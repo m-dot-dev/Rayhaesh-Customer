@@ -37,7 +37,7 @@ const Hero = () => {
           </Text>
           <ListingCarousel />
         </Box>
-        <Box style={{ padding: 20 }}>
+        <Box style={{ paddingRight: 20, paddingLeft: 20 }}>
           <Text className={classes.listingText}>
             Featured Agencies Listings
           </Text>
