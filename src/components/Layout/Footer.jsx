@@ -36,7 +36,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function Footer() {
+export default function Footer() {
   const links = [
     {
       link: '#',
