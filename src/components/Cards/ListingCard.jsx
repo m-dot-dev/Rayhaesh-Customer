@@ -5,8 +5,9 @@ import {
   IconBed,
   IconDimensions,
 } from '@tabler/icons'
+import { Link } from 'react-router-dom'
 
-export default function ListingCard() {
+export default function ListingCard({ property }) {
   return (
     <Card
       shadow="sm"
@@ -20,20 +21,20 @@ export default function ListingCard() {
         maxHeight: '400px',
       }}
     >
+      {/* <Link
+                  to={`/productPage/${property?._id}`}
+                  state={{ data: property }}
+                > */}
       <Card.Section>
-        <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-          height={180}
-          alt="Norway"
-        />
+        <Image src={property?.images[0]} height={180} alt="image" />
       </Card.Section>
 
       <Group position="apart" mt="md" mb="md">
         <Text weight={700} size="lg">
-          Property Location
+          {property?.propertyCity}
         </Text>
         <Badge color="pink" variant="light">
-          For Sale
+          {property?.propertyIs}
         </Badge>
       </Group>
 
@@ -49,6 +50,7 @@ export default function ListingCard() {
             display: 'flex',
             flexDirection: 'row',
             gap: 5,
+            textDecoration: 'none',
           }}
         >
           5
@@ -86,7 +88,7 @@ export default function ListingCard() {
         weight={500}
         mt={'md'}
       >
-        Rs. 50000
+        Rs. {property?.totalPrice}
       </Text>
 
       <Button variant="light" color="red" fullWidth mt="md" radius="md">
