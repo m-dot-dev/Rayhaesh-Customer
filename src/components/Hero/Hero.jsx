@@ -1,14 +1,87 @@
-import React from 'react'
+import {
+  createStyles,
+  Overlay,
+  Container,
+  Title,
+  Button,
+  Text,
+} from '@mantine/core'
 
-const Hero = () => {
+const useStyles = createStyles((theme) => ({
+  hero: {
+    position: 'relative',
+    backgroundImage:
+      'url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+
+  container: {
+    height: 250,
+    display: 'flex',
+    flexDirection: 'column',
+    paddingBottom: theme.spacing.xl * 6,
+    zIndex: 1,
+    position: 'relative',
+
+    [theme.fn.smallerThan('sm')]: {
+      height: 175,
+      paddingBottom: theme.spacing.xl * 3,
+    },
+  },
+
+  title: {
+    color: theme.white,
+    fontSize: 60,
+    fontWeight: 900,
+    lineHeight: 1.1,
+    fontFamily: 'poppins',
+
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: 40,
+      lineHeight: 1.2,
+      fontFamily: 'poppins',
+    },
+
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: 28,
+      lineHeight: 1.3,
+      fontFamily: 'poppins',
+    },
+  },
+
+  description: {
+    color: theme.white,
+    maxWidth: 600,
+
+    [theme.fn.smallerThan('sm')]: {
+      maxWidth: '100%',
+      fontSize: theme.fontSizes.sm,
+    },
+  },
+
+  control: {
+    marginTop: theme.spacing.xl * 1.5,
+
+    [theme.fn.smallerThan('sm')]: {
+      width: '100%',
+    },
+  },
+}))
+
+export default function Hero() {
+  const { classes } = useStyles()
+
   return (
-    <div>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam dolore in
-      numquam vitae tempore, voluptates porro? Excepturi laboriosam atque esse
-      perspiciatis eligendi delectus? Explicabo impedit ex, praesentium
-      recusandae consequuntur ratione?
+    <div className={classes.hero}>
+      <Overlay
+        gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
+        opacity={1}
+        zIndex={0}
+      />
+      <Container className={classes.container}>
+        <Title className={classes.title}>Find Your Dream Home</Title>
+      </Container>
     </div>
   )
 }
-
-export default Hero
