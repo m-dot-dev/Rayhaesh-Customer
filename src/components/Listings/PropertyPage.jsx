@@ -48,12 +48,7 @@ const PropertyPage = () => {
         }}
       >
         {/* Title and Locations */}
-        <Group
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+        <Stack>
           <Text className={classes.titleText}>
             {property?.propertyTitle || 'Property Title Here'}
           </Text>
@@ -61,7 +56,7 @@ const PropertyPage = () => {
             <IconMap2 />
             {property?.propertyCity || 'Property City Here'}
           </Text>
-        </Group>
+        </Stack>
       </Group>
       {/* Tabs */}
       <Group
@@ -177,11 +172,118 @@ const PropertyPage = () => {
           </Tabs.Panel>
 
           <Tabs.Panel value="services" pt="xs">
-            <Text></Text>
+            {property?.propertySubCategory !== 'plot' &&
+              property?.propertySubCategory !== 'file' && (
+                <Stack spacing={0}>
+                  {property?.noOfBedRooms !== 0 && (
+                    <Text>{property?.noOfBedRooms} Bedrooms</Text>
+                  )}
+                  {property?.noOfBathrooms !== 0 && (
+                    <Text>{property?.noOfBathrooms} Bathrooms</Text>
+                  )}
+                  {property?.parkingSpace !== 0 && (
+                    <Text>{property?.parkingSpace} Parking Space</Text>
+                  )}
+                  {property?.drawingRoom !== 0 && (
+                    <Text>{property?.drawingRoom} Drawing Room</Text>
+                  )}
+                  {property?.servantQuarters !== 0 && (
+                    <Stack spacing={0}>
+                      <Text>{property?.servantQuarters} Servant Quarter</Text>
+                      <Text>
+                        Servant Quarter Description:{' '}
+                        {property?.servantQuarterDetails}
+                      </Text>
+                    </Stack>
+                  )}
+                  {property?.diningRoom !== 0 && (
+                    <Text>{property?.diningRoom} Dining Room</Text>
+                  )}
+                  {property?.kitchen !== 0 && (
+                    <Text>{property?.kitchen} Kitchen</Text>
+                  )}
+                  {property?.floorType !== 0 && (
+                    <Text>Floor Type: {property?.floorType}</Text>
+                  )}
+                  {property?.electricityBackup && (
+                    <Text>Electricity Backup Available</Text>
+                  )}
+                  {property?.powderRoom !== 0 && (
+                    <Text>{property?.powderRoom} Powder Room</Text>
+                  )}
+                  {property?.storeRoom !== 0 && (
+                    <Text>{property?.storeRoom} Store Room</Text>
+                  )}
+                  {property?.wasteDisposal && (
+                    <Text>Waste Disposal Available</Text>
+                  )}
+                  {property?.steamRoom !== 0 && (
+                    <Text>{property?.steamRoom} Steam Room</Text>
+                  )}
+                  {property?.lounge !== 0 && (
+                    <Text>{property?.lounge} Lounge</Text>
+                  )}
+                  {property?.sittingRoom !== 0 && (
+                    <Text>{property?.sittingRoom} Sitting Room</Text>
+                  )}
+                  {property?.laundryRoom !== 0 && (
+                    <Text>{property?.laundryRoom} Laundry Room</Text>
+                  )}
+                  {property?.hasDoubleGlazedWindows && (
+                    <Text>Double Gazed Windows</Text>
+                  )}
+                  {property?.hasCentralAirConditioning && (
+                    <Text>Central Air Conditioning</Text>
+                  )}
+                  {property?.hasCheckCentralHeating && (
+                    <Text>Central Heating</Text>
+                  )}
+                  {property?.hasInternet && (
+                    <Stack spacing={0}>
+                      <Text>Internet Avilable</Text>
+                      <Text>{property?.internetDescription}</Text>
+                    </Stack>
+                  )}
+                  {property?.hasCableTv && (
+                    <Stack spacing={0}>
+                      <Text>TV Cable Available</Text>
+                      <Text>{property?.cableDescription}</Text>
+                    </Stack>
+                  )}
+                  {property?.hasSwimmingPool && (
+                    <Text>Swimming Pool Available</Text>
+                  )}
+                  {property?.hasCommunityLawnandGarden && (
+                    <Text>Community Lawn and Garden Available</Text>
+                  )}
+                  {property?.hasMedicalCenter && (
+                    <Text>Medical Center Available</Text>
+                  )}
+                  {property?.hasDayCareCenter && (
+                    <Text>Day Care Center Available</Text>
+                  )}
+                  {property?.hasKidsPlayArea && (
+                    <Text>Kids Play Area Available</Text>
+                  )}
+                  {property?.hasBarBQueArea && (
+                    <Text>Bar B Que Area Available</Text>
+                  )}
+                  {property?.nearbyFacilities && (
+                    <Text>Nearby Facilities: {property?.nearbyFacilities}</Text>
+                  )}
+                  {property?.otherFacilities && (
+                    <Text>Other Facilities: {property?.otherFacilities}</Text>
+                  )}
+                </Stack>
+              )}
+            {/* <Text>
+              No Services available for this {property?.propertySubCategory} at
+              the moment
+            </Text> */}
           </Tabs.Panel>
 
           <Tabs.Panel value="location" pt="xs">
-            Map Here
+            <Text>Map Component Here</Text>
           </Tabs.Panel>
         </Tabs>
       </Group>
