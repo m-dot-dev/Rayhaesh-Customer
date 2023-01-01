@@ -3,7 +3,7 @@ import ListingCard from '../Cards/ListingCard'
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Anchor, Skeleton } from '@mantine/core'
+import { Skeleton } from '@mantine/core'
 import { Link } from 'react-router-dom'
 
 export default function ListingCarousel() {
@@ -79,14 +79,13 @@ export default function ListingCarousel() {
                   },
                 }}
               >
-                <Anchor
-                  component={Link}
-                  to={`/property/${property?.propertyId}`}
+                <Link
+                  to={`/property/${property?._id}`}
                   state={{ data: property }}
-                  variant="text"
+                  style={{ textDecoration: 'none' }}
                 >
                   <ListingCard property={property} />
-                </Anchor>
+                </Link>
               </Carousel.Slide>
             ))}
           </Carousel>

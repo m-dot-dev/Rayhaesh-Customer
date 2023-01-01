@@ -1,11 +1,5 @@
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core'
-import {
-  IconAspectRatio,
-  IconBath,
-  IconBed,
-  IconDimensions,
-} from '@tabler/icons'
-import { Link } from 'react-router-dom'
+import { IconAspectRatio, IconBath, IconBed } from '@tabler/icons'
 
 export default function ListingCard({ property }) {
   return (
@@ -21,10 +15,6 @@ export default function ListingCard({ property }) {
         maxHeight: '400px',
       }}
     >
-      {/* <Link
-                  to={`/productPage/${property?._id}`}
-                  state={{ data: property }}
-                > */}
       <Card.Section>
         <Image src={property?.images[0]} height={180} alt="image" />
       </Card.Section>
@@ -45,37 +35,77 @@ export default function ListingCard({ property }) {
         }}
         mb="md"
       >
-        <Text
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 5,
-            textDecoration: 'none',
-          }}
-        >
-          5
-          <IconAspectRatio opacity={0.6} />
-        </Text>
-        <Text
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 5,
-          }}
-        >
-          5
-          <IconBed opacity={0.6} />
-        </Text>
-        <Text
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 5,
-          }}
-        >
-          5
-          <IconBath opacity={0.6} />
-        </Text>
+        {property?.propertySubCategory === 'plot' ||
+        property?.propertySubCategory === 'shop' ||
+        property?.propertySubCategory === 'file' ? (
+          <Group
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text
+              style={{
+                color: '#D92228',
+                fontSize: 16,
+                textTransform: 'uppercase',
+              }}
+              size="md"
+              weight={500}
+            >
+              {property?.propertySubCategory}
+            </Text>
+            <Text>
+              {property?.areaSize} {property?.areaSizeUnit}
+            </Text>
+          </Group>
+        ) : (
+          <>
+            <Text
+              style={{
+                color: '#D92228',
+                fontSize: 16,
+                textTransform: 'uppercase',
+              }}
+              size="md"
+              weight={500}
+            >
+              {property?.propertySubCategory}
+            </Text>
+            <Text
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 5,
+                textDecoration: 'none',
+              }}
+            >
+              {property?.areaSize} {property?.areaSizeUnit}
+              <IconAspectRatio opacity={0.6} />
+            </Text>
+            <Text
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 5,
+              }}
+            >
+              {property?.noOfBedRooms}
+              <IconBed opacity={0.6} />
+            </Text>
+            <Text
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 5,
+              }}
+            >
+              {property?.noOfBathrooms}
+              <IconBath opacity={0.6} />
+            </Text>
+          </>
+        )}
       </Group>
 
       <Text

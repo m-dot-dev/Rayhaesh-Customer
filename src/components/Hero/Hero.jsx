@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchSection from './SearchSection'
 import ListingCarousel from '../Carousel/ListingCarousel'
 import { Box, Text, createStyles } from '@mantine/core'
 import AgenciesCarousel from '../Carousel/AgenciesCarousel'
+import axios from 'axios'
 
 const Hero = () => {
-  const useStyles = createStyles((theme) => ({
+  const useStyles = createStyles(() => ({
     listingText: {
       fontSize: 30,
       fontWeight: 600,
