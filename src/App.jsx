@@ -3,6 +3,10 @@ import Hero from './components/Hero/Hero'
 import Navbar from './components/Layout/Navbar'
 import Footer from './components/Layout/Footer'
 import PropertyPage from './components/Listings/PropertyPage'
+import Login from './components/PfpManagement/Login'
+import SignUp from './components/PfpManagement/SignUp'
+import Subscription from './components/PfpManagement/Subscription'
+import Blogs from './components/NewsInsights/Blogs'
 import './App.css'
 import { MantineProvider } from '@mantine/core'
 
@@ -15,6 +19,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/property/:id" element={<PropertyPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/subscription" element={<Subscription />} />
+            <Route path="/blogs" element={<Blogs />} />
           </Routes>
           <Footer />
         </Router>

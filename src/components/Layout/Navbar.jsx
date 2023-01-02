@@ -14,6 +14,7 @@ import {
 import RemsLogo from '../../assets/images/Logo.png'
 import { useNavigate } from 'react-router-dom'
 import { Avatar } from '@mantine/core'
+import { Link } from 'react-router-dom'
 
 import { useDisclosure } from '@mantine/hooks'
 import {
@@ -201,7 +202,7 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
-                navigate('/')
+                navigate('/blogs')
               }}
             >
               News & Insights
@@ -211,38 +212,44 @@ export default function Navbar() {
           <Group className={classes.hiddenMobile}>
             {loggedIn ? (
               <>
-                <Button
-                  variant="outline"
-                  sx={{
-                    color: '#D92228',
-                    borderColor: '#D92228',
-                    fontFamily: 'poppins',
-                  }}
-                  size="md"
-                >
-                  Log in
-                </Button>
-                <Button
-                  variant="outline"
-                  sx={{
-                    color: '#D92228',
-                    borderColor: '#D92228',
-                    fontFamily: 'poppins',
-                  }}
-                  size="md"
-                >
-                  Sign up
-                </Button>
-                <Button
-                  sx={{
-                    color: 'white',
-                    backgroundColor: '#D92228',
-                    fontFamily: 'poppins',
-                  }}
-                  size="md"
-                >
-                  Subscription
-                </Button>
+                <Link to={'/login'}>
+                  <Button
+                    variant="outline"
+                    sx={{
+                      color: '#D92228',
+                      borderColor: '#D92228',
+                      fontFamily: 'poppins',
+                    }}
+                    size="md"
+                  >
+                    Log in
+                  </Button>
+                </Link>
+                <Link to={'/register'}>
+                  <Button
+                    variant="outline"
+                    sx={{
+                      color: '#D92228',
+                      borderColor: '#D92228',
+                      fontFamily: 'poppins',
+                    }}
+                    size="md"
+                  >
+                    Sign up
+                  </Button>
+                </Link>
+                <Link to={'/subscription'}>
+                  <Button
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#D92228',
+                      fontFamily: 'poppins',
+                    }}
+                    size="md"
+                  >
+                    Subscription
+                  </Button>
+                </Link>
               </>
             ) : (
               <Menu

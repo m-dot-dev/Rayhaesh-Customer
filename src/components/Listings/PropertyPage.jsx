@@ -4,6 +4,7 @@ import {
   IconMap,
   IconMap2,
   IconPhoto,
+  IconUser,
   IconVideo,
 } from '@tabler/icons'
 import React, { useEffect } from 'react'
@@ -107,6 +108,9 @@ const PropertyPage = () => {
             <Tabs.Tab value="location" icon={<IconMap2 size={14} />}>
               Location
             </Tabs.Tab>
+            <Tabs.Tab value="seller" icon={<IconUser size={14} />}>
+              About Seller
+            </Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="about" pt="xs">
@@ -163,6 +167,28 @@ const PropertyPage = () => {
                       Minimum Exchange Value:{' '}
                     </Text>
                     <Text>{property?.minimumExchangeValue}</Text>
+                  </Group>
+                  {/* There is no installments in the last property but it has monthly rent etc. where to put that? */}
+                  <Group>
+                    {property?.inInstallments && (
+                      <Stack>
+                        <Text className={classes.aboutText}>
+                          In Installments:{' '}
+                        </Text>
+                        <Text className={classes.aboutText}>
+                          Total Number of Installments:{' '}
+                        </Text>
+                        <Text>{property?.totalNumberOfInstallments}</Text>
+                        <Text className={classes.aboutText}>
+                          Installment Duration:{' '}
+                        </Text>
+                        <Text>{property?.installmentDuration}</Text>
+                        <Text className={classes.aboutText}>
+                          Monthly Installments:{' '}
+                        </Text>
+                        <Text>{property?.monthlyInstallment}</Text>
+                      </Stack>
+                    )}
                   </Group>
                 </Stack>
               ) : (
@@ -276,14 +302,38 @@ const PropertyPage = () => {
                   )}
                 </Stack>
               )}
-            {/* <Text>
-              No Services available for this {property?.propertySubCategory} at
-              the moment
-            </Text> */}
           </Tabs.Panel>
 
           <Tabs.Panel value="location" pt="xs">
-            <Text>Map Component Here</Text>
+            <Stack spacing={0}>
+              {property?.propertyCity && (
+                <Group>
+                  <Text className={classes.aboutText}>City:</Text>
+                  <Text>{property?.propertyCity}</Text>
+                </Group>
+              )}
+              {property?.streetNumber && (
+                <Group>
+                  <Text className={classes.aboutText}>Street Number: </Text>
+                  <Text>{property?.streetNumber}</Text>
+                </Group>
+              )}
+              {property?.houseNumber && (
+                <Group>
+                  <Text className={classes.aboutText}>House Number: </Text>
+                  <Text>{property?.houseNumber}</Text>
+                </Group>
+              )}
+              {property?.ZIPCode && (
+                <Group>
+                  <Text className={classes.aboutText}>Zip Code: </Text>
+                  <Text>{property?.ZIPCode}</Text>
+                </Group>
+              )}
+            </Stack>
+          </Tabs.Panel>
+          <Tabs.Panel value="seller" pt="xs">
+            <Text>Information about the seller</Text>
           </Tabs.Panel>
         </Tabs>
       </Group>
