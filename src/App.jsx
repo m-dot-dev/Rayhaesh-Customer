@@ -7,6 +7,7 @@ import Login from './components/PfpManagement/Login'
 import SignUp from './components/PfpManagement/SignUp'
 import Subscription from './components/PfpManagement/Subscription'
 import Blogs from './components/NewsInsights/Blogs'
+import BuyListings from './components/Buy/BuyListings'
 import './App.css'
 import { MantineProvider } from '@mantine/core'
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/register" element={<SignUp />} />
             <Route path="/subscription" element={<Subscription />} />
             <Route path="/blogs" element={<Blogs />} />
+            <Route path="/properties" element={<BuyListings />} />
           </Routes>
           <Footer />
         </Router>

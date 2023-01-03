@@ -158,7 +158,7 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
-                navigate('/')
+                navigate('/properties')
               }}
             >
               Buy
