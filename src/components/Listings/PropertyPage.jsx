@@ -78,11 +78,11 @@ const PropertyPage = () => {
           </Tabs.List>
 
           <Tabs.Panel value="photos" pt="xs">
-            <PropertyCarousel property={property} />
+            <PropertyCarousel property={property} type="image" />
           </Tabs.Panel>
 
           <Tabs.Panel value="videos" pt="xs">
-            <Text>No Videos Available</Text>
+            <PropertyCarousel property={property} type="video" />
           </Tabs.Panel>
         </Tabs>
       </Group>

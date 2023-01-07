@@ -2,18 +2,12 @@ import { Carousel } from '@mantine/carousel'
 import ListingCard from '../Cards/ListingCard'
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons'
 import axios from 'axios'
-import { Skeleton } from '@mantine/core'
+import { Group, Paper, Skeleton } from '@mantine/core'
 import { Link } from 'react-router-dom'
 
 export default function ListingCarousel({ listings, loading, error }) {
   if (loading) {
-    return (
-      <Skeleton
-        style={{ width: '100%', height: '200px' }}
-        variant="rect"
-        radius="md"
-      />
-    )
+    return <Skeleton style={{ width: '100%', height: '200px' }} />
   }
   if (error) {
     return <div>Error: {error.message}</div>

@@ -33,11 +33,9 @@ const useStyles = createStyles((theme) => ({
   link: {
     display: 'flex',
     alignItems: 'center',
-    // height: '100%',
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
     textDecoration: 'none',
-    // color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     color: 'black',
     fontWeight: 400,
     fontSize: '1.2rem',
@@ -56,6 +54,16 @@ const useStyles = createStyles((theme) => ({
           ? theme.colors.red[6]
           : theme.colors.red[0],
     }),
+  },
+
+  imageContainer: {
+    width: '250px',
+    height: '60px',
+
+    [theme.fn.smallerThan('xs')]: {
+      width: '160px',
+      height: '40px',
+    },
   },
 
   mobileLink: {
@@ -131,10 +139,7 @@ export default function Navbar() {
             <img
               src={RemsLogo}
               alt="TRA Rems Logo"
-              style={{
-                width: '250px',
-                height: '60px',
-              }}
+              className={classes.imageContainer}
             />
           </Box>
           <Group
@@ -295,6 +300,7 @@ export default function Navbar() {
             opened={drawerOpened}
             onClick={toggleDrawer}
             className={classes.hiddenDesktop}
+            color="#D92228"
           />
         </Group>
       </Header>

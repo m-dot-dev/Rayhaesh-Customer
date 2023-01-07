@@ -10,6 +10,8 @@ import {
   Text,
 } from '@mantine/core'
 import { IconChevronDown, IconLocation } from '@tabler/icons'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   hero: {
@@ -83,6 +85,33 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export default function SearchSection() {
+  // const [city, setCity] = useState([])
+  // const [error, setError] = useState(null)
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getAllProperties',
+  //     )
+  //     .then((data) => {
+  //       setCity(data.data.body.filter((item) => item?.propertySubCategory))
+  //     })
+  //     .catch((error) => {
+  //       setError(error)
+  //     })
+  // }, [])
+
+  // console.log('====================================')
+  // console.log(city)
+  // console.log('====================================')
+
+  // const cityData = city.map((item) => {
+  //   return {
+  //     value: item.propertySubCategory,
+  //     label: item.propertySubCategory,
+  //   }
+  // })
+
   const cityData = [
     { value: 'islamabad', label: 'Islamabad' },
     { value: 'rawalpindi', label: 'Rawalpindi' },
@@ -90,7 +119,10 @@ export default function SearchSection() {
     { value: 'karachi', label: 'Karachi' },
     { value: 'peshawar', label: 'Peshawar' },
     { value: 'quetta', label: 'Quetta' },
+    { value: 'multan', label: 'Multan' },
+    { value: 'faisalabad', label: 'Faisalabad' },
   ]
+
   const typeData = [
     { value: 'house', label: 'House' },
     { value: 'plot', label: 'Plot' },

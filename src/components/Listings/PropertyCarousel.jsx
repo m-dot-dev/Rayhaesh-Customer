@@ -2,7 +2,7 @@ import { Carousel } from '@mantine/carousel'
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons'
 import { Image, createStyles } from '@mantine/core'
 
-export default function PropertyCarousel({ property }) {
+export default function PropertyCarousel({ property, type }) {
   const useStyles = createStyles((theme) => ({
     imageContainer: {
       width: 500,
@@ -10,11 +10,18 @@ export default function PropertyCarousel({ property }) {
     },
   }))
   const classes = useStyles()
-  const slides = property?.images?.map((image) => (
+  const imagesSlides = property?.images?.map((image) => (
     <Carousel.Slide>
       <Image src={image} alt="image" />
     </Carousel.Slide>
   ))
+
+  const videoSlides = property?.videos?.map((video) => (
+    <Carousel.Slide>
+      <Image src={video} alt="video" />
+    </Carousel.Slide>
+  ))
+
   return (
     <>
       {property.length !== 0 && (
@@ -37,7 +44,6 @@ export default function PropertyCarousel({ property }) {
             },
           }}
           withIndicators
-          //   style={{ maxWidth: 800 }}
           sx={{
             maxWidth: 800,
             '@media (max-width: 940px)': {
@@ -56,7 +62,7 @@ export default function PropertyCarousel({ property }) {
           mx="auto"
           className={classes.imageContainer}
         >
-          {slides}
+          {type === 'image' ? imagesSlides : type === 'video' && videoSlides}
         </Carousel>
       )}
     </>
