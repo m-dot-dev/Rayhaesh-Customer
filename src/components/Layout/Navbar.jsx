@@ -185,7 +185,7 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
-                navigate('/')
+                navigate('/exchange')
               }}
             >
               Exchange
@@ -196,7 +196,7 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
-                navigate('/')
+                navigate('/rent')
               }}
             >
               Rent

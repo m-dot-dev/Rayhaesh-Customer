@@ -8,6 +8,7 @@ import {
   Button,
   Box,
   Text,
+  Select,
 } from '@mantine/core'
 import { IconChevronDown, IconLocation } from '@tabler/icons'
 import axios from 'axios'
@@ -157,12 +158,10 @@ export default function SearchSection() {
           This is where you can find a dream home of your choice without stress
         </Text>
         <Container className={classes.control}>
-          <MultiSelect
+          <Select
             data={cityData}
             label="Choose City"
             placeholder="Islamabad"
-            searchable
-            nothingFound="No city found!"
             size="md"
             styles={{
               label: {
@@ -171,12 +170,10 @@ export default function SearchSection() {
               },
             }}
           />
-          <MultiSelect
+          <Select
             data={typeData}
             label="Choose Type"
             placeholder="House"
-            searchable
-            nothingFound="No type found!"
             size="md"
             styles={{
               label: {
@@ -185,7 +182,7 @@ export default function SearchSection() {
               },
             }}
           />
-          <MultiSelect
+          <Select
             data={priceData}
             label="Choose Price Range"
             placeholder="<15 Lac"

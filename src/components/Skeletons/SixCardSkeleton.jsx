@@ -3,7 +3,7 @@ import React from 'react'
 import CardSkeleton from './CardSkeleton'
 
 const SixCardSkeleton = () => {
-  const venues = [...Array(6).keys()]?.map((venue, index) => {
+  const properties = [...Array(6).keys()]?.map((property, index) => {
     return <CardSkeleton key={index} />
   })
 
@@ -19,7 +19,7 @@ const SixCardSkeleton = () => {
           { maxWidth: 'xl', cols: 3 },
         ]}
       >
-        {venues}
+        {properties}
       </SimpleGrid>
     </Center>
   )

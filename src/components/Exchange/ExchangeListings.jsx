@@ -7,14 +7,14 @@ import {
   Skeleton,
   createStyles,
 } from '@mantine/core'
-import BuyCards from './BuyCards'
+import BuyCards from '../Buy/BuyCards'
 import axios from 'axios'
 import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
 import { Link } from 'react-router-dom'
 import { Pagination } from '@mantine/core'
 
-const BuyListings = () => {
+const ExchangeListings = () => {
   const useStyles = createStyles((theme) => ({
     filter: {},
   }))
@@ -31,7 +31,11 @@ const BuyListings = () => {
       )
       .then((data) => {
         setIsLoaded(false)
-        setAllProperties(data.data.body)
+        setAllProperties(
+          data.data.body.filter(
+            (property) => property?.propertyIs === 'For Exchange',
+          ),
+        )
       })
       .catch((error) => {
         setIsLoaded(false)
@@ -91,4 +95,4 @@ const BuyListings = () => {
   )
 }
 
-export default BuyListings
+export default ExchangeListings

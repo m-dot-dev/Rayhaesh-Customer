@@ -21,6 +21,9 @@ export default function BuyCards({ property }) {
       }}
       sx={{
         maxHeight: '400px',
+        ':hover': {
+          boxShadow: '0 5px 12px #0003',
+        },
       }}
     >
       <Card.Section>

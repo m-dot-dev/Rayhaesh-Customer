@@ -16,7 +16,7 @@ const CardSkeleton = () => {
         transitionDelay: '0s',
         transitionProperty: 'box-shadow',
       }}
-      style={{ width: '302px' }}
+      style={{ width: '350px' }}
     >
       <Card.Section style={{ height: '201px' }}>
         <Skeleton height={'201px'} width={'100%'} />

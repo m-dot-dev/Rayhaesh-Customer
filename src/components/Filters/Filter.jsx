@@ -13,6 +13,8 @@ import { Divider } from '@mantine/core'
 import { MultiSelect } from '@mantine/core'
 import PropertyCategoryCB from './Checkboxes/PropertyCategoryCB'
 import PropertySubCategoryCB from './Checkboxes/PropertySubCategoryCB'
+import AreaCB from './Checkboxes/AreaCB'
+import PriceCB from './Checkboxes/PriceCB'
 
 const Filter = () => {
   const [from, setFrom] = React.useState(0)
@@ -33,7 +35,6 @@ const Filter = () => {
         padding: 20,
       }}
     >
-      {/* <Text>Advance Filters</Text> */}
       <MultiSelect data={cityData} label="City" placeholder="Cities Filter" />
       <Divider my="sm" />
       <Input.Wrapper label="Price">
@@ -100,10 +101,9 @@ const Filter = () => {
       <Stack spacing={'lg'}>
         <PropertyCategoryCB />
         <PropertySubCategoryCB />
+        <AreaCB />
+        <PriceCB />
       </Stack>
-
-      {/* Filter by Size, checkboxes below for marla/kanal etc */}
-      {/* Filter by Beds, checkboxes below for marla/kanal etc */}
     </Box>
   )
 }
