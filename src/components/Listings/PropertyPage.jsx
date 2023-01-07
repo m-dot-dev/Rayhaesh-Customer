@@ -44,8 +44,8 @@ const PropertyPage = () => {
     <>
       <Group
         style={{
-          marginTop: 30,
-          marginLeft: 80,
+          marginTop: 40,
+          marginLeft: 120,
         }}
       >
         {/* Title and Locations */}
@@ -62,8 +62,8 @@ const PropertyPage = () => {
       {/* Tabs */}
       <Group
         style={{
-          marginTop: 30,
-          marginLeft: 80,
+          marginTop: 40,
+          marginLeft: 120,
           width: 'auto',
         }}
       >
@@ -91,7 +91,7 @@ const PropertyPage = () => {
       <Group
         style={{
           marginTop: 20,
-          marginLeft: 80,
+          marginLeft: 120,
         }}
       >
         <Tabs color="red" variant="default" defaultValue="about">

@@ -340,6 +340,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconHome />}
+              onClick={() => {
+                navigate('/')
+                closeDrawer()
+              }}
             >
               Home
             </Button>
@@ -353,6 +357,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconShoppingBag />}
+              onClick={() => {
+                navigate('/buy')
+                closeDrawer()
+              }}
             >
               Buy
             </Button>
@@ -366,6 +374,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconCash />}
+              onClick={() => {
+                navigate('/')
+                closeDrawer()
+              }}
             >
               Sell
             </Button>
@@ -379,6 +391,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconExchange />}
+              onClick={() => {
+                navigate('/exchange')
+                closeDrawer()
+              }}
             >
               Exchange
             </Button>
@@ -392,6 +408,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconHome2 />}
+              onClick={() => {
+                navigate('/rent')
+                closeDrawer()
+              }}
             >
               Rent
             </Button>
@@ -405,6 +425,10 @@ export default function Navbar() {
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconNews />}
+              onClick={() => {
+                navigate('/blogs')
+                closeDrawer()
+              }}
             >
               News & Insights
             </Button>
