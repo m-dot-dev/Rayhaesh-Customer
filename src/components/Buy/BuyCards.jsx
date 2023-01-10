@@ -6,6 +6,7 @@ import {
   Button,
   Group,
   Skeleton,
+  createStyles,
 } from '@mantine/core'
 import { IconAspectRatio, IconBath, IconBed } from '@tabler/icons'
 
@@ -131,10 +132,6 @@ export default function BuyCards({ property }) {
       >
         Rs. {property?.totalPrice}
       </Text>
-
-      {/* <Button variant="light" color="red" fullWidth mt="md" radius="md">
-        View
-      </Button> */}
     </Card>
   )
 }

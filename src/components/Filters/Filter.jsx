@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Checkbox,
   Group,
   Input,
@@ -15,8 +16,10 @@ import PropertyCategoryCB from './Checkboxes/PropertyCategoryCB'
 import PropertySubCategoryCB from './Checkboxes/PropertySubCategoryCB'
 import AreaCB from './Checkboxes/AreaCB'
 import PriceCB from './Checkboxes/PriceCB'
+import { useMediaQuery } from '@mantine/hooks'
 
 const Filter = () => {
+  const match1200 = useMediaQuery('(max-width: 1200px)')
   const [from, setFrom] = React.useState(0)
   const [to, setTo] = React.useState(50000000)
   const cityData = [
@@ -32,9 +35,19 @@ const Filter = () => {
   return (
     <Box
       style={{
-        padding: 20,
+        padding: !match1200 ? 20 : 0,
       }}
     >
+      {match1200 && (
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+          }}
+        >
+          Advance Filters
+        </Text>
+      )}
       <MultiSelect data={cityData} label="City" placeholder="Cities Filter" />
       <Divider my="sm" />
       <Input.Wrapper label="Price">
@@ -104,6 +117,29 @@ const Filter = () => {
         <AreaCB />
         <PriceCB />
       </Stack>
+
+      {match1200 && (
+        <Group mt={'md'} position="apart" noWrap>
+          <Button
+            fullWidth
+            style={{
+              backgroundColor: '#D92228',
+              color: 'white',
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            fullWidth
+            style={{
+              backgroundColor: '#D92228',
+              color: 'white',
+            }}
+          >
+            Apply
+          </Button>
+        </Group>
+      )}
     </Box>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SearchSection from './SearchSection'
 import ListingCarousel from '../Carousel/ListingCarousel'
-import { Box, Text, createStyles } from '@mantine/core'
+import { Box, Container, Text, createStyles } from '@mantine/core'
 import AgenciesCarousel from '../Carousel/AgenciesCarousel'
 import axios from 'axios'
 

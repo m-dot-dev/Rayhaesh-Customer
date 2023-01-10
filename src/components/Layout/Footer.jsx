@@ -14,6 +14,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
     }`,
     backgroundColor: '#e5e5e5',
+    // position: 'absolute',
   },
 
   inner: {
@@ -76,7 +77,7 @@ export default function Footer() {
   ))
 
   return (
-    <div className={classes.footer}>
+    <footer className={classes.footer}>
       <div className={classes.inner}>
         <Group className={classes.links}>{items}</Group>
 
@@ -95,6 +96,6 @@ export default function Footer() {
           </ActionIcon>
         </Group>
       </div>
-    </div>
+    </footer>
   )
 }

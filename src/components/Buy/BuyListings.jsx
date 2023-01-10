@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import {
+  Box,
   Button,
+  Container,
   Grid,
   Group,
+  Input,
   Paper,
   Skeleton,
+  Text,
+  Modal,
   createStyles,
 } from '@mantine/core'
 import BuyCards from './BuyCards'
@@ -13,8 +18,12 @@ import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
 import { Link } from 'react-router-dom'
 import { Pagination } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons'
 
 const BuyListings = () => {
+  const [opened, setOpened] = useState(false)
+  const match1200 = useMediaQuery('(max-width: 1200px)')
   const useStyles = createStyles((theme) => ({
     filter: {},
   }))
@@ -45,12 +54,54 @@ const BuyListings = () => {
 
   return (
     <>
-      <Paper>
+      <Container size="xl">
         <Grid px={'sm'} py="sm">
-          <Grid.Col md={3}>
+          <Grid.Col md={3} hidden={match1200 ? true : false}>
             <Filter />
           </Grid.Col>
-          <Grid.Col md={9}>
+
+          <Grid.Col md={!match1200 ? 9 : 12}>
+            <Group
+              style={{
+                justifyContent: 'space-between',
+              }}
+              mb="lg"
+            >
+              <Group
+                noWrap
+                style={{
+                  width: '100%',
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: 600,
+                  }}
+                >
+                  Results
+                </Text>
+                <Input
+                  placeholder="Search"
+                  icon={<IconSearch />}
+                  style={{
+                    width: '100%',
+                  }}
+                />
+                {match1200 && (
+                  <Button
+                    onClick={() => {
+                      setOpened(true)
+                    }}
+                    style={{
+                      backgroundColor: '#D92228',
+                      color: 'white',
+                    }}
+                  >
+                    Filters
+                  </Button>
+                )}
+              </Group>
+            </Group>
             <Grid>
               {loading && (
                 <Grid.Col>
@@ -86,7 +137,11 @@ const BuyListings = () => {
             </Group>
           </Grid.Col>
         </Grid>
-      </Paper>
+      </Container>
+
+      <Modal opened={opened} onClose={() => setOpened(false)}>
+        <Filter />
+      </Modal>
     </>
   )
 }
