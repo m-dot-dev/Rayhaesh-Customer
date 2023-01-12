@@ -34,17 +34,20 @@ export default function PropertyCarousel({ property, type }) {
           withIndicators
           sx={{
             maxWidth: 900,
-            '@media (max-width: 940px)': {
+            '@media (max-width: 1030px)': {
               maxWidth: 700,
             },
-            '@media (max-width: 700px)': {
-              maxWidth: 400,
+            '@media (max-width: 850px)': {
+              maxWidth: 600,
+            },
+            '@media (max-width: 736px)': {
+              maxWidth: 500,
+            },
+            '@media (max-width: 650px)': {
+              maxWidth: 450,
             },
             '@media (max-width: 500px)': {
               maxWidth: 300,
-            },
-            '@media (max-width: 380px)': {
-              maxWidth: 250,
             },
           }}
           mx="auto"

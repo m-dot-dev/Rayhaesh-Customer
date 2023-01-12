@@ -6,6 +6,7 @@ import {
   Group,
   Input,
   NativeSelect,
+  Notification,
   NumberInput,
   Paper,
   RingProgress,
@@ -16,11 +17,19 @@ import {
   Textarea,
 } from '@mantine/core'
 import { IconChevronDown, IconCreditCard, IconShoppingBag } from '@tabler/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Booking = () => {
-  const [payment, setPayment] = useState()
-  const [booking, setBooking] = useState()
+  const [property, setProperty] = useState({})
+  const location = useLocation()
+
+  useEffect(() => {
+    setProperty(location.state?.data)
+  }, [location])
+
+  const [payment, setPayment] = useState('bank')
+  const [booking, setBooking] = useState('advance')
 
   const bookingData = [
     { value: 'advance', label: 'Advance' },
@@ -46,6 +55,9 @@ const Booking = () => {
   const InterestedPaymentProgress = [{ value: 0, color: 'yellow' }]
   const OnHoldPaymentProgress = [{ value: 0, color: 'red' }]
 
+  const handleNotification = () => {
+    return <Notification>asdad</Notification>
+  }
   return (
     <Container size={'xl'}>
       <Grid columns={12}>
@@ -151,30 +163,6 @@ const Booking = () => {
                 required
                 onChange={(event) => setBooking(event.currentTarget.value)}
               />
-              {/* <Select
-                clearable
-                data={bookingData}
-                label="Booking Status"
-                placeholder="Select Booking Status"
-                size="md"
-                style={{
-                  width: '100%',
-                }}
-                value={booking}
-                onChange={(event) => setBooking(event.currentTarget.value)}
-              />
-              <Select
-                clearable
-                data={paymentMethods}
-                label="Payment Method"
-                placeholder="Select Payment Method"
-                size="md"
-                style={{
-                  width: '100%',
-                }}
-                value={payment}
-                onChange={(event) => setPayment(event.currentTarget.value)}
-              /> */}
               <NativeSelect
                 label="Payment Method"
                 placeholder="Select Payment Method"
@@ -182,6 +170,7 @@ const Booking = () => {
                 rightSection={<IconChevronDown size={14} />}
                 rightSectionWidth={40}
                 value={payment}
+                defaultValue={paymentMethods[0]}
                 size="md"
                 style={{
                   width: '100%',
@@ -252,11 +241,11 @@ const Booking = () => {
                 <Text size="xs" align="center">
                   {booking === 'advance' ? (
                     <Text weight={600} size="lg">
-                      30% Advance Payment Rs.
+                      30% Advance Payment Rs. {property?.totalPrice * 0.3}
                     </Text>
                   ) : booking === 'full' ? (
                     <Text weight={600} size="lg">
-                      100% Full Payment Rs.
+                      100% Full Payment Rs. {property?.totalPrice}
                     </Text>
                   ) : booking === 'interested' ? (
                     <Text weight={600} size="lg">
@@ -271,51 +260,98 @@ const Booking = () => {
               </Stack>
             </Group>
           </Paper>
-          <Paper
-            shadow="sm"
-            radius="md"
-            withBorder
-            style={{ borderColor: 'lightgrey', borderWidth: 1 }}
-            p={30}
-            mt={30}
-          >
-            <Stack>
-              <Group position="apart">
-                <NumberInput
-                  hideControls
-                  placeholder="1234 1234 1234 1234"
-                  label="Card Number"
-                  style={{
-                    width: '40%',
-                  }}
-                  icon={<IconCreditCard />}
-                  required
+          {payment === 'bank' && (
+            <Paper
+              shadow="sm"
+              radius="md"
+              withBorder
+              style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+              p={30}
+              mt={15}
+            >
+              <Stack>
+                <Group position="apart">
+                  <NumberInput
+                    hideControls
+                    placeholder="1234 1234 1234 1234"
+                    label="Card Number"
+                    style={{
+                      width: '40%',
+                    }}
+                    icon={<IconCreditCard />}
+                    required
+                  />
+                  <NumberInput
+                    hideControls
+                    placeholder="MM/YY"
+                    label="Expiry Date"
+                    style={{
+                      width: '30%',
+                    }}
+                    required
+                  />
+                  <NumberInput
+                    hideControls
+                    placeholder="123"
+                    label="CVC"
+                    style={{
+                      width: '20%',
+                    }}
+                    required
+                  />
+                </Group>
+                <Select
+                  data={countries}
+                  label="Country"
+                  placeholder="Choose a conutry"
                 />
-                <NumberInput
-                  hideControls
-                  placeholder="MM/YY"
-                  label="Expiry Date"
-                  style={{
-                    width: '30%',
-                  }}
-                  required
-                />
-                <NumberInput
-                  hideControls
-                  placeholder="123"
-                  label="CVC"
-                  style={{
-                    width: '20%',
-                  }}
-                  required
-                />
-              </Group>
-              <Select
-                data={countries}
-                label="Country"
-                placeholder="Choose a conutry"
-              />
-              <Checkbox label="Remember payment details" color={'red'} />
+                <Checkbox label="Remember payment details" color={'red'} />
+                <Group mt={'md'} position="apart" noWrap>
+                  <Button
+                    fullWidth
+                    style={{
+                      backgroundColor: '#D92228',
+                      color: 'white',
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    fullWidth
+                    style={{
+                      backgroundColor: '#0b4096',
+                      color: 'white',
+                    }}
+                  >
+                    Pay
+                  </Button>
+                </Group>
+              </Stack>
+            </Paper>
+          )}
+          {payment === 'easypaisa' && (
+            <Paper
+              shadow="sm"
+              radius="md"
+              withBorder
+              style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+              p={30}
+              mt={15}
+            >
+              <Stack>
+                <Group position="apart">
+                  <NumberInput
+                    hideControls
+                    placeholder="03xxxxxxxxx"
+                    label="Easy Paisa Number"
+                    style={{
+                      width: '100%',
+                    }}
+                    icon={<IconCreditCard />}
+                    required
+                  />
+                </Group>
+              </Stack>
               <Group mt={'md'} position="apart" noWrap>
                 <Button
                   fullWidth
@@ -332,12 +368,13 @@ const Booking = () => {
                     backgroundColor: '#0b4096',
                     color: 'white',
                   }}
+                  onClick={handleNotification}
                 >
                   Pay
                 </Button>
               </Group>
-            </Stack>
-          </Paper>
+            </Paper>
+          )}
         </Grid.Col>
       </Grid>
     </Container>
