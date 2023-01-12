@@ -35,7 +35,15 @@ export default function BuyCards({ property }) {
         <Text weight={700} size="lg">
           {property?.propertyCity}
         </Text>
-        <Badge color="pink" variant="light">
+        <Badge
+          color="pink"
+          variant="light"
+          sx={{
+            '@media (max-width: 1300px)': {
+              fontSize: 10,
+            },
+          }}
+        >
           {property?.propertyIs}
         </Badge>
       </Group>
@@ -50,13 +58,7 @@ export default function BuyCards({ property }) {
         {property?.propertySubCategory === 'plot' ||
         property?.propertySubCategory === 'shop' ||
         property?.propertySubCategory === 'file' ? (
-          <Group
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
+          <Group noWrap>
             <Text
               style={{
                 color: '#D92228',
@@ -73,7 +75,7 @@ export default function BuyCards({ property }) {
             </Text>
           </Group>
         ) : (
-          <>
+          <Group position="apart">
             <Text
               style={{
                 color: '#D92228',
@@ -85,38 +87,26 @@ export default function BuyCards({ property }) {
             >
               {property?.propertySubCategory}
             </Text>
-            <Text
+            <Group
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
                 textDecoration: 'none',
               }}
+              spacing={0}
             >
-              {property?.areaSize} {property?.areaSizeUnit}
+              <Text>
+                {property?.areaSize} {property?.areaSizeUnit}
+              </Text>
               <IconAspectRatio opacity={0.6} />
-            </Text>
-            <Text
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
-              }}
-            >
-              {property?.noOfBedRooms}
+            </Group>
+            <Group spacing={0}>
+              <Text>{property?.noOfBedRooms}</Text>
               <IconBed opacity={0.6} />
-            </Text>
-            <Text
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
-              }}
-            >
-              {property?.noOfBathrooms}
+            </Group>
+            <Group spacing={0}>
+              <Text>{property?.noOfBathrooms}</Text>
               <IconBath opacity={0.6} />
-            </Text>
-          </>
+            </Group>
+          </Group>
         )}
       </Group>
 

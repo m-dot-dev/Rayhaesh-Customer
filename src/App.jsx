@@ -10,6 +10,7 @@ import Blogs from './components/NewsInsights/Blogs'
 import BuyListings from './components/Buy/BuyListings'
 import ExchangeListings from './components/Exchange/ExchangeListings'
 import RentListings from './components/Rent/RentListings'
+import Booking from './components/Buy/Booking'
 import './App.css'
 import { MantineProvider } from '@mantine/core'
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/properties" element={<BuyListings />} />
             <Route path="/exchange" element={<ExchangeListings />} />
             <Route path="/rent" element={<RentListings />} />
+            <Route path="/booking" element={<Booking />} />
           </Routes>
           <Footer />
         </Router>

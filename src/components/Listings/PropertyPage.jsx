@@ -11,19 +11,29 @@ import {
   NumberInput,
   Paper,
   Button,
+  List,
+  Box,
+  Input,
 } from '@mantine/core'
 import {
   IconAdjustmentsHorizontal,
+  IconArrowRight,
   IconAt,
+  IconBook,
+  IconBrandBooking,
+  IconCheck,
+  IconList,
   IconMap,
   IconMap2,
   IconPhoto,
+  IconShoppingBag,
   IconUser,
   IconVideo,
 } from '@tabler/icons'
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import PropertyCarousel from './PropertyCarousel'
+import { useMediaQuery } from '@mantine/hooks'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -64,12 +74,16 @@ const PropertyPage = () => {
 
   const location = useLocation()
   const [property, setProperty] = React.useState({})
+  const match1200 = useMediaQuery('(max-width: 1200px)')
   useEffect(() => {
     setProperty(location.state?.data)
   }, [location])
   return (
-    <Grid columns={24}>
-      <Grid.Col style={{ display: 'flex', flexDirection: 'column' }} span={16}>
+    <Grid columns={12}>
+      <Grid.Col
+        style={{ display: 'flex', flexDirection: 'column' }}
+        span={match1200 ? 12 : 8}
+      >
         <Group className={classes.mainGroup}>
           {/* Title and Locations */}
           <Stack>
@@ -94,6 +108,11 @@ const PropertyPage = () => {
               {property?.videos?.length !== 0 && (
                 <Tabs.Tab value="videos" icon={<IconVideo size={14} />}>
                   Videos
+                </Tabs.Tab>
+              )}
+              {match1200 && (
+                <Tabs.Tab value="booking" icon={<IconShoppingBag size={14} />}>
+                  Booking
                 </Tabs.Tab>
               )}
             </Tabs.List>
@@ -219,107 +238,183 @@ const PropertyPage = () => {
               {property?.propertySubCategory !== 'plot' &&
                 property?.propertySubCategory !== 'file' && (
                   <Stack spacing={0}>
-                    {property?.noOfBedRooms !== 0 && (
-                      <Text>{property?.noOfBedRooms} Bedrooms</Text>
-                    )}
-                    {property?.noOfBathrooms !== 0 && (
-                      <Text>{property?.noOfBathrooms} Bathrooms</Text>
-                    )}
-                    {property?.parkingSpace !== 0 && (
-                      <Text>{property?.parkingSpace} Parking Space</Text>
-                    )}
-                    {property?.drawingRoom !== 0 && (
-                      <Text>{property?.drawingRoom} Drawing Room</Text>
-                    )}
-                    {property?.servantQuarters !== 0 && (
-                      <Stack spacing={0}>
-                        <Text>{property?.servantQuarters} Servant Quarter</Text>
-                        <Text>
-                          Servant Quarter Description:{' '}
-                          {property?.servantQuarterDetails}
-                        </Text>
-                      </Stack>
-                    )}
-                    {property?.diningRoom !== 0 && (
-                      <Text>{property?.diningRoom} Dining Room</Text>
-                    )}
-                    {property?.kitchen !== 0 && (
-                      <Text>{property?.kitchen} Kitchen</Text>
-                    )}
-                    {property?.floorType !== 0 && (
-                      <Text>Floor Type: {property?.floorType}</Text>
-                    )}
-                    {property?.electricityBackup && (
-                      <Text>Electricity Backup Available</Text>
-                    )}
-                    {property?.powderRoom !== 0 && (
-                      <Text>{property?.powderRoom} Powder Room</Text>
-                    )}
-                    {property?.storeRoom !== 0 && (
-                      <Text>{property?.storeRoom} Store Room</Text>
-                    )}
-                    {property?.wasteDisposal && (
-                      <Text>Waste Disposal Available</Text>
-                    )}
-                    {property?.steamRoom !== 0 && (
-                      <Text>{property?.steamRoom} Steam Room</Text>
-                    )}
-                    {property?.lounge !== 0 && (
-                      <Text>{property?.lounge} Lounge</Text>
-                    )}
-                    {property?.sittingRoom !== 0 && (
-                      <Text>{property?.sittingRoom} Sitting Room</Text>
-                    )}
-                    {property?.laundryRoom !== 0 && (
-                      <Text>{property?.laundryRoom} Laundry Room</Text>
-                    )}
-                    {property?.hasDoubleGlazedWindows && (
-                      <Text>Double Gazed Windows</Text>
-                    )}
-                    {property?.hasCentralAirConditioning && (
-                      <Text>Central Air Conditioning</Text>
-                    )}
-                    {property?.hasCheckCentralHeating && (
-                      <Text>Central Heating</Text>
-                    )}
-                    {property?.hasInternet && (
-                      <Stack spacing={0}>
-                        <Text>Internet Avilable</Text>
-                        <Text>{property?.internetDescription}</Text>
-                      </Stack>
-                    )}
-                    {property?.hasCableTv && (
-                      <Stack spacing={0}>
-                        <Text>TV Cable Available</Text>
-                        <Text>{property?.cableDescription}</Text>
-                      </Stack>
-                    )}
-                    {property?.hasSwimmingPool && (
-                      <Text>Swimming Pool Available</Text>
-                    )}
-                    {property?.hasCommunityLawnandGarden && (
-                      <Text>Community Lawn and Garden Available</Text>
-                    )}
-                    {property?.hasMedicalCenter && (
-                      <Text>Medical Center Available</Text>
-                    )}
-                    {property?.hasDayCareCenter && (
-                      <Text>Day Care Center Available</Text>
-                    )}
-                    {property?.hasKidsPlayArea && (
-                      <Text>Kids Play Area Available</Text>
-                    )}
-                    {property?.hasBarBQueArea && (
-                      <Text>Bar B Que Area Available</Text>
-                    )}
-                    {property?.nearbyFacilities && (
-                      <Text>
-                        Nearby Facilities: {property?.nearbyFacilities}
-                      </Text>
-                    )}
-                    {property?.otherFacilities && (
-                      <Text>Other Facilities: {property?.otherFacilities}</Text>
-                    )}
+                    <List icon={<IconCheck />}>
+                      {property?.noOfBedRooms !== 0 && (
+                        <List.Item>
+                          <Text>{property?.noOfBedRooms} Bedrooms</Text>
+                        </List.Item>
+                      )}
+                      {property?.noOfBathrooms !== 0 && (
+                        <List.Item>
+                          <Text>{property?.noOfBathrooms} Bathrooms</Text>
+                        </List.Item>
+                      )}
+                      {property?.parkingSpace !== 0 && (
+                        <List.Item>
+                          <Text>{property?.parkingSpace} Parking Space</Text>
+                        </List.Item>
+                      )}
+                      {property?.drawingRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.drawingRoom} Drawing Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.servantQuarters !== 0 && (
+                        <List.Item>
+                          <Stack spacing={0}>
+                            <Text>
+                              {property?.servantQuarters} Servant Quarter
+                            </Text>
+                            <List.Item>
+                              <Text italic>
+                                Servant Quarter Description:{' '}
+                                {property?.servantQuarterDetails}
+                              </Text>
+                            </List.Item>
+                          </Stack>
+                        </List.Item>
+                      )}
+                      {property?.diningRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.diningRoom} Dining Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.kitchen !== 0 && (
+                        <List.Item>
+                          <Text>{property?.kitchen} Kitchen</Text>
+                        </List.Item>
+                      )}
+                      {property?.floorType !== 0 && (
+                        <List.Item>
+                          <Text>Floor Type: {property?.floorType}</Text>
+                        </List.Item>
+                      )}
+                      {property?.electricityBackup && (
+                        <List.Item>
+                          <Text>Electricity Backup Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.powderRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.powderRoom} Powder Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.storeRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.storeRoom} Store Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.wasteDisposal && (
+                        <List.Item>
+                          <Text>Waste Disposal Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.steamRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.steamRoom} Steam Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.lounge !== 0 && (
+                        <List.Item>
+                          <Text>{property?.lounge} Lounge</Text>
+                        </List.Item>
+                      )}
+                      {property?.sittingRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.sittingRoom} Sitting Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.laundryRoom !== 0 && (
+                        <List.Item>
+                          <Text>{property?.laundryRoom} Laundry Room</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasDoubleGlazedWindows && (
+                        <List.Item>
+                          <Text>Double Gazed Windows</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasCentralAirConditioning && (
+                        <List.Item>
+                          <Text>Central Air Conditioning</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasCheckCentralHeating && (
+                        <List.Item>
+                          <Text>Central Heating</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasInternet && (
+                        <List.Item>
+                          <Stack spacing={0}>
+                            <Text>Internet Avilable</Text>
+                            <Text italic>
+                              <List.Item>
+                                Internet Description:{' '}
+                                {property?.internetDescription}
+                              </List.Item>
+                            </Text>
+                          </Stack>
+                        </List.Item>
+                      )}
+                      {property?.hasCableTv && (
+                        <List.Item>
+                          <Stack spacing={0}>
+                            <Text>TV Cable Available</Text>
+                            <List.Item>
+                              <Text italic>
+                                TV Cable Description:{' '}
+                                {property?.cableDescription}
+                              </Text>
+                            </List.Item>
+                          </Stack>
+                        </List.Item>
+                      )}
+                      {property?.hasSwimmingPool && (
+                        <List.Item>
+                          <Text>Swimming Pool Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasCommunityLawnandGarden && (
+                        <List.Item>
+                          <Text>Community Lawn and Garden Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasMedicalCenter && (
+                        <List.Item>
+                          <Text>Medical Center Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasDayCareCenter && (
+                        <List.Item>
+                          <Text>Day Care Center Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasKidsPlayArea && (
+                        <List.Item>
+                          <Text>Kids Play Area Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.hasBarBQueArea && (
+                        <List.Item>
+                          <Text>Bar B Que Area Available</Text>
+                        </List.Item>
+                      )}
+                      {property?.nearbyFacilities && (
+                        <List.Item>
+                          <Text>
+                            Nearby Facilities: {property?.nearbyFacilities}
+                          </Text>
+                        </List.Item>
+                      )}
+                      {property?.otherFacilities && (
+                        <List.Item>
+                          <Text>
+                            Other Facilities: {property?.otherFacilities}
+                          </Text>
+                        </List.Item>
+                      )}
+                    </List>
                   </Stack>
                 )}
             </Tabs.Panel>
@@ -358,40 +453,52 @@ const PropertyPage = () => {
           </Tabs>
         </Group>
       </Grid.Col>
-      <Grid.Col span={8}>
-        <Container
-          sx={{
-            marginTop: 140,
-            padding: 15,
-            display: 'flex',
-            maxWidth: 350,
-            '@media (max-width: 1100px)': {
-              display: 'none',
-            },
+      <Grid.Col span={4} p="xl" hidden={match1200 ? true : false}>
+        <Paper
+          shadow="sm"
+          p="xl"
+          withBorder
+          style={{
+            marginTop: 100,
+            marginRight: 50,
+            top: '100px',
+            position: 'sticky',
+            outline: '0px',
           }}
         >
-          <Paper shadow="sm" p="xl" withBorder>
-            <Stack>
-              <Text className={classes.bookingText}>Booking</Text>
-              <Stack spacing={'xl'}>
-                <TextInput required label="Name" placeholder="Tehseen Riaz" />
-                <TextInput
-                  icon={<IconAt size={14} />}
-                  required
-                  label="Email"
-                  placeholder="hello@gmail.com"
-                />
-                <NumberInput
-                  placeholder="03xxxxxxxxx"
-                  label="Phone Number"
-                  hideControls
-                  required
-                />
-                <Button>Book Now</Button>
-              </Stack>
-            </Stack>
-          </Paper>
-        </Container>
+          <Stack>
+            <Text
+              style={{
+                fontSize: 22,
+                fontWeight: 700,
+                color: '#D92228',
+                textAlign: 'center',
+              }}
+            >
+              Booking
+            </Text>
+            <Input.Wrapper label="Name">
+              <Input required />
+            </Input.Wrapper>
+            <Input.Wrapper label="Email Address">
+              <Input required />
+            </Input.Wrapper>
+            <Input.Wrapper label="Phone Number">
+              <Input required />
+            </Input.Wrapper>
+            <Button
+              style={{
+                color: 'white',
+                backgroundColor: '#D92228',
+                fontFamily: 'poppins',
+              }}
+              size="md"
+              rightIcon={<IconArrowRight />}
+            >
+              Book Now
+            </Button>
+          </Stack>
+        </Paper>
       </Grid.Col>
     </Grid>
   )

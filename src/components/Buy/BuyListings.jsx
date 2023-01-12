@@ -23,7 +23,7 @@ import { IconSearch } from '@tabler/icons'
 
 const BuyListings = () => {
   const [opened, setOpened] = useState(false)
-  const match1200 = useMediaQuery('(max-width: 1200px)')
+  const match1200 = useMediaQuery('(max-width: 1280px)')
   const useStyles = createStyles((theme) => ({
     filter: {},
   }))
@@ -72,6 +72,7 @@ const BuyListings = () => {
                 style={{
                   width: '100%',
                 }}
+                position="apart"
               >
                 <Text
                   style={{
@@ -80,13 +81,15 @@ const BuyListings = () => {
                 >
                   Results
                 </Text>
-                <Input
-                  placeholder="Search"
-                  icon={<IconSearch />}
-                  style={{
-                    width: '100%',
-                  }}
-                />
+                {match1200 ? (
+                  <Input
+                    placeholder="Search"
+                    icon={<IconSearch />}
+                    style={{ width: '100%' }}
+                  />
+                ) : (
+                  <Input placeholder="Search" icon={<IconSearch />} />
+                )}
                 {match1200 && (
                   <Button
                     onClick={() => {
@@ -110,7 +113,7 @@ const BuyListings = () => {
               )}
               {allproperties.map((property) => {
                 return (
-                  <Grid.Col lg={4} md={6} xs={6}>
+                  <Grid.Col lg={4} md={4} xs={6}>
                     <Link
                       to={`/property/${property?._id}`}
                       state={{ data: property }}
