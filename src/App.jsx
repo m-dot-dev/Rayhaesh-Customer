@@ -13,28 +13,31 @@ import RentListings from './components/Rent/RentListings'
 import Booking from './components/Buy/Booking'
 import './App.css'
 import { MantineProvider } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 
 function App() {
   return (
     <MantineProvider theme={{ fontFamily: 'Poppins' }}>
-      <div className="App">
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Hero />} />
-            <Route path="/property/:id" element={<PropertyPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<SignUp />} />
-            <Route path="/subscription" element={<Subscription />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/properties" element={<BuyListings />} />
-            <Route path="/exchange" element={<ExchangeListings />} />
-            <Route path="/rent" element={<RentListings />} />
-            <Route path="/booking/:id" element={<Booking />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </div>
+      <NotificationsProvider>
+        <div className="App">
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Hero />} />
+              <Route path="/property/:id" element={<PropertyPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/subscription" element={<Subscription />} />
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/properties" element={<BuyListings />} />
+              <Route path="/exchange" element={<ExchangeListings />} />
+              <Route path="/rent" element={<RentListings />} />
+              <Route path="/booking/:id" element={<Booking />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </div>
+      </NotificationsProvider>
     </MantineProvider>
   )
 }

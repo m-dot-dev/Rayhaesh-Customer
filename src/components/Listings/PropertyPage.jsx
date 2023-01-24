@@ -30,6 +30,7 @@ import { Link, useLocation } from 'react-router-dom'
 import PropertyCarousel from './PropertyCarousel'
 import { useMediaQuery } from '@mantine/hooks'
 import { useNavigate } from 'react-router-dom'
+import { showNotification } from '@mantine/notifications'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -84,11 +85,41 @@ const PropertyPage = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
+  // const handleBookingSubmit = (e) => {
+  //   e.preventDefault()
+  //   navigate(`/booking/${property?._id}`, {
+  //     state: { data: property, name: name, email: email, phone: phone },
+  //   })
+  // }
+
   const handleBookingSubmit = (e) => {
     e.preventDefault()
-    navigate(`/booking/${property?._id}`, {
-      state: { data: property, name: name, email: email, phone: phone },
-    })
+    if (name === '' || email === '' || phone === '') {
+      showNotification({
+        title: 'Error',
+        message: 'Please fill in all the fields',
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.red[8],
+            borderColor: theme.colors.red[8],
+
+            '&::before': { backgroundColor: theme.white },
+          },
+
+          title: { color: theme.white },
+          description: { color: theme.white },
+          closeButton: {
+            color: theme.white,
+            backgroundColor: theme.colors.red[6],
+            '&:hover': { backgroundColor: theme.colors.red[7] },
+          },
+        }),
+      })
+    } else {
+      navigate(`/booking/${property?._id}`, {
+        state: { data: property, name: name, email: email, phone: phone },
+      })
+    }
   }
 
   return (
@@ -160,21 +191,21 @@ const PropertyPage = () => {
                       <form onSubmit={handleBookingSubmit}>
                         <Input.Wrapper label="Name" id="">
                           <Input
-                            required
+                            // required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
                         </Input.Wrapper>
                         <Input.Wrapper label="Email Address" id="">
                           <Input
-                            required
+                            // required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </Input.Wrapper>
                         <Input.Wrapper label="Phone Number" id="">
                           <Input
-                            required
+                            // required
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -558,21 +589,21 @@ const PropertyPage = () => {
               <form onSubmit={handleBookingSubmit}>
                 <Input.Wrapper label="Name">
                   <Input
-                    required
+                    // required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Input.Wrapper>
                 <Input.Wrapper label="Email Address">
                   <Input
-                    required
+                    // required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </Input.Wrapper>
                 <Input.Wrapper label="Phone Number">
                   <Input
-                    required
+                    // required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />

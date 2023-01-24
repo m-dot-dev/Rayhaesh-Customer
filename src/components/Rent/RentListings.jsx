@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import {
   Button,
+  Container,
   Grid,
   Group,
-  Paper,
-  Skeleton,
+  Input,
+  Modal,
   Text,
-  createStyles,
 } from '@mantine/core'
 import BuyCards from '../Buy/BuyCards'
 import axios from 'axios'
 import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
 import { Link } from 'react-router-dom'
-import { Pagination } from '@mantine/core'
 import ListingPagination from '../Generic/ListingPagination'
+import { useMediaQuery } from '@mantine/hooks'
+import { IconSearch } from '@tabler/icons'
 
 const RentListings = () => {
-  const useStyles = createStyles((theme) => ({
-    filter: {},
-  }))
+  const [opened, setOpened] = useState(false)
+  const match1200 = useMediaQuery('(max-width: 1280px)')
 
   const [allproperties, setAllProperties] = useState([])
   const [error, setError] = useState('')
   const [loading, setIsLoaded] = useState(true)
+
+  const [query, setQuery] = useState('')
 
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(9)
@@ -59,43 +61,118 @@ const RentListings = () => {
 
   return (
     <>
-      {allproperties.length === 0 ? (
-        <Group position="center" mt={'lg'}>
-          <Text>No Properties to Display</Text>
-        </Group>
-      ) : (
-        <Grid px={'sm'} py="sm">
-          <Grid.Col md={3}>
+      <Container size="xl">
+        <Grid py="md">
+          <Grid.Col md={3} hidden={match1200 ? true : false}>
             <Filter />
           </Grid.Col>
-          <Grid.Col md={9}>
-            <Grid>
-              {loading && (
-                <Grid.Col>
-                  <SixCardSkeleton />
-                </Grid.Col>
-              )}
-              {allproperties.length === 0 && (
-                <Grid.Col>
-                  <Group position="center" mt={'lg'}>
-                    <Text>No Properties to Display</Text>
-                  </Group>
-                </Grid.Col>
-              )}
-              {currentPosts.map((property) => {
-                return (
-                  <Grid.Col lg={4} md={6} xs={6}>
-                    <Link
-                      to={`/property/${property?._id}`}
-                      state={{ data: property }}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <BuyCards property={property} />
-                    </Link>
-                  </Grid.Col>
-                )
-              })}
-            </Grid>
+
+          <Grid.Col md={!match1200 ? 9 : 12}>
+            <Group
+              style={{
+                justifyContent: 'space-between',
+              }}
+              mb="lg"
+            >
+              <Group
+                noWrap
+                style={{
+                  width: '100%',
+                }}
+                position="apart"
+              >
+                <Group noWrap spacing={3}>
+                  <Text
+                    style={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    {
+                      currentPosts.filter((property) => {
+                        if (query === '') {
+                          return property
+                        } else if (
+                          property.propertyCity
+                            .toLowerCase()
+                            .includes(query.toLowerCase())
+                        ) {
+                          return property
+                        }
+                        return null
+                      }).length
+                    }{' '}
+                  </Text>
+                  <Text>Results</Text>
+                </Group>
+
+                {match1200 ? (
+                  <Input
+                    placeholder="Search"
+                    icon={<IconSearch />}
+                    style={{ width: '100%' }}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                ) : (
+                  <Input
+                    placeholder="Search"
+                    icon={<IconSearch />}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                )}
+                {match1200 && (
+                  <Button
+                    onClick={() => {
+                      setOpened(true)
+                    }}
+                    style={{
+                      backgroundColor: '#D92228',
+                      color: 'white',
+                    }}
+                  >
+                    Filters
+                  </Button>
+                )}
+              </Group>
+            </Group>
+            {loading ? (
+              <SixCardSkeleton />
+            ) : allproperties.length === 0 ? (
+              <Group position="center" mt={'md'}>
+                <Text>No Results Found for Rentable Properties</Text>
+              </Group>
+            ) : (
+              <SimpleGrid
+                cols={3}
+                breakpoints={[
+                  { maxWidth: 1040, cols: 2, spacing: 'md' },
+                  { maxWidth: 680, cols: 1, spacing: 'sm' },
+                ]}
+              >
+                {currentPosts
+                  .filter((property) => {
+                    if (query === '') {
+                      return property
+                    } else if (
+                      property?.propertyCity
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase())
+                    ) {
+                      return property
+                    }
+                  })
+                  ?.map((property) => {
+                    return (
+                      <Link
+                        to={`/property/${property?._id}`}
+                        state={{ data: property }}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <BuyCards property={property} key={property._id} />
+                      </Link>
+                    )
+                  })}
+              </SimpleGrid>
+            )}
             <Group position="center" mt={'lg'}>
               <ListingPagination
                 postsPerPage={postsPerPage}
@@ -105,7 +182,10 @@ const RentListings = () => {
             </Group>
           </Grid.Col>
         </Grid>
-      )}
+      </Container>
+      <Modal opened={opened} onClose={() => setOpened(false)}>
+        <Filter />
+      </Modal>
     </>
   )
 }

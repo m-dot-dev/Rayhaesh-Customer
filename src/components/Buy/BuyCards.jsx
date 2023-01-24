@@ -85,10 +85,11 @@ export default function BuyCards({ property }) {
               spacing={0}
               noWrap
             >
-              <Text>
-                {property?.areaSize} {property?.areaSizeUnit}
-              </Text>
-              <IconAspectRatio opacity={0.6} />
+              <Group noWrap position="apart" spacing={1}>
+                <Text>{property?.areaSize}</Text>
+                <Text>{property?.areaSizeUnit}</Text>
+                <IconAspectRatio opacity={0.6} />
+              </Group>
             </Group>
             <Group spacing={0} noWrap>
               <Text>{property?.noOfBedRooms}</Text>

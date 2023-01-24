@@ -11,6 +11,7 @@ import {
   Text,
   Modal,
   createStyles,
+  SimpleGrid,
 } from '@mantine/core'
 import BuyCards from './BuyCards'
 import axios from 'axios'
@@ -86,27 +87,30 @@ const BuyListings = () => {
                 }}
                 position="apart"
               >
-                <Text
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  {
-                    currentPosts.filter((property) => {
-                      if (query === '') {
-                        return property
-                      } else if (
-                        property.propertyCity
-                          .toLowerCase()
-                          .includes(query.toLowerCase())
-                      ) {
-                        return property
-                      }
-                      return null
-                    }).length
-                  }{' '}
-                  Results
-                </Text>
+                <Group noWrap spacing={3}>
+                  <Text
+                    style={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    {
+                      currentPosts.filter((property) => {
+                        if (query === '') {
+                          return property
+                        } else if (
+                          property.propertyCity
+                            .toLowerCase()
+                            .includes(query.toLowerCase())
+                        ) {
+                          return property
+                        }
+                        return null
+                      }).length
+                    }{' '}
+                  </Text>
+                  <Text>Results</Text>
+                </Group>
+
                 {match1200 ? (
                   <Input
                     placeholder="Search"
@@ -136,27 +140,34 @@ const BuyListings = () => {
                 )}
               </Group>
             </Group>
-            <Grid>
-              {loading && (
-                <Grid.Col>
-                  <SixCardSkeleton />
-                </Grid.Col>
-              )}
-              {currentPosts
-                .filter((property) => {
-                  if (query === '') {
-                    return property
-                  } else if (
-                    property?.propertyCity
-                      ?.toLowerCase()
-                      .includes(query.toLowerCase())
-                  ) {
-                    return property
-                  }
-                })
-                ?.map((property) => {
-                  return (
-                    <Grid.Col lg={4} md={4} xs={6}>
+            {loading ? (
+              <SixCardSkeleton />
+            ) : allproperties.length === 0 ? (
+              <Group position="center" mt={'md'}>
+                <Text>No Properties Found</Text>
+              </Group>
+            ) : (
+              <SimpleGrid
+                cols={3}
+                breakpoints={[
+                  { maxWidth: 1040, cols: 2, spacing: 'md' },
+                  { maxWidth: 680, cols: 1, spacing: 'sm' },
+                ]}
+              >
+                {currentPosts
+                  .filter((property) => {
+                    if (query === '') {
+                      return property
+                    } else if (
+                      property?.propertyCity
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase())
+                    ) {
+                      return property
+                    }
+                  })
+                  ?.map((property) => {
+                    return (
                       <Link
                         to={`/property/${property?._id}`}
                         state={{ data: property }}
@@ -164,10 +175,10 @@ const BuyListings = () => {
                       >
                         <BuyCards property={property} key={property._id} />
                       </Link>
-                    </Grid.Col>
-                  )
-                })}
-            </Grid>
+                    )
+                  })}
+              </SimpleGrid>
+            )}
             <Group position="center" mt={'lg'}>
               <ListingPagination
                 postsPerPage={postsPerPage}
@@ -178,7 +189,6 @@ const BuyListings = () => {
           </Grid.Col>
         </Grid>
       </Container>
-
       <Modal opened={opened} onClose={() => setOpened(false)}>
         <Filter />
       </Modal>

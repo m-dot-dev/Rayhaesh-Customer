@@ -28,6 +28,10 @@ const Booking = () => {
   const [city, setCity] = useState('')
   const [cnic, setCnic] = useState('')
   const [address, setAddress] = useState('')
+  const [country, setCountry] = useState('pakistan')
+  const [cardNumber, setCardNumber] = useState('')
+  const [expiryDate, setExpiryDate] = useState('')
+  const [cvv, setCvv] = useState('')
 
   const location = useLocation()
 
@@ -304,6 +308,10 @@ const Booking = () => {
                     }}
                     icon={<IconCreditCard />}
                     required
+                    value={cardNumber}
+                    onChange={(event) =>
+                      setCardNumber(event.currentTarget.value)
+                    }
                   />
                   <NumberInput
                     hideControls
@@ -313,6 +321,10 @@ const Booking = () => {
                       width: '30%',
                     }}
                     required
+                    value={expiryDate}
+                    onChange={(event) =>
+                      setExpiryDate(event.currentTarget.value)
+                    }
                   />
                   <NumberInput
                     hideControls
@@ -322,12 +334,17 @@ const Booking = () => {
                       width: '20%',
                     }}
                     required
+                    value={cvv}
+                    onChange={(event) => setCvv(event.currentTarget.value)}
                   />
                 </Group>
                 <Select
                   data={countries}
                   label="Country"
                   placeholder="Choose a conutry"
+                  required
+                  value={country}
+                  onChange={(event) => setCountry(event.currentTarget.value)}
                 />
                 <Checkbox label="Remember payment details" color={'red'} />
                 <Group mt={'md'} position="apart" noWrap>
