@@ -66,7 +66,7 @@ export default function BuyCards({ property }) {
             </Text>
           </Group>
         ) : (
-          <Group position="apart">
+          <Group position="apart" noWrap>
             <Text
               style={{
                 color: '#D92228',
@@ -83,17 +83,18 @@ export default function BuyCards({ property }) {
                 textDecoration: 'none',
               }}
               spacing={0}
+              noWrap
             >
               <Text>
                 {property?.areaSize} {property?.areaSizeUnit}
               </Text>
               <IconAspectRatio opacity={0.6} />
             </Group>
-            <Group spacing={0}>
+            <Group spacing={0} noWrap>
               <Text>{property?.noOfBedRooms}</Text>
               <IconBed opacity={0.6} />
             </Group>
-            <Group spacing={0}>
+            <Group spacing={0} noWrap>
               <Text>{property?.noOfBathrooms}</Text>
               <IconBath opacity={0.6} />
             </Group>

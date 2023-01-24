@@ -5,6 +5,7 @@ import {
   Group,
   Paper,
   Skeleton,
+  Text,
   createStyles,
 } from '@mantine/core'
 import BuyCards from '../Buy/BuyCards'
@@ -13,16 +14,25 @@ import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
 import { Link } from 'react-router-dom'
 import { Pagination } from '@mantine/core'
+import ListingPagination from '../Generic/ListingPagination'
 
 const RentListings = () => {
   const useStyles = createStyles((theme) => ({
     filter: {},
   }))
-  const { classes, theme } = useStyles()
 
   const [allproperties, setAllProperties] = useState([])
   const [error, setError] = useState('')
   const [loading, setIsLoaded] = useState(true)
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage] = useState(9)
+
+  const indexOfLastPost = currentPage * postsPerPage
+  const indexOfFirstPost = indexOfLastPost - postsPerPage
+  const currentPosts = allproperties.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   useEffect(() => {
     axios
@@ -49,7 +59,11 @@ const RentListings = () => {
 
   return (
     <>
-      <Paper>
+      {allproperties.length === 0 ? (
+        <Group position="center" mt={'lg'}>
+          <Text>No Properties to Display</Text>
+        </Group>
+      ) : (
         <Grid px={'sm'} py="sm">
           <Grid.Col md={3}>
             <Filter />
@@ -61,7 +75,14 @@ const RentListings = () => {
                   <SixCardSkeleton />
                 </Grid.Col>
               )}
-              {allproperties.map((property) => {
+              {allproperties.length === 0 && (
+                <Grid.Col>
+                  <Group position="center" mt={'lg'}>
+                    <Text>No Properties to Display</Text>
+                  </Group>
+                </Grid.Col>
+              )}
+              {currentPosts.map((property) => {
                 return (
                   <Grid.Col lg={4} md={6} xs={6}>
                     <Link
@@ -76,21 +97,15 @@ const RentListings = () => {
               })}
             </Grid>
             <Group position="center" mt={'lg'}>
-              <Pagination
-                total={3}
-                withEdges
-                styles={() => ({
-                  item: {
-                    '&[data-active]': {
-                      backgroundColor: '#D92228',
-                    },
-                  },
-                })}
+              <ListingPagination
+                postsPerPage={postsPerPage}
+                totalPosts={allproperties.length}
+                paginate={paginate}
               />
             </Group>
           </Grid.Col>
         </Grid>
-      </Paper>
+      )}
     </>
   )
 }

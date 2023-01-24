@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 import { Pagination } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
+import ListingPagination from '../Generic/ListingPagination'
 
 const BuyListings = () => {
   const [opened, setOpened] = useState(false)
@@ -34,6 +35,15 @@ const BuyListings = () => {
   const [loading, setIsLoaded] = useState(true)
 
   const [query, setQuery] = useState('')
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage] = useState(9)
+
+  const indexOfLastPost = currentPage * postsPerPage
+  const indexOfFirstPost = indexOfLastPost - postsPerPage
+  const currentPosts = allproperties.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   useEffect(() => {
     axios
@@ -82,7 +92,7 @@ const BuyListings = () => {
                   }}
                 >
                   {
-                    allproperties.filter((property) => {
+                    currentPosts.filter((property) => {
                       if (query === '') {
                         return property
                       } else if (
@@ -132,7 +142,7 @@ const BuyListings = () => {
                   <SixCardSkeleton />
                 </Grid.Col>
               )}
-              {allproperties
+              {currentPosts
                 .filter((property) => {
                   if (query === '') {
                     return property
@@ -159,16 +169,10 @@ const BuyListings = () => {
                 })}
             </Grid>
             <Group position="center" mt={'lg'}>
-              <Pagination
-                total={3}
-                withEdges
-                styles={() => ({
-                  item: {
-                    '&[data-active]': {
-                      backgroundColor: '#D92228',
-                    },
-                  },
-                })}
+              <ListingPagination
+                postsPerPage={postsPerPage}
+                totalPosts={allproperties.length}
+                paginate={paginate}
               />
             </Group>
           </Grid.Col>
