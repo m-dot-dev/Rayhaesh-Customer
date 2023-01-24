@@ -33,6 +33,8 @@ const BuyListings = () => {
   const [error, setError] = useState('')
   const [loading, setIsLoaded] = useState(true)
 
+  const [query, setQuery] = useState('')
+
   useEffect(() => {
     axios
       .get(
@@ -55,7 +57,7 @@ const BuyListings = () => {
   return (
     <>
       <Container size="xl">
-        <Grid px={'sm'} py="sm">
+        <Grid py="md">
           <Grid.Col md={3} hidden={match1200 ? true : false}>
             <Filter />
           </Grid.Col>
@@ -79,6 +81,20 @@ const BuyListings = () => {
                     fontWeight: 600,
                   }}
                 >
+                  {
+                    allproperties.filter((property) => {
+                      if (query === '') {
+                        return property
+                      } else if (
+                        property.propertyCity
+                          .toLowerCase()
+                          .includes(query.toLowerCase())
+                      ) {
+                        return property
+                      }
+                      return null
+                    }).length
+                  }{' '}
                   Results
                 </Text>
                 {match1200 ? (
@@ -86,9 +102,14 @@ const BuyListings = () => {
                     placeholder="Search"
                     icon={<IconSearch />}
                     style={{ width: '100%' }}
+                    onChange={(e) => setQuery(e.target.value)}
                   />
                 ) : (
-                  <Input placeholder="Search" icon={<IconSearch />} />
+                  <Input
+                    placeholder="Search"
+                    icon={<IconSearch />}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
                 )}
                 {match1200 && (
                   <Button
@@ -111,19 +132,31 @@ const BuyListings = () => {
                   <SixCardSkeleton />
                 </Grid.Col>
               )}
-              {allproperties.map((property) => {
-                return (
-                  <Grid.Col lg={4} md={4} xs={6}>
-                    <Link
-                      to={`/property/${property?._id}`}
-                      state={{ data: property }}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <BuyCards property={property} />
-                    </Link>
-                  </Grid.Col>
-                )
-              })}
+              {allproperties
+                .filter((property) => {
+                  if (query === '') {
+                    return property
+                  } else if (
+                    property?.propertyCity
+                      ?.toLowerCase()
+                      .includes(query.toLowerCase())
+                  ) {
+                    return property
+                  }
+                })
+                ?.map((property) => {
+                  return (
+                    <Grid.Col lg={4} md={4} xs={6}>
+                      <Link
+                        to={`/property/${property?._id}`}
+                        state={{ data: property }}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <BuyCards property={property} key={property._id} />
+                      </Link>
+                    </Grid.Col>
+                  )
+                })}
             </Grid>
             <Group position="center" mt={'lg'}>
               <Pagination

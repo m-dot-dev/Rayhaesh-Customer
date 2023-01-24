@@ -1,13 +1,4 @@
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  Skeleton,
-  createStyles,
-} from '@mantine/core'
+import { Card, Image, Text, Badge, Group } from '@mantine/core'
 import { IconAspectRatio, IconBath, IconBed } from '@tabler/icons'
 
 export default function BuyCards({ property }) {

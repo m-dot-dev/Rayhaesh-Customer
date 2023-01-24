@@ -84,26 +84,11 @@ const PropertyPage = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleBookingSubmit = (e) => {
     e.preventDefault()
-    if (name === '' || email === '' || phone === '') {
-      return (
-        <Notification
-          title="Default notification"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            zIndex: 20,
-          }}
-        >
-          This is default notification with title and body
-          {console.log('asdasdasdasdasdasdasdasdasdasdasd')}
-        </Notification>
-      )
-    } else {
-      navigate(`/booking/${property?._id}`, { state: { data: property } })
-    }
+    navigate(`/booking/${property?._id}`, {
+      state: { data: property, name: name, email: email, phone: phone },
+    })
   }
 
   return (
@@ -161,7 +146,7 @@ const PropertyPage = () => {
               <Tabs.Panel value="booking" pt="xs">
                 <Modal opened={opened} onClose={() => setOpened(false)}>
                   <Paper shadow="sm" p="xl" withBorder>
-                    <Stack>
+                    <Stack spacing={'md'}>
                       <Text
                         style={{
                           fontSize: 22,
@@ -172,42 +157,46 @@ const PropertyPage = () => {
                       >
                         Booking
                       </Text>
-                      <Input.Wrapper label="Name" id="">
-                        <Input
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </Input.Wrapper>
-                      <Input.Wrapper label="Email Address" id="">
-                        <Input
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </Input.Wrapper>
-                      <Input.Wrapper label="Phone Number" id="">
-                        <Input
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                        />
-                      </Input.Wrapper>
-                      <Button
-                        style={{
-                          color: 'white',
-                          backgroundColor: '#D92228',
-                          fontFamily: 'poppins',
-                          ':hover': {
+                      <form onSubmit={handleBookingSubmit}>
+                        <Input.Wrapper label="Name" id="">
+                          <Input
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </Input.Wrapper>
+                        <Input.Wrapper label="Email Address" id="">
+                          <Input
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </Input.Wrapper>
+                        <Input.Wrapper label="Phone Number" id="">
+                          <Input
+                            required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </Input.Wrapper>
+                        <Button
+                          style={{
+                            color: 'white',
                             backgroundColor: '#D92228',
-                          },
-                        }}
-                        size="md"
-                        rightIcon={<IconArrowRight />}
-                        onClick={handleSubmit}
-                      >
-                        Book Now
-                      </Button>
+                            fontFamily: 'poppins',
+                            ':hover': {
+                              backgroundColor: '#D92228',
+                            },
+                          }}
+                          mt={'md'}
+                          fullWidth
+                          size="md"
+                          rightIcon={<IconArrowRight />}
+                          type="submit"
+                        >
+                          Book Now
+                        </Button>
+                      </form>
                     </Stack>
                   </Paper>
                 </Modal>
@@ -533,6 +522,7 @@ const PropertyPage = () => {
                       <Text>{property?.ZIPCode}</Text>
                     </Group>
                   )}
+                  {/* <MapInput /> */}
                 </Stack>
               </Tabs.Panel>
               <Tabs.Panel value="seller" pt="xs">
@@ -554,7 +544,7 @@ const PropertyPage = () => {
               outline: '0px',
             }}
           >
-            <Stack>
+            <Stack spacing={'md'}>
               <Text
                 style={{
                   fontSize: 22,
@@ -565,42 +555,46 @@ const PropertyPage = () => {
               >
                 Booking
               </Text>
-              <Input.Wrapper label="Name">
-                <Input
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Input.Wrapper>
-              <Input.Wrapper label="Email Address">
-                <Input
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Input.Wrapper>
-              <Input.Wrapper label="Phone Number">
-                <Input
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </Input.Wrapper>
-              <Button
-                sx={{
-                  color: 'white',
-                  backgroundColor: '#D92228',
-                  fontFamily: 'poppins',
-                  ':hover': {
+              <form onSubmit={handleBookingSubmit}>
+                <Input.Wrapper label="Name">
+                  <Input
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Input.Wrapper>
+                <Input.Wrapper label="Email Address">
+                  <Input
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Input.Wrapper>
+                <Input.Wrapper label="Phone Number">
+                  <Input
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </Input.Wrapper>
+                <Button
+                  sx={{
+                    color: 'white',
                     backgroundColor: '#D92228',
-                  },
-                }}
-                size="md"
-                rightIcon={<IconArrowRight />}
-                onClick={handleSubmit}
-              >
-                Book Now
-              </Button>
+                    fontFamily: 'poppins',
+                    ':hover': {
+                      backgroundColor: '#D92228',
+                    },
+                  }}
+                  mt={'md'}
+                  fullWidth
+                  size="md"
+                  rightIcon={<IconArrowRight />}
+                  type="submit"
+                >
+                  Book Now
+                </Button>
+              </form>
             </Stack>
           </Paper>
         </Grid.Col>

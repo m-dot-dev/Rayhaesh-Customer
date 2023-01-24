@@ -22,10 +22,20 @@ import { useLocation } from 'react-router-dom'
 
 const Booking = () => {
   const [property, setProperty] = useState({})
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [city, setCity] = useState('')
+  const [cnic, setCnic] = useState('')
+  const [address, setAddress] = useState('')
+
   const location = useLocation()
 
   useEffect(() => {
     setProperty(location.state?.data)
+    setName(location.state?.name)
+    setEmail(location.state?.email)
+    setPhone(location.state?.phone)
   }, [location])
 
   const [payment, setPayment] = useState('bank')
@@ -98,6 +108,8 @@ const Booking = () => {
                 label="Full Name"
                 required
                 size="md"
+                value={name}
+                onChange={(event) => setName(event.currentTarget.value)}
               />
               <TextInput
                 placeholder="tehseen@gmail.com"
@@ -107,6 +119,8 @@ const Booking = () => {
                 label="Email Address"
                 required
                 size="md"
+                value={email}
+                onChange={(event) => setEmail(event.currentTarget.value)}
               />
             </Group>
             <Group position="apart" mt="lg" noWrap>
@@ -119,6 +133,8 @@ const Booking = () => {
                 label="Phone Number"
                 required
                 size="md"
+                value={phone}
+                onChange={(event) => setPhone(event.currentTarget.value)}
               />
               <TextInput
                 placeholder="Islamabad"
@@ -128,24 +144,32 @@ const Booking = () => {
                 label="City"
                 required
                 size="md"
+                value={city}
+                onChange={(event) => setCity(event.currentTarget.value)}
               />
             </Group>
             <Group mt={'lg'}>
               <NumberInput
                 hideControls
+                required
                 label="CNIC"
                 size="md"
                 style={{
                   width: '100%',
                 }}
+                value={cnic}
+                onChange={(event) => setCnic(event.currentTarget.value)}
               />
             </Group>
             <Group mt={'lg'} noWrap>
               <Textarea
                 placeholder="your address"
                 label="Address"
+                required
                 size="md"
                 style={{ width: '100%' }}
+                value={address}
+                onChange={(event) => setAddress(event.currentTarget.value)}
               />
             </Group>
             <Group position="apart" mt="lg" noWrap>
