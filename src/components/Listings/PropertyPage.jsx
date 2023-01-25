@@ -31,6 +31,7 @@ import PropertyCarousel from './PropertyCarousel'
 import { useMediaQuery } from '@mantine/hooks'
 import { useNavigate } from 'react-router-dom'
 import { showNotification } from '@mantine/notifications'
+import LocationMap from '../Generic/LocationMap'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -553,7 +554,12 @@ const PropertyPage = () => {
                       <Text>{property?.ZIPCode}</Text>
                     </Group>
                   )}
-                  {/* <MapInput /> */}
+                  {property?.propertyLocation && (
+                    <LocationMap
+                      lat={property?.propertyLocation?.coordinates[0] || 0}
+                      lng={property?.propertyLocation?.coordinates[1] || 1}
+                    />
+                  )}
                 </Stack>
               </Tabs.Panel>
               <Tabs.Panel value="seller" pt="xs">
