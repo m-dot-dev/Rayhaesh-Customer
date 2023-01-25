@@ -21,8 +21,8 @@ const LocationMap = ({ lat, lng }) => {
         <Marker position={[lat, lng]}>
           <Popup>
             <Stack spacing={0}>
-              <Text weight={700}>
-                Location: <br />
+              <Text weight={700} align="center">
+                Location <br />
               </Text>
               <Text>
                 Lat: {lat} <br /> Lng: {lng}
