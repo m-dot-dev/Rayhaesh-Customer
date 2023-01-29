@@ -2,13 +2,11 @@ import { useListState, randomId } from '@mantine/hooks'
 import { Checkbox, Input } from '@mantine/core'
 
 const initialValues = [
-  { label: '< 1 Lac', checked: false, key: randomId() },
-  { label: '1 Lac - 10 Lac', checked: false, key: randomId() },
-  { label: '10 Lac - 30 Lac', checked: false, key: randomId() },
+  { label: '< 5 Lac', checked: false, key: randomId() },
+  { label: '5 Lac - 30 Lac', checked: false, key: randomId() },
   { label: '30 Lac - 50 Lac', checked: false, key: randomId() },
   { label: '50 Lac - 1 Crore', checked: false, key: randomId() },
-  { label: '1 Crore - 5 Crore', checked: false, key: randomId() },
-  { label: '> 5 Crore', checked: false, key: randomId() },
+  { label: '> 1 Crore', checked: false, key: randomId() },
 ]
 
 export default function PriceCB() {

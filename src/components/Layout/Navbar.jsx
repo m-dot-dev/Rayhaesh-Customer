@@ -277,11 +277,17 @@ export default function Navbar() {
                     icon={
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
+                    onClick={() => {
+                      navigate('/profile')
+                    }}
                   >
                     <Text style={{ fontFamily: 'poppins' }}>Settings</Text>
                   </Menu.Item>
                   <Menu.Item
                     icon={<IconLogout size={20} style={{ color: '#D92228' }} />}
+                    onClick={() => {
+                      navigate('/')
+                    }}
                   >
                     <Text
                       style={{

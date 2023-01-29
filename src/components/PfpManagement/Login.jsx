@@ -12,27 +12,89 @@ import {
   Divider,
   Stack,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
 import { IconAt, IconBrandFacebook, IconBrandGoogle } from '@tabler/icons'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import {
+  Link,
+  useNavigate,
+  useLocation,
+  useRoutes,
+  createMemoryRouter,
+  RouterProvider,
+} from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+import axios from 'axios'
 
 export default function Login() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      name: '',
-      password: '',
-      terms: true,
-    },
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
+  const [validEmail, setValidEmail] = useState(false)
 
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val) =>
-        val.length <= 6
-          ? 'Password should include at least 6 characters'
-          : null,
-    },
-  })
+  // //extract the pathname from the url and output each part of the pathname
+  // const pathname = window.location.pathname
+  // const pathArray = pathname.split('/')
+  // console.log('Path array: ', pathArray)
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email))
+  }, [email])
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [routerHistory, setRouterHistory] = useState([])
+
+  const from = location.state?.from || '/'
+  console.log('From: ', from)
+
+  useEffect(() => {
+    setRouterHistory((routerHistory) => [...routerHistory, from])
+  }, [from])
+
+  console.log('Router history: ', routerHistory[routerHistory.length - 1])
+
+  const prevLocation = routerHistory[routerHistory.length - 1]
+  console.log('Previous location: ', prevLocation)
+
+  const { setAuth } = useAuth()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios
+        .post(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/login',
+          {
+            email,
+            password,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          },
+        )
+        .then((res) => {
+          return res.data
+        })
+      console.log(response?.data)
+      console.log(JSON.stringify(response))
+      const accessToken = response?.data?.accessToken
+      setAuth({ email, password, accessToken })
+      setEmail('')
+      setPassword('')
+      navigate(prevLocation, { replace: true })
+    } catch (err) {
+      if (!err.response) {
+        console.log('No response from the server')
+      } else if (err.response.status === 401) {
+        console.log('Unauthorized')
+      } else if (err.response.status === 400) {
+        console.log('Missing Username or password')
+      } else {
+        console.log('Something went wrong, Login Failed')
+      }
+    }
+  }
 
   return (
     <Container size={420} my={40}>
@@ -66,53 +128,53 @@ export default function Login() {
         radius="md"
         style={{ borderColor: 'lightgrey' }}
       >
-        <Stack spacing={'xl'}>
-          <TextInput
-            icon={<IconAt size={14} />}
-            required
-            label="Email"
-            placeholder="hello@gmail.com"
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue('email', event.currentTarget.value)
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={'xl'}>
+            <TextInput
+              icon={<IconAt size={14} />}
+              required
+              label="Email"
+              placeholder="hello@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              aria-invalid={validEmail ? 'false' : 'true'}
+            />
+            <PasswordInput
+              required
+              label="Password"
+              placeholder="Your password"
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+            />
+          </Stack>
+
+          <Group position="apart" mt="lg">
+            <Checkbox
+              label="Remember me"
+              color={'red'}
+              sx={{ lineHeight: 1 }}
+            />
+            <Anchor
+              onClick={(event) => event.preventDefault()}
+              href="#"
+              size="sm"
+              style={{ color: '#D92228', textDecoration: 'none' }}
+            >
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button
+            fullWidth
+            mt="xl"
+            color="red"
+            type="submit"
+            disabled={
+              !validEmail || !password || password.length < 4 ? true : false
             }
-            error={form.errors.email && 'Invalid email'}
-          />
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue('password', event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              'Password should include at least 6 characters'
-            }
-          />
-        </Stack>
-        <Group position="apart" mt="lg">
-          <Checkbox label="Remember me" color={'red'} sx={{ lineHeight: 1 }} />
-          <Anchor
-            onClick={(event) => event.preventDefault()}
-            href="#"
-            size="sm"
-            style={{ color: '#D92228', textDecoration: 'none' }}
           >
-            Forgot password?
-          </Anchor>
-        </Group>
-        <Button
-          fullWidth
-          mt="xl"
-          style={{
-            backgroundColor: '#D92228',
-            color: 'white',
-          }}
-        >
-          Sign in
-        </Button>
+            Sign in
+          </Button>
+        </form>
         <Divider my="sm" label="OR LOGIN WITH" labelPosition="center" />
 
         <Group

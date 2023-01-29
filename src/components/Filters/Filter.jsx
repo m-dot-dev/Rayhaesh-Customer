@@ -18,7 +18,7 @@ import AreaCB from './Checkboxes/AreaCB'
 import PriceCB from './Checkboxes/PriceCB'
 import { useMediaQuery } from '@mantine/hooks'
 
-const Filter = () => {
+const Filter = ({ city, setCity }) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')
   const [from, setFrom] = React.useState(0)
   const [to, setTo] = React.useState(50000000)
@@ -31,7 +31,9 @@ const Filter = () => {
     { value: 'quetta', label: 'Quetta' },
     { value: 'multan', label: 'Multan' },
     { value: 'faisalabad', label: 'Faisalabad' },
+    { value: 'gujranwala', label: 'Gujranwala' },
   ]
+
   return (
     <Box
       style={{
@@ -48,7 +50,13 @@ const Filter = () => {
           Advance Filters
         </Text>
       )}
-      <MultiSelect data={cityData} label="City" placeholder="Cities Filter" />
+      <MultiSelect
+        data={cityData}
+        label="City"
+        placeholder="Cities Filter"
+        value={city}
+        onChange={setCity}
+      />
       <Divider my="sm" />
       <Input.Wrapper label="Price">
         <RangeSlider

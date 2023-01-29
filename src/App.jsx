@@ -14,29 +14,42 @@ import Booking from './components/Buy/Booking'
 import './App.css'
 import { MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
+import ProfileSettings from './components/PfpManagement/ProfileSettings'
+import { AuthProvider } from './components/PfpManagement/AuthProvider'
+import ErrorPage from './components/Generic/ErrorPage'
+import RequireAuth from './components/PfpManagement/RequireAuth'
 
 function App() {
   return (
     <MantineProvider theme={{ fontFamily: 'Poppins' }}>
       <NotificationsProvider>
-        <div className="App">
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Hero />} />
-              <Route path="/property/:id" element={<PropertyPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/subscription" element={<Subscription />} />
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/properties" element={<BuyListings />} />
-              <Route path="/exchange" element={<ExchangeListings />} />
-              <Route path="/rent" element={<RentListings />} />
-              <Route path="/booking/:id" element={<Booking />} />
-            </Routes>
-            <Footer />
-          </Router>
-        </div>
+        <AuthProvider>
+          <div className="App">
+            <Router>
+              <Navbar />
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Hero />} />
+                <Route path="/property/:id" element={<PropertyPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<SignUp />} />
+                <Route path="/subscription" element={<Subscription />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/properties" element={<BuyListings />} />
+                <Route path="/exchange" element={<ExchangeListings />} />
+                <Route path="/rent" element={<RentListings />} />
+                {/* Routes to Protect */}
+                <Route element={<RequireAuth />}>
+                  <Route path="/booking/:id" element={<Booking />} />
+                  <Route path="/profile/:id" element={<ProfileSettings />} />
+                </Route>
+                {/* 404 Page */}
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+              <Footer />
+            </Router>
+          </div>
+        </AuthProvider>
       </NotificationsProvider>
     </MantineProvider>
   )

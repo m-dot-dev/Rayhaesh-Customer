@@ -3,12 +3,10 @@ import { Checkbox, Input } from '@mantine/core'
 
 const initialValues = [
   { label: '< 5 Marla', checked: false, key: randomId() },
-  { label: '5 Marla - 10 Marla', checked: false, key: randomId() },
-  { label: '10 Marla - 20 Marla', checked: false, key: randomId() },
+  { label: '5 Marla - 20 Marla', checked: false, key: randomId() },
   { label: '20 Marla - 2 Kanal', checked: false, key: randomId() },
   { label: '2 Kanal - 5 Kanal', checked: false, key: randomId() },
-  { label: '5 Kanal - 20 Kanal', checked: false, key: randomId() },
-  { label: '> 20 Kanal', checked: false, key: randomId() },
+  { label: '> 5 Kanal', checked: false, key: randomId() },
 ]
 
 export default function AreaCB() {

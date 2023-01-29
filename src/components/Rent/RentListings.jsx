@@ -102,7 +102,7 @@ const RentListings = () => {
                       }).length
                     }{' '}
                   </Text>
-                  <Text>Results</Text>
+                  <Text>Results for Rentable Properties</Text>
                 </Group>
 
                 {match1200 ? (

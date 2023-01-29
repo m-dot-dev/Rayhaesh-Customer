@@ -11,29 +11,109 @@ import {
   Button,
   Divider,
   Stack,
+  Tooltip,
+  Radio,
+  Notification,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import { IconAt, IconBrandFacebook, IconBrandGoogle } from '@tabler/icons'
+import {
+  IconAt,
+  IconBrandFacebook,
+  IconBrandGoogle,
+  IconCheck,
+  IconX,
+} from '@tabler/icons'
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { showNotification } from '@mantine/notifications'
+
+const USER_REGEX = /^[A-z]{5,20}$/
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
 
 export default function SignUp() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      name: '',
-      password: '',
-      confirmPassword: '',
-      terms: true,
-    },
+  const [username, setUsername] = useState('')
+  const [validName, setValidName] = useState(false)
 
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val) =>
-        val.length <= 6
-          ? 'Password should include at least 6 characters'
-          : null,
-    },
-  })
+  const [email, setEmail] = useState('')
+  const [validEmail, setValidEmail] = useState(false)
+
+  const [password, setPassword] = useState('')
+  const [validPassword, setValidPassword] = useState(false)
+
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [validMatch, setValidMatch] = useState(false)
+
+  const [errMsg, setErrMsg] = useState('')
+  const [success, setSuccess] = useState(false)
+
+  const [gender, setGender] = useState('male')
+
+  const [loading, setLoading] = useState(false)
+
+  const [error, setError] = useState('')
+
+  const userType = 'buyer'
+
+  useEffect(() => {
+    setValidName(USER_REGEX.test(username))
+  }, [username])
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email))
+  }, [email])
+
+  useEffect(() => {
+    setValidPassword(PWD_REGEX.test(password))
+    setValidMatch(password === confirmPassword)
+  }, [password, confirmPassword])
+
+  useEffect(() => {
+    setErrMsg('')
+  }, [username, password, confirmPassword])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const v1 = USER_REGEX.test(username)
+    const v2 = PWD_REGEX.test(password)
+    const v3 = EMAIL_REGEX.test(email)
+    if (!v1 || !v2 || !v3) {
+      setErrMsg('Invalid Entry')
+      return
+    }
+    try {
+      const response = await axios
+        .post(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/signup',
+          {
+            name: username,
+            email,
+            password,
+            gender,
+            userType,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          },
+        )
+        .then((res) => {
+          return res.data
+        })
+      console.log(response?.data)
+      console.log(response?.accessToken)
+      console.log(JSON.stringify(response))
+      setSuccess(true)
+      setUsername('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+    } catch (err) {
+      setError(err)
+      console.log(err)
+      // err.response?.status === 409
+    }
+  }
 
   return (
     <Container size={420} my={40}>
@@ -67,58 +147,88 @@ export default function SignUp() {
         radius="md"
         style={{ borderColor: 'lightgrey' }}
       >
-        <Stack spacing={'xl'}>
-          <TextInput
-            icon={<IconAt size={14} />}
-            required
-            label="Email"
-            placeholder="hello@gmail.com"
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue('email', event.currentTarget.value)
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={'xl'}>
+            <TextInput
+              required
+              label="Username"
+              description="Must be between 5-20 characters and only letters allowed"
+              placeholder="Tehseen Riaz"
+              value={username}
+              onChange={(e) => setUsername(e.currentTarget.value)}
+              aria-invalid={validName ? 'false' : 'true'}
+            />
+            <TextInput
+              icon={<IconAt size={14} />}
+              required
+              label="Email"
+              placeholder="hello@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              aria-invalid={validEmail ? 'false' : 'true'}
+            />
+            <PasswordInput
+              required
+              label="Password"
+              placeholder="Your password"
+              description="Must be between 4-24 characters. Must begin with uppercase letter and should contain one special letter."
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+              aria-invalid={validPassword ? 'false' : 'true'}
+            />
+            <PasswordInput
+              required
+              label="Confirm Password"
+              placeholder="Your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+              aria-invalid={validMatch ? 'false' : 'true'}
+            />
+            <Group>
+              <Radio.Group
+                label="Choose your Gender"
+                required
+                value={gender}
+                onChange={setGender}
+              >
+                <Radio value="male" label="Male" color="red" />
+                <Radio value="female" label="Female" color="red" />
+              </Radio.Group>
+            </Group>
+          </Stack>
+          <Group position="apart" mt="lg">
+            <Checkbox
+              label="Remember me"
+              color={'red'}
+              sx={{ lineHeight: 1 }}
+            />
+          </Group>
+          <Button
+            fullWidth
+            mt="xl"
+            color="red"
+            disabled={
+              !validName || !validEmail || !validPassword || !validMatch
+                ? true
+                : false
             }
-            error={form.errors.email && 'Invalid email'}
-          />
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue('password', event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              'Password should include at least 6 characters'
-            }
-          />
-          <PasswordInput
-            required
-            label="Confirm Password"
-            placeholder="Your password"
-            value={form.values.confirmPassword}
-            onChange={(event) =>
-              form.setFieldValue('confirmPassword', event.currentTarget.value)
-            }
-            error={
-              form.password !== form.confirmPassword &&
-              'Passwords does not match'
-            }
-          />
-        </Stack>
-        <Group position="apart" mt="lg">
-          <Checkbox label="Remember me" color={'red'} sx={{ lineHeight: 1 }} />
-        </Group>
-        <Button
-          fullWidth
-          mt="xl"
-          style={{
-            backgroundColor: '#D92228',
-            color: 'white',
-          }}
-        >
-          Sign Up
-        </Button>
+            type="submit"
+            loading={loading}
+            // onClick={() => {
+            //   setLoading(true)
+            //   success
+            //     ? showNotification({
+            //         title: 'Registration Successfull',
+            //         message: 'Your account has been created successfully',
+            //         color: 'green',
+            //         icon: <IconCheck />,
+            //       }) && setLoading(false)
+            //     : setLoading(false)
+            // }}
+          >
+            Sign Up
+          </Button>
+        </form>
         <Divider my="sm" label="OR SIGN UP WITH" labelPosition="center" />
 
         <Group

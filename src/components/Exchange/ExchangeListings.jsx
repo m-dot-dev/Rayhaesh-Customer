@@ -103,7 +103,7 @@ const ExchangeListings = () => {
                       }).length
                     }{' '}
                   </Text>
-                  <Text>Results</Text>
+                  <Text>Results for Exchangeable Properties</Text>
                 </Group>
 
                 {match1200 ? (

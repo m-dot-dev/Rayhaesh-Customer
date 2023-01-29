@@ -22,6 +22,7 @@ import { Pagination } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
 import ListingPagination from '../Generic/ListingPagination'
+import { filtering } from './BuyFilter'
 
 const BuyListings = () => {
   const [opened, setOpened] = useState(false)
@@ -45,6 +46,25 @@ const BuyListings = () => {
   const currentPosts = allproperties.slice(indexOfFirstPost, indexOfLastPost)
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+  const [selectedCity, setSelectedCity] = React.useState([])
+
+  const citySelector = (value) => {
+    setSelectedCity(value)
+  }
+
+  // Filter Hooks here
+  const [city, setCity] = React.useState([])
+  const [filteredData, setFilteredData] = React.useState([])
+  console.log('====================================')
+  console.log('filteredData', filteredData)
+  console.log('====================================')
+
+  useEffect(() => {
+    if (allproperties.length > 0) {
+      setFilteredData(filtering(city, allproperties))
+    }
+  }, [city])
 
   useEffect(() => {
     axios
@@ -70,7 +90,7 @@ const BuyListings = () => {
       <Container size="xl">
         <Grid py="md">
           <Grid.Col md={3} hidden={match1200 ? true : false}>
-            <Filter />
+            <Filter city={city} setCity={setCity} />
           </Grid.Col>
 
           <Grid.Col md={!match1200 ? 9 : 12}>
