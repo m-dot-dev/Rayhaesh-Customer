@@ -12,18 +12,18 @@ import {
   Divider,
   Stack,
 } from '@mantine/core'
-import { IconAt, IconBrandFacebook, IconBrandGoogle } from '@tabler/icons'
-import { useState, useEffect } from 'react'
 import {
-  Link,
-  useNavigate,
-  useLocation,
-  useRoutes,
-  createMemoryRouter,
-  RouterProvider,
-} from 'react-router-dom'
+  IconAt,
+  IconBrandFacebook,
+  IconBrandGoogle,
+  IconCheck,
+  IconX,
+} from '@tabler/icons'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import axios from 'axios'
+import { showNotification } from '@mantine/notifications'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -31,10 +31,8 @@ export default function Login() {
   const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
   const [validEmail, setValidEmail] = useState(false)
 
-  // //extract the pathname from the url and output each part of the pathname
-  // const pathname = window.location.pathname
-  // const pathArray = pathname.split('/')
-  // console.log('Path array: ', pathArray)
+  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email))
@@ -45,16 +43,12 @@ export default function Login() {
   const [routerHistory, setRouterHistory] = useState([])
 
   const from = location.state?.from || '/'
-  console.log('From: ', from)
 
   useEffect(() => {
     setRouterHistory((routerHistory) => [...routerHistory, from])
   }, [from])
 
-  console.log('Router history: ', routerHistory[routerHistory.length - 1])
-
   const prevLocation = routerHistory[routerHistory.length - 1]
-  console.log('Previous location: ', prevLocation)
 
   const { setAuth } = useAuth()
 
@@ -82,16 +76,63 @@ export default function Login() {
       setAuth({ email, password, accessToken })
       setEmail('')
       setPassword('')
-      navigate(prevLocation, { replace: true })
+      setSuccess(true)
+      setLoading(false)
+      if (success) {
+        showNotification({
+          title: 'Login Successful',
+          message: 'You have been successfully logged in!',
+          color: 'green',
+          icon: <IconCheck size={14} />,
+          autoClose: true,
+        })
+        navigate(prevLocation, { replace: true })
+      } else {
+        showNotification({
+          title: 'Login Failed',
+          message: 'Invalid Credentials',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
+        })
+      }
     } catch (err) {
       if (!err.response) {
         console.log('No response from the server')
+        showNotification({
+          title: 'Login Failed',
+          message: 'No response from the server',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
+        })
       } else if (err.response.status === 401) {
         console.log('Unauthorized')
+        showNotification({
+          title: 'Login Failed',
+          message: 'Unauthorized',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
+        })
       } else if (err.response.status === 400) {
         console.log('Missing Username or password')
+        showNotification({
+          title: 'Login Failed',
+          message: 'Missing Username or password',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
+        })
       } else {
         console.log('Something went wrong, Login Failed')
+        showNotification({
+          title: 'Login Failed',
+          message: 'Something went wrong, Login Failed',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
+        })
       }
     }
   }
@@ -171,6 +212,8 @@ export default function Login() {
             disabled={
               !validEmail || !password || password.length < 4 ? true : false
             }
+            loading={loading}
+            onClick={() => setLoading(true)}
           >
             Sign in
           </Button>
