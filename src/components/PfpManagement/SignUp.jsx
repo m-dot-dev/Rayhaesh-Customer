@@ -24,7 +24,7 @@ import {
 } from '@tabler/icons'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { showNotification } from '@mantine/notifications'
 
 const USER_REGEX = /^[A-z]{5,20}$/
@@ -72,7 +72,9 @@ export default function SignUp() {
     setErrMsg('')
   }, [username, password, confirmPassword])
 
-  const handleSubmit = async (e) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
     e.preventDefault()
     const v1 = USER_REGEX.test(username)
     const v2 = PWD_REGEX.test(password)
@@ -81,38 +83,63 @@ export default function SignUp() {
       setErrMsg('Invalid Entry')
       return
     }
-    try {
-      const response = await axios
-        .post(
-          import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/signup',
-          {
-            name: username,
-            email,
-            password,
-            gender,
-            userType,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          },
-        )
-        .then((res) => {
-          return res.data
+
+    axios
+      .post(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/signup',
+        {
+          name: username,
+          email,
+          password,
+          gender,
+          userType,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        console.log(res?.data)
+        console.log(res?.accessToken)
+        console.log(JSON.stringify(res))
+        setSuccess(true)
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setLoading(false)
+
+        if (res?.data?.success === true) {
+          showNotification({
+            title: 'Registration Successful',
+            message: 'You account has been created!',
+            color: 'green',
+            icon: <IconCheck size={14} />,
+            autoClose: true,
+          })
+          navigate('/login', { replace: true })
+        } else {
+          showNotification({
+            title: 'Registration Failed',
+            message: 'Email Already Taken!',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        }
+      })
+      .catch((err) => {
+        setError(err)
+        console.log(err)
+        showNotification({
+          title: 'Registration Failed',
+          message: 'No Response from the server!',
+          color: 'red',
+          icon: <IconX size={14} />,
+          autoClose: true,
         })
-      console.log(response?.data)
-      console.log(response?.accessToken)
-      console.log(JSON.stringify(response))
-      setSuccess(true)
-      setUsername('')
-      setEmail('')
-      setPassword('')
-      setConfirmPassword('')
-    } catch (err) {
-      setError(err)
-      console.log(err)
-      // err.response?.status === 409
-    }
+      })
   }
 
   return (
@@ -214,17 +241,9 @@ export default function SignUp() {
             }
             type="submit"
             loading={loading}
-            // onClick={() => {
-            //   setLoading(true)
-            //   success
-            //     ? showNotification({
-            //         title: 'Registration Successfull',
-            //         message: 'Your account has been created successfully',
-            //         color: 'green',
-            //         icon: <IconCheck />,
-            //       }) && setLoading(false)
-            //     : setLoading(false)
-            // }}
+            onClick={() => {
+              setLoading(true)
+            }}
           >
             Sign Up
           </Button>

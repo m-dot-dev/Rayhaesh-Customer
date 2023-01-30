@@ -31,7 +31,6 @@ export default function Login() {
   const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
   const [validEmail, setValidEmail] = useState(false)
 
-  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -52,89 +51,88 @@ export default function Login() {
 
   const { setAuth } = useAuth()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    try {
-      const response = await axios
-        .post(
-          import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/login',
-          {
-            email,
-            password,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          },
-        )
-        .then((res) => {
-          return res.data
-        })
-      console.log(response?.data)
-      console.log(JSON.stringify(response))
-      const accessToken = response?.data?.accessToken
-      setAuth({ email, password, accessToken })
-      setEmail('')
-      setPassword('')
-      setSuccess(true)
-      setLoading(false)
-      if (success) {
-        showNotification({
-          title: 'Login Successful',
-          message: 'You have been successfully logged in!',
-          color: 'green',
-          icon: <IconCheck size={14} />,
-          autoClose: true,
-        })
-        navigate(prevLocation, { replace: true })
-      } else {
-        showNotification({
-          title: 'Login Failed',
-          message: 'Invalid Credentials',
-          color: 'red',
-          icon: <IconX size={14} />,
-          autoClose: true,
-        })
-      }
-    } catch (err) {
-      if (!err.response) {
-        console.log('No response from the server')
-        showNotification({
-          title: 'Login Failed',
-          message: 'No response from the server',
-          color: 'red',
-          icon: <IconX size={14} />,
-          autoClose: true,
-        })
-      } else if (err.response.status === 401) {
-        console.log('Unauthorized')
-        showNotification({
-          title: 'Login Failed',
-          message: 'Unauthorized',
-          color: 'red',
-          icon: <IconX size={14} />,
-          autoClose: true,
-        })
-      } else if (err.response.status === 400) {
-        console.log('Missing Username or password')
-        showNotification({
-          title: 'Login Failed',
-          message: 'Missing Username or password',
-          color: 'red',
-          icon: <IconX size={14} />,
-          autoClose: true,
-        })
-      } else {
-        console.log('Something went wrong, Login Failed')
-        showNotification({
-          title: 'Login Failed',
-          message: 'Something went wrong, Login Failed',
-          color: 'red',
-          icon: <IconX size={14} />,
-          autoClose: true,
-        })
-      }
-    }
+    axios
+      .post(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/login',
+        {
+          email,
+          password,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        console.log(response?.data)
+        console.log(JSON.stringify(response))
+        const accessToken = response?.data?.accessToken
+        setAuth({ email, password, accessToken })
+        setEmail('')
+        setPassword('')
+        setLoading(false)
+
+        if (response?.data?.success === true) {
+          showNotification({
+            title: 'Login Successful',
+            message: 'You have been successfully logged in!',
+            color: 'green',
+            icon: <IconCheck size={14} />,
+            autoClose: true,
+          })
+          navigate(prevLocation, { replace: true })
+        } else {
+          showNotification({
+            title: 'Login Failed',
+            message: 'Invalid Credentials',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        }
+      })
+      .catch((err) => {
+        setLoading(false)
+        if (!err.response) {
+          console.log('No response from the server')
+          showNotification({
+            title: 'Login Failed',
+            message: 'No response from the server',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        } else if (err.response.status === 401) {
+          console.log('Unauthorized')
+          showNotification({
+            title: 'Login Failed',
+            message: 'Unauthorized',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        } else if (err.response.status === 400) {
+          console.log('Missing Username or password')
+          showNotification({
+            title: 'Login Failed',
+            message: 'Missing Username or password',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        } else {
+          console.log('Something went wrong, Login Failed')
+          showNotification({
+            title: 'Login Failed',
+            message: 'Something went wrong, Login Failed',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        }
+      })
   }
 
   return (

@@ -28,6 +28,7 @@ import {
   IconNews,
 } from '@tabler/icons'
 import { useState } from 'react'
+import useAuth from '../hooks/useAuth'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -107,6 +108,12 @@ const useStyles = createStyles((theme) => ({
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(true)
   const navigate = useNavigate()
+
+  const { auth, setAuth } = useAuth()
+
+  console.log('====================================')
+  console.log('auth checking: ', auth)
+  console.log('====================================')
 
   const [
     drawerOpened,
@@ -215,46 +222,49 @@ export default function Navbar() {
           </Group>
 
           <Group className={classes.hiddenMobile}>
-            {loggedIn ? (
+            {!auth ? (
               <>
-                <Link to={'/login'}>
-                  <Button
-                    variant="outline"
-                    sx={{
-                      color: '#D92228',
-                      borderColor: '#D92228',
-                      fontFamily: 'poppins',
-                    }}
-                    size="md"
-                  >
-                    Log in
-                  </Button>
-                </Link>
-                <Link to={'/register'}>
-                  <Button
-                    variant="outline"
-                    sx={{
-                      color: '#D92228',
-                      borderColor: '#D92228',
-                      fontFamily: 'poppins',
-                    }}
-                    size="md"
-                  >
-                    Sign up
-                  </Button>
-                </Link>
-                <Link to={'/subscription'}>
-                  <Button
-                    style={{
-                      color: 'white',
-                      backgroundColor: '#D92228',
-                      fontFamily: 'poppins',
-                    }}
-                    size="md"
-                  >
-                    Subscription
-                  </Button>
-                </Link>
+                <Button
+                  variant="outline"
+                  sx={{
+                    color: '#D92228',
+                    borderColor: '#D92228',
+                    fontFamily: 'poppins',
+                  }}
+                  size="md"
+                  onClick={() => {
+                    navigate('/login')
+                  }}
+                >
+                  Log in
+                </Button>
+                <Button
+                  variant="outline"
+                  sx={{
+                    color: '#D92228',
+                    borderColor: '#D92228',
+                    fontFamily: 'poppins',
+                  }}
+                  size="md"
+                  onClick={() => {
+                    navigate('/register')
+                  }}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  style={{
+                    color: 'white',
+                    backgroundColor: '#D92228',
+                    fontFamily: 'poppins',
+                  }}
+                  size="md"
+                  onClick={() => {
+                    navigate('/subscription')
+                  }}
+                >
+                  Subscription
+                </Button>
               </>
             ) : (
               <Menu
@@ -278,7 +288,7 @@ export default function Navbar() {
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
                     onClick={() => {
-                      navigate('/profile')
+                      navigate('/profile/:id')
                     }}
                   >
                     <Text style={{ fontFamily: 'poppins' }}>Settings</Text>
@@ -287,6 +297,7 @@ export default function Navbar() {
                     icon={<IconLogout size={20} style={{ color: '#D92228' }} />}
                     onClick={() => {
                       navigate('/')
+                      setAuth(null)
                     }}
                   >
                     <Text
@@ -438,6 +449,23 @@ export default function Navbar() {
             >
               News & Insights
             </Button>
+
+            <Button
+              sx={{
+                color: 'white',
+                backgroundColor: '#D92228',
+                fontFamily: 'poppins',
+              }}
+              className={classes.mobileLink}
+              size="md"
+              leftIcon={<IconNews />}
+              onClick={() => {
+                navigate('/subscription')
+                closeDrawer()
+              }}
+            >
+              Subscription
+            </Button>
           </Group>
 
           <Divider
@@ -445,11 +473,15 @@ export default function Navbar() {
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
 
-          {loggedIn ? (
+          {!auth ? (
             <Group position="center" grow px={'2rem'}>
               <Button
                 variant="outline"
                 style={{ color: '#D92228', borderColor: '#D92228' }}
+                onClick={() => {
+                  navigate('/login')
+                  closeDrawer()
+                }}
               >
                 Log in
               </Button>
@@ -459,13 +491,25 @@ export default function Navbar() {
                   backgroundColor: '#D92228',
                   color: 'white',
                 }}
+                onClick={() => {
+                  navigate('/register')
+                  closeDrawer()
+                }}
               >
                 Sign up
               </Button>
             </Group>
           ) : (
             <Group position="center" grow pb="xl" px="md">
-              <Button variant="default">Sign Out</Button>
+              <Button
+                variant="default"
+                onClick={() => {
+                  setAuth(null)
+                  closeDrawer()
+                }}
+              >
+                Sign Out
+              </Button>
             </Group>
           )}
         </ScrollArea>
