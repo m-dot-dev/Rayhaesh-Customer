@@ -69,7 +69,6 @@ export default function Login() {
         console.log(response?.data)
         console.log(JSON.stringify(response))
         const accessToken = response?.data?.accessToken
-        setAuth({ email, password, accessToken })
         setEmail('')
         setPassword('')
         setLoading(false)
@@ -82,6 +81,7 @@ export default function Login() {
             icon: <IconCheck size={14} />,
             autoClose: true,
           })
+          setAuth({ email, password, accessToken })
           navigate(prevLocation, { replace: true })
         } else {
           showNotification({

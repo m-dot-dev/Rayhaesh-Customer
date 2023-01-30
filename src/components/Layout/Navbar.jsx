@@ -27,8 +27,9 @@ import {
   IconHome2,
   IconNews,
 } from '@tabler/icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
+import axios from 'axios'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -120,6 +121,25 @@ export default function Navbar() {
     { toggle: toggleDrawer, close: closeDrawer },
   ] = useDisclosure(false)
   const { classes, theme } = useStyles()
+  const [error, setError] = useState('')
+
+  const [allUsers, setAllUsers] = useState([])
+  const [loggedUser, setLoggedUser] = useState({})
+
+  // console.log('====================================')
+  // console.log('allUsers: ', allUsers)
+  // console.log('====================================')
+
+  useEffect(() => {
+    axios
+      .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/admin/getAllUsers')
+      .then((data) => {
+        setAllUsers(data.data)
+      })
+      .catch((error) => {
+        setError(error)
+      })
+  }, [])
 
   return (
     <>
