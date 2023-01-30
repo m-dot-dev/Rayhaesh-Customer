@@ -1,68 +1,67 @@
-import { createStyles, Anchor, Group, ActionIcon } from '@mantine/core'
+import { ActionIcon, Anchor, createStyles, Group } from "@mantine/core";
 import {
+  IconBrandFacebook,
+  IconBrandInstagram,
   IconBrandTwitter,
   IconBrandYoutube,
-  IconBrandInstagram,
-  IconBrandFacebook,
-} from '@tabler/icons'
+} from "@tabler/icons";
 
 const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: 50,
     padding: 10,
     borderTop: `2px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
     }`,
-    backgroundColor: '#e5e5e5',
-    // position: 'absolute',
+    backgroundColor: "#e5e5e5",
   },
 
   inner: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
 
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
     },
   },
 
   links: {
     fontWeight: 600,
     fontSize: 20,
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       marginTop: theme.spacing.lg,
       marginBottom: theme.spacing.sm,
     },
   },
-}))
+}));
 
 export default function Footer() {
   const links = [
     {
-      link: '#',
-      label: 'Contact',
+      link: "#",
+      label: "Contact",
     },
     {
-      link: '#',
-      label: 'Privacy',
+      link: "#",
+      label: "Privacy",
     },
     {
-      link: '#',
-      label: 'Blog',
+      link: "#",
+      label: "Blog",
     },
     {
-      link: '#',
-      label: 'Store',
+      link: "#",
+      label: "Store",
     },
     {
-      link: '#',
-      label: 'Careers',
+      link: "#",
+      label: "Careers",
     },
-  ]
+  ];
 
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   const items = links.map((link) => (
     <Anchor
       color="dimmed"
@@ -74,7 +73,7 @@ export default function Footer() {
     >
       {link.label}
     </Anchor>
-  ))
+  ));
 
   return (
     <footer className={classes.footer}>
@@ -97,5 +96,5 @@ export default function Footer() {
         </Group>
       </div>
     </footer>
-  )
+  );
 }
