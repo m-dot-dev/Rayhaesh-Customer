@@ -8,47 +8,45 @@ import {
   Select,
   Stack,
   Text,
-  TextInput,
   Textarea,
-  useMantineTheme,
-} from '@mantine/core'
-import React from 'react'
-import { Image } from '@mantine/core'
-import { IconAt, IconCheck, IconPhoto, IconUpload, IconX } from '@tabler/icons'
-// import { Dropzone, IMAGE_MIME_TYPE, DropzoneProps } from '@mantine/dropzone'
+  TextInput,
+} from "@mantine/core";
+import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { IconAt, IconCheck, IconPhoto, IconUpload, IconX } from "@tabler/icons";
+import React from "react";
 
-const ProfileSettings = () => {
-  const [profileImage, setProfileImage] = React.useState(null)
-  const [name, setName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [confirmPassword, setConfirmPassword] = React.useState('')
-  const [phone, setPhone] = React.useState('')
-  const [whatsapp, setWhatsapp] = React.useState('')
-  const [tempAddress, setTempAddress] = React.useState('')
-  const [permAddress, setPermAddress] = React.useState('')
-  const [about, setAbout] = React.useState('')
-  const [zip, setZip] = React.useState()
-  const [city, setCity] = React.useState('')
-  const [agency, setAgency] = React.useState('')
+const ProfileSettings = (props) => {
+  const [profileImage, setProfileImage] = React.useState(null);
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [whatsapp, setWhatsapp] = React.useState("");
+  const [tempAddress, setTempAddress] = React.useState("");
+  const [permAddress, setPermAddress] = React.useState("");
+  const [about, setAbout] = React.useState("");
+  const [zip, setZip] = React.useState();
+  const [city, setCity] = React.useState("");
+  const [agency, setAgency] = React.useState("");
 
   const cityData = [
-    { value: 'islamabad', label: 'Islamabad' },
-    { value: 'rawalpindi', label: 'Rawalpindi' },
-    { value: 'lahore', label: 'Lahore' },
-    { value: 'karachi', label: 'Karachi' },
-    { value: 'peshawar', label: 'Peshawar' },
-    { value: 'quetta', label: 'Quetta' },
-    { value: 'multan', label: 'Multan' },
-    { value: 'faisalabad', label: 'Faisalabad' },
-  ]
+    { value: "islamabad", label: "Islamabad" },
+    { value: "rawalpindi", label: "Rawalpindi" },
+    { value: "lahore", label: "Lahore" },
+    { value: "karachi", label: "Karachi" },
+    { value: "peshawar", label: "Peshawar" },
+    { value: "quetta", label: "Quetta" },
+    { value: "multan", label: "Multan" },
+    { value: "faisalabad", label: "Faisalabad" },
+  ];
 
   const agencyData = [
-    { value: 'agency1', label: 'Agency 1' },
-    { value: 'agency2', label: 'Agency 2' },
-    { value: 'agency3', label: 'Agency 3' },
-    { value: 'agency4', label: 'Agency 4' },
-  ]
+    { value: "agency1", label: "Agency 1" },
+    { value: "agency2", label: "Agency 2" },
+    { value: "agency3", label: "Agency 3" },
+    { value: "agency4", label: "Agency 4" },
+  ];
 
   return (
     <Container>
@@ -57,9 +55,9 @@ const ProfileSettings = () => {
           Profile Settings
         </Text>
         <Stack align="center">
-          {/* <Dropzone
-            onDrop={(files) => console.log('accepted files', files)}
-            onReject={(files) => console.log('rejected files', files)}
+          <Dropzone
+            onDrop={(files) => console.log("accepted files", files)}
+            onReject={(files) => console.log("rejected files", files)}
             maxSize={3 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
             {...props}
@@ -67,24 +65,24 @@ const ProfileSettings = () => {
             <Group
               position="center"
               spacing="xl"
-              style={{ minHeight: 220, pointerEvents: 'none' }}
+              style={{ minHeight: 220, pointerEvents: "none" }}
             >
               <Dropzone.Accept>
                 <IconUpload
                   size={50}
                   stroke={1.5}
-                  color={
-                    theme.colors[theme.primaryColor][
-                      theme.colorScheme === 'dark' ? 4 : 6
-                    ]
-                  }
+                  // color={
+                  //   theme.colors[theme.primaryColor][
+                  //     theme.colorScheme === "dark" ? 4 : 6
+                  //   ]
+                  // }
                 />
               </Dropzone.Accept>
               <Dropzone.Reject>
                 <IconX
                   size={50}
                   stroke={1.5}
-                  color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+                  // color={theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]}
                 />
               </Dropzone.Reject>
               <Dropzone.Idle>
@@ -101,21 +99,21 @@ const ProfileSettings = () => {
                 </Text>
               </div>
             </Group>
-          </Dropzone> */}
+          </Dropzone>
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
-            mt={'lg'}
+            mt={"lg"}
           >
             <TextInput
               required
               label="Username"
               placeholder="Tehseen Riaz"
               style={{
-                width: '50%',
+                width: "50%",
               }}
               value={name}
               onChange={(e) => setName(e.currentTarget.value)}
@@ -126,7 +124,7 @@ const ProfileSettings = () => {
               label="Email"
               placeholder="hello@gmail.com"
               style={{
-                width: '50%',
+                width: "50%",
               }}
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
@@ -135,7 +133,7 @@ const ProfileSettings = () => {
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -144,7 +142,7 @@ const ProfileSettings = () => {
               label="Password"
               placeholder=""
               style={{
-                width: '50%',
+                width: "50%",
               }}
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
@@ -154,7 +152,7 @@ const ProfileSettings = () => {
               label="Confirm Password"
               placeholder=""
               style={{
-                width: '50%',
+                width: "50%",
               }}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.currentTarget.value)}
@@ -163,7 +161,7 @@ const ProfileSettings = () => {
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -174,7 +172,7 @@ const ProfileSettings = () => {
               onChange={(e) => setPhone(e.currentTarget.value)}
               hideControls
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
             <NumberInput
@@ -184,14 +182,14 @@ const ProfileSettings = () => {
               onChange={(e) => setWhatsapp(e.currentTarget.value)}
               hideControls
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
           </Group>
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -201,14 +199,14 @@ const ProfileSettings = () => {
               value={about}
               onChange={(e) => setAbout(e.currentTarget.value)}
               style={{
-                width: '100%',
+                width: "100%",
               }}
             />
           </Group>
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -218,7 +216,7 @@ const ProfileSettings = () => {
               value={tempAddress}
               onChange={(e) => setTempAddress(e.currentTarget.value)}
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
             <Textarea
@@ -227,14 +225,14 @@ const ProfileSettings = () => {
               value={permAddress}
               onChange={(e) => setPermAddress(e.currentTarget.value)}
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
           </Group>
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -245,7 +243,7 @@ const ProfileSettings = () => {
               onChange={(e) => setZip(e.currentTarget.value)}
               hideControls
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
             <NumberInput
@@ -255,7 +253,7 @@ const ProfileSettings = () => {
               value={zip}
               onChange={(e) => setZip(e.currentTarget.value)}
               style={{
-                width: '50%',
+                width: "50%",
               }}
             />
           </Group>
@@ -263,7 +261,7 @@ const ProfileSettings = () => {
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
             position="center"
           >
@@ -273,7 +271,7 @@ const ProfileSettings = () => {
               value={city}
               onChange={(e) => setCity(e.currentTarget.value)}
               style={{
-                width: '50%',
+                width: "50%",
               }}
               data={cityData}
             />
@@ -283,7 +281,7 @@ const ProfileSettings = () => {
               value={agency}
               onChange={(e) => setAgency(e.currentTarget.value)}
               style={{
-                width: '50%',
+                width: "50%",
               }}
               data={agencyData}
             />
@@ -291,9 +289,9 @@ const ProfileSettings = () => {
           <Group
             noWrap
             style={{
-              width: '80%',
+              width: "80%",
             }}
-            mt={'lg'}
+            mt={"lg"}
           >
             <Button fullWidth color="red" leftIcon={<IconX />}>
               Cancel
@@ -305,7 +303,7 @@ const ProfileSettings = () => {
         </Stack>
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
-export default ProfileSettings
+export default ProfileSettings;
