@@ -43,6 +43,9 @@ const BuyListings = () => {
   const [to, setTo] = React.useState(50000000)
   const [range, setRange] = React.useState([0, 50000000])
 
+  //Category Hooks
+  const [categoryValue, setCategoryValue] = useState([])
+
   // ----------------------------------------------
 
   const [allproperties, setAllProperties] = useState([])
@@ -61,8 +64,8 @@ const BuyListings = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   useEffect(() => {
-    setFilteredData(filtering(city, allproperties))
-  }, [city])
+    setFilteredData(filtering(city, categoryValue, allproperties))
+  }, [city, categoryValue])
 
   useEffect(() => {
     axios
@@ -94,6 +97,8 @@ const BuyListings = () => {
               setCity={setCity}
               range={range}
               setRange={setRange}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
             />
           </Grid.Col>
 

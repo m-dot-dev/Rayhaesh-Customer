@@ -19,7 +19,14 @@ import PriceCB from './Checkboxes/PriceCB'
 import { useMediaQuery } from '@mantine/hooks'
 import { PakistanCities } from './cities'
 
-const Filter = ({ city, setCity, range, setRange }) => {
+const Filter = ({
+  city,
+  setCity,
+  range,
+  setRange,
+  categoryValue,
+  setCategoryValue,
+}) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')
   const cityData = PakistanCities.map((city) => ({
     label: city.label,
@@ -109,7 +116,10 @@ const Filter = ({ city, setCity, range, setRange }) => {
       <Divider my="sm" />
 
       <Stack spacing={'lg'}>
-        <PropertyCategoryCB />
+        <PropertyCategoryCB
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+        />
         <PropertySubCategoryCB />
         <AreaCB />
         <PriceCB />
