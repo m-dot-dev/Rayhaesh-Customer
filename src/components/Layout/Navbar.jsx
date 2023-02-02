@@ -10,6 +10,7 @@ import {
   Drawer,
   ScrollArea,
   Box,
+  Stack,
 } from '@mantine/core'
 import RemsLogo from '../../assets/images/Logo.png'
 import { useNavigate } from 'react-router-dom'
@@ -113,7 +114,7 @@ export default function Navbar() {
   const { auth, setAuth } = useAuth()
 
   console.log('====================================')
-  console.log('auth checking: ', auth)
+  console.log('auth checking in the navbar: ', auth)
   console.log('====================================')
 
   const [
@@ -126,9 +127,8 @@ export default function Navbar() {
   const [allUsers, setAllUsers] = useState([])
   const [loggedUser, setLoggedUser] = useState({})
 
-  // console.log('====================================')
-  // console.log('allUsers: ', allUsers)
-  // console.log('====================================')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     axios
@@ -140,6 +140,25 @@ export default function Navbar() {
         setError(error)
       })
   }, [])
+
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getUserProfile',
+        {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        },
+      )
+      .then((res) => {
+        setName(res.data?.body?.name)
+        setEmail(res.data?.body?.email)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [email])
 
   return (
     <>
@@ -304,6 +323,25 @@ export default function Navbar() {
 
                 <Menu.Dropdown style={{ borderColor: '#D92228' }}>
                   <Menu.Item
+                    onClick={() => {
+                      navigate('/profile/:id')
+                    }}
+                  >
+                    <Group noWrap>
+                      <Avatar />
+                      <Stack spacing={0}>
+                        <Text>{name}</Text>
+                        <Text
+                          style={{
+                            fontSize: '11px',
+                          }}
+                        >
+                          {email}
+                        </Text>
+                      </Stack>
+                    </Group>
+                  </Menu.Item>
+                  <Menu.Item
                     icon={
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
@@ -318,6 +356,7 @@ export default function Navbar() {
                     onClick={() => {
                       navigate('/')
                       setAuth(null)
+                      localStorage.clear('token')
                     }}
                   >
                     <Text

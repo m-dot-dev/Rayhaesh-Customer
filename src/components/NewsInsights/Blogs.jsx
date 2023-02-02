@@ -24,12 +24,12 @@ const Blogs = () => {
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/admin/getAllBlogs')
+      .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/getAllBlogs')
       .then((res) => {
         setBlogs(res.data)
-        // console.log('====================================')
-        // console.log('blogs', blogs)
-        // console.log('====================================')
+        console.log('====================================')
+        console.log('blogs', blogs)
+        console.log('====================================')
       })
       .catch((err) => {
         console.log(err)

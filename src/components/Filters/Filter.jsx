@@ -17,22 +17,14 @@ import PropertySubCategoryCB from './Checkboxes/PropertySubCategoryCB'
 import AreaCB from './Checkboxes/AreaCB'
 import PriceCB from './Checkboxes/PriceCB'
 import { useMediaQuery } from '@mantine/hooks'
+import { PakistanCities } from './cities'
 
-const Filter = ({ city, setCity }) => {
+const Filter = ({ city, setCity, range, setRange }) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')
-  const [from, setFrom] = React.useState(0)
-  const [to, setTo] = React.useState(50000000)
-  const cityData = [
-    { value: 'islamabad', label: 'Islamabad' },
-    { value: 'rawalpindi', label: 'Rawalpindi' },
-    { value: 'lahore', label: 'Lahore' },
-    { value: 'karachi', label: 'Karachi' },
-    { value: 'peshawar', label: 'Peshawar' },
-    { value: 'quetta', label: 'Quetta' },
-    { value: 'multan', label: 'Multan' },
-    { value: 'faisalabad', label: 'Faisalabad' },
-    { value: 'gujranwala', label: 'Gujranwala' },
-  ]
+  const cityData = PakistanCities.map((city) => ({
+    label: city.label,
+    value: city.value,
+  }))
 
   return (
     <Box
@@ -66,11 +58,8 @@ const Filter = ({ city, setCity }) => {
           labelTransitionTimingFunction="ease"
           min={0}
           max={50000000}
-          value={[from, to]}
-          onChange={(value) => {
-            setFrom(value[0])
-            setTo(value[1])
-          }}
+          value={range}
+          onChange={setRange}
           styles={{
             bar: {
               backgroundColor: '#D92228',
@@ -86,7 +75,7 @@ const Filter = ({ city, setCity }) => {
             },
           }}
         />
-        <Group
+        {/* <Group
           style={{
             justifyContent: 'space-between',
           }}
@@ -99,7 +88,7 @@ const Filter = ({ city, setCity }) => {
               style={{
                 width: 150,
               }}
-              value={from}
+              value={range[0]}
               onChange={(event) => setFrom(Number(event.currentTarget.value))}
             />
           </Input.Wrapper>
@@ -111,11 +100,11 @@ const Filter = ({ city, setCity }) => {
               style={{
                 width: 150,
               }}
-              value={to}
+              value={range[1]}
               onChange={(event) => setTo(Number(event.currentTarget.value))}
             />
           </Input.Wrapper>
-        </Group>
+        </Group> */}
       </Input.Wrapper>
       <Divider my="sm" />
 

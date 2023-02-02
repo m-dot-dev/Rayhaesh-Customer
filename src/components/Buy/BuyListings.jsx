@@ -30,7 +30,20 @@ const BuyListings = () => {
   const useStyles = createStyles((theme) => ({
     filter: {},
   }))
-  const { classes, theme } = useStyles()
+
+  // Filter Hooks here
+
+  //City Hooks
+  const [city, setCity] = React.useState([])
+  const [filteredData, setFilteredData] = React.useState([])
+  console.log('filteredData', filteredData)
+
+  //Price Hooks
+  const [from, setFrom] = React.useState(0)
+  const [to, setTo] = React.useState(50000000)
+  const [range, setRange] = React.useState([0, 50000000])
+
+  // ----------------------------------------------
 
   const [allproperties, setAllProperties] = useState([])
   const [error, setError] = useState('')
@@ -43,27 +56,12 @@ const BuyListings = () => {
 
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
-  const currentPosts = allproperties.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost)
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-  const [selectedCity, setSelectedCity] = React.useState([])
-
-  const citySelector = (value) => {
-    setSelectedCity(value)
-  }
-
-  // Filter Hooks here
-  const [city, setCity] = React.useState([])
-  const [filteredData, setFilteredData] = React.useState([])
-  console.log('====================================')
-  console.log('filteredData', filteredData)
-  console.log('====================================')
-
   useEffect(() => {
-    if (allproperties.length > 0) {
-      setFilteredData(filtering(city, allproperties))
-    }
+    setFilteredData(filtering(city, allproperties))
   }, [city])
 
   useEffect(() => {
@@ -74,6 +72,7 @@ const BuyListings = () => {
       .then((data) => {
         setIsLoaded(false)
         setAllProperties(data.data.body)
+        setFilteredData(data.data.body)
       })
       .catch((error) => {
         setIsLoaded(false)
@@ -90,7 +89,12 @@ const BuyListings = () => {
       <Container size="xl">
         <Grid py="md">
           <Grid.Col md={3} hidden={match1200 ? true : false}>
-            <Filter city={city} setCity={setCity} />
+            <Filter
+              city={city}
+              setCity={setCity}
+              range={range}
+              setRange={setRange}
+            />
           </Grid.Col>
 
           <Grid.Col md={!match1200 ? 9 : 12}>

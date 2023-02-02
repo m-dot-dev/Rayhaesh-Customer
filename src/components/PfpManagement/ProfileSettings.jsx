@@ -17,6 +17,8 @@ import { useMediaQuery } from '@mantine/hooks'
 import { IconAt, IconCheck, IconPhoto, IconUpload, IconX } from '@tabler/icons'
 import React from 'react'
 import { useEffect } from 'react'
+import axios from 'axios'
+import useAuth from '../hooks/useAuth'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')
@@ -68,6 +70,9 @@ const ProfileSettings = (props) => {
   const [validNumber, setValidNumber] = React.useState(false)
   const [validWhatsapp, setValidWhatsapp] = React.useState(false)
   const [validCnic, setValidCnic] = React.useState(false)
+  const [user, setUser] = React.useState()
+
+  // const { auth } = useAuth()
 
   useEffect(() => {
     setValidName(USER_REGEX.test(name))
@@ -106,6 +111,25 @@ const ProfileSettings = (props) => {
     }
   }, [whatsapp])
 
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getUserProfile',
+        {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        },
+      )
+      .then((res) => {
+        setEmail(res.data?.body?.email)
+        setName(res.data?.body?.name)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   return (
     <Container>
       <Paper p="lg">
@@ -118,6 +142,15 @@ const ProfileSettings = (props) => {
           maxSize={3 * 1024 ** 2}
           accept={IMAGE_MIME_TYPE}
           {...props}
+          style={{
+            width: '30%',
+            height: '50%',
+            margin: 'auto',
+            borderRadius: 30,
+            padding: 10,
+            textAlign: 'center',
+            cursor: 'pointer',
+          }}
         >
           <Group
             position="center"

@@ -68,7 +68,12 @@ export default function Login() {
       .then((response) => {
         console.log(response?.data)
         console.log(JSON.stringify(response))
-        const accessToken = response?.data?.accessToken
+        const accessToken = response?.data?.token
+        localStorage.setItem('token', accessToken)
+        console.log('====================================LoginCheckings')
+        console.log(localStorage.getItem('token'))
+        console.log(localStorage)
+        console.log('====================================LoginChecking')
         setEmail('')
         setPassword('')
         setLoading(false)

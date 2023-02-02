@@ -1,11 +1,13 @@
-export const filtering = ({ city, buyListings }) => {
-  //   const filteredListings = buyListings.filter((listing) => {
-  //     return listing.city === city
-  //   })
-  //   return filteredListings
+export function filtering(city, allproperties) {
+  if (city.length === 0) {
+    return allproperties
+  }
+  let filteredListings = allproperties.filter((listing) =>
+    city.includes(listing.propertyCity),
+  )
   console.log('====================================')
-  console.log('city', city)
-  console.log('listings', buyListings)
+  console.log('city  in jsx file', city)
+  console.log('listings in jsx file', filteredListings)
   console.log('====================================')
-  return buyListings
+  return filteredListings
 }
