@@ -46,6 +46,9 @@ const BuyListings = () => {
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
 
+  //SubCategory Hooks
+  const [subCategoryValue, setSubCategoryValue] = useState([])
+
   // ----------------------------------------------
 
   const [allproperties, setAllProperties] = useState([])
@@ -64,8 +67,10 @@ const BuyListings = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   useEffect(() => {
-    setFilteredData(filtering(city, categoryValue, allproperties))
-  }, [city, categoryValue])
+    setFilteredData(
+      filtering(city, categoryValue, subCategoryValue, allproperties),
+    )
+  }, [city, categoryValue, subCategoryValue])
 
   useEffect(() => {
     axios
@@ -99,6 +104,8 @@ const BuyListings = () => {
               setRange={setRange}
               categoryValue={categoryValue}
               setCategoryValue={setCategoryValue}
+              subCategoryValue={subCategoryValue}
+              setSubCategoryValue={setSubCategoryValue}
             />
           </Grid.Col>
 

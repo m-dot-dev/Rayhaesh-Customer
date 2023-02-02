@@ -26,6 +26,8 @@ const Filter = ({
   setRange,
   categoryValue,
   setCategoryValue,
+  subCategoryValue,
+  setSubCategoryValue,
 }) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')
   const cityData = PakistanCities.map((city) => ({
@@ -120,7 +122,10 @@ const Filter = ({
           categoryValue={categoryValue}
           setCategoryValue={setCategoryValue}
         />
-        <PropertySubCategoryCB />
+        <PropertySubCategoryCB
+          subCategoryValue={subCategoryValue}
+          setSubCategoryValue={setSubCategoryValue}
+        />
         <AreaCB />
         <PriceCB />
       </Stack>

@@ -5,10 +5,6 @@ export default function PropertyCategoryCB({
   categoryValue,
   setCategoryValue,
 }) {
-  console.log('====================================')
-  console.log('categoryValue selected: ', categoryValue)
-  console.log('====================================')
-
   return (
     <>
       <Input.Wrapper label="Filter by Property Category">
@@ -20,6 +16,7 @@ export default function PropertyCategoryCB({
           <Checkbox
             value="Commercial"
             label="Commercial"
+            mt={'md'}
             styles={{
               input: {
                 '&:checked': {
