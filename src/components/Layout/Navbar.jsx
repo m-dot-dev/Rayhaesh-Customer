@@ -330,13 +330,13 @@ export default function Navbar() {
                     <Group noWrap>
                       <Avatar />
                       <Stack spacing={0}>
-                        <Text>{name}</Text>
+                        <Text>{auth.name}</Text>
                         <Text
                           style={{
                             fontSize: '11px',
                           }}
                         >
-                          {email}
+                          {auth.email}
                         </Text>
                       </Stack>
                     </Group>

@@ -86,7 +86,15 @@ export default function Login() {
             icon: <IconCheck size={14} />,
             autoClose: true,
           })
-          setAuth({ email, password, accessToken })
+          console.log('====================================')
+          console.log('NAMEEE', response.data.body.name)
+          console.log('====================================')
+          setAuth({
+            name: response.data.body?.name,
+            email,
+            password,
+            accessToken,
+          })
           navigate(prevLocation, { replace: true })
         } else {
           showNotification({

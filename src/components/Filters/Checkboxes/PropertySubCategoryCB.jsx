@@ -22,6 +22,9 @@ export default function PropertySubCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -33,6 +36,9 @@ export default function PropertySubCategoryCB({
                 '&:checked': {
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
                 },
               },
             }}
@@ -46,6 +52,9 @@ export default function PropertySubCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -57,6 +66,9 @@ export default function PropertySubCategoryCB({
                 '&:checked': {
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
                 },
               },
             }}
@@ -70,6 +82,9 @@ export default function PropertySubCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -81,6 +96,9 @@ export default function PropertySubCategoryCB({
                 '&:checked': {
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
                 },
               },
             }}
@@ -94,6 +112,9 @@ export default function PropertySubCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -106,6 +127,9 @@ export default function PropertySubCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -117,6 +141,9 @@ export default function PropertySubCategoryCB({
                 '&:checked': {
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
                 },
               },
             }}

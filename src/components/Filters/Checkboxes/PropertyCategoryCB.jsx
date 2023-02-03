@@ -23,6 +23,9 @@ export default function PropertyCategoryCB({
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
                 },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
               },
             }}
           />
@@ -34,6 +37,9 @@ export default function PropertyCategoryCB({
                 '&:checked': {
                   backgroundColor: '#D92228',
                   borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
                 },
               },
             }}

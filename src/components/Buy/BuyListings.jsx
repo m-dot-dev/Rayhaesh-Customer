@@ -27,9 +27,6 @@ import { filtering } from './BuyFilter'
 const BuyListings = () => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
-  const useStyles = createStyles((theme) => ({
-    filter: {},
-  }))
 
   // Filter Hooks here
 
@@ -38,16 +35,17 @@ const BuyListings = () => {
   const [filteredData, setFilteredData] = React.useState([])
   console.log('filteredData', filteredData)
 
-  //Price Hooks
-  const [from, setFrom] = React.useState(0)
-  const [to, setTo] = React.useState(50000000)
-  const [range, setRange] = React.useState([0, 50000000])
-
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
 
   //SubCategory Hooks
   const [subCategoryValue, setSubCategoryValue] = useState([])
+
+  //Area Hooks
+  const [areaValue, setAreaValue] = useState([])
+
+  //Price Hooks
+  const [priceValue, setPriceValue] = useState([])
 
   // ----------------------------------------------
 
@@ -68,9 +66,16 @@ const BuyListings = () => {
 
   useEffect(() => {
     setFilteredData(
-      filtering(city, categoryValue, subCategoryValue, allproperties),
+      filtering(
+        city,
+        categoryValue,
+        subCategoryValue,
+        areaValue,
+        priceValue,
+        allproperties,
+      ),
     )
-  }, [city, categoryValue, subCategoryValue])
+  }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
 
   useEffect(() => {
     axios
@@ -100,12 +105,14 @@ const BuyListings = () => {
             <Filter
               city={city}
               setCity={setCity}
-              range={range}
-              setRange={setRange}
               categoryValue={categoryValue}
               setCategoryValue={setCategoryValue}
               subCategoryValue={subCategoryValue}
               setSubCategoryValue={setSubCategoryValue}
+              areaValue={areaValue}
+              setAreaValue={setAreaValue}
+              priceValue={priceValue}
+              setPriceValue={setPriceValue}
             />
           </Grid.Col>
 

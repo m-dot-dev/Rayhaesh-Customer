@@ -5,7 +5,6 @@ import {
   Group,
   Input,
   NumberInput,
-  RangeSlider,
   Stack,
   Text,
 } from '@mantine/core'
@@ -22,12 +21,14 @@ import { PakistanCities } from './cities'
 const Filter = ({
   city,
   setCity,
-  range,
-  setRange,
   categoryValue,
   setCategoryValue,
   subCategoryValue,
   setSubCategoryValue,
+  areaValue,
+  setAreaValue,
+  priceValue,
+  setPriceValue,
 }) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')
   const cityData = PakistanCities.map((city) => ({
@@ -57,64 +58,8 @@ const Filter = ({
         placeholder="Cities Filter"
         value={city}
         onChange={setCity}
+        mb={'md'}
       />
-      <Divider my="sm" />
-      <Input.Wrapper label="Price">
-        <RangeSlider
-          thumbSize={14}
-          labelTransition="skew-down"
-          labelTransitionDuration={150}
-          labelTransitionTimingFunction="ease"
-          min={0}
-          max={50000000}
-          value={range}
-          onChange={setRange}
-          styles={{
-            bar: {
-              backgroundColor: '#D92228',
-            },
-            thumb: {
-              borderColor: '#D92228',
-              borderWidth: 2,
-              padding: 3,
-            },
-            label: {
-              backgroundColor: '#D92228',
-              color: 'white',
-            },
-          }}
-        />
-        {/* <Group
-          style={{
-            justifyContent: 'space-between',
-          }}
-        >
-          <Input.Wrapper id="from" label="From">
-            <NumberInput
-              hideControls
-              icon={<span>Rs.</span>}
-              id="from"
-              style={{
-                width: 150,
-              }}
-              value={range[0]}
-              onChange={(event) => setFrom(Number(event.currentTarget.value))}
-            />
-          </Input.Wrapper>
-          <Input.Wrapper id="to" label="To">
-            <NumberInput
-              hideControls
-              icon={<span>Rs.</span>}
-              id="to"
-              style={{
-                width: 150,
-              }}
-              value={range[1]}
-              onChange={(event) => setTo(Number(event.currentTarget.value))}
-            />
-          </Input.Wrapper>
-        </Group> */}
-      </Input.Wrapper>
       <Divider my="sm" />
 
       <Stack spacing={'lg'}>
@@ -126,8 +71,8 @@ const Filter = ({
           subCategoryValue={subCategoryValue}
           setSubCategoryValue={setSubCategoryValue}
         />
-        <AreaCB />
-        <PriceCB />
+        <AreaCB areaValue={areaValue} setAreaValue={setAreaValue} />
+        <PriceCB priceValue={priceValue} setPriceValue={setPriceValue} />
       </Stack>
 
       {match1200 && (
