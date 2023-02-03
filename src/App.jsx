@@ -12,55 +12,67 @@ import Footer from './components/Layout/Footer'
 import Navbar from './components/Layout/Navbar'
 import PropertyPage from './components/Listings/PropertyPage'
 import Blogs from './components/NewsInsights/Blogs'
-import { AuthProvider } from './components/PfpManagement/AuthProvider'
+import AuthContext, {
+  AuthProvider,
+} from './components/PfpManagement/AuthProvider'
 import Login from './components/PfpManagement/Login'
 import ProfileSettings from './components/PfpManagement/ProfileSettings'
 import RequireAuth from './components/PfpManagement/RequireAuth'
 import SignUp from './components/PfpManagement/SignUp'
 import RentListings from './components/Rent/RentListings'
 import AddBlog from './components/NewsInsights/AddBlog'
-
+import useAuth from './components/hooks/useAuth'
+import { useEffect, useState } from 'react'
 function App() {
-  return (
+  const { setAuth } = useAuth()
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    let token = localStorage.getItem('token')
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]))
+      setAuth({ name: decodedToken.name, email: decodedToken.email, token })
+    }
+    setLoading(false)
+  }, [])
+
+  return loading ? null : (
     <MantineProvider theme={{ fontFamily: 'Poppins' }}>
       <NotificationsProvider>
-        <AuthProvider>
-          <div
-            className="App"
-            style={{
-              minHeight: '100vh',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Router>
-              <Navbar />
-              <main style={{ flex: 1 }}>
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/" element={<Hero />} />
-                  <Route path="/property/:id" element={<PropertyPage />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<SignUp />} />
-                  <Route path="/subscription" element={<Subscription />} />
-                  <Route path="/blogs" element={<Blogs />} />
-                  <Route path="/properties" element={<BuyListings />} />
-                  <Route path="/exchange" element={<ExchangeListings />} />
-                  <Route path="/rent" element={<RentListings />} />
-                  <Route path="/addblog" element={<AddBlog />} />
-                  {/* Routes to Protect */}
-                  <Route element={<RequireAuth />}>
-                    <Route path="/booking/:id" element={<Booking />} />
-                    <Route path="/profile/:id" element={<ProfileSettings />} />
-                  </Route>
-                  {/* 404 Page */}
-                  <Route path="*" element={<ErrorPage />} />
-                </Routes>
-              </main>
-              <Footer />
-            </Router>
-          </div>
-        </AuthProvider>
+        <div
+          className="App"
+          style={{
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Router>
+            <Navbar />
+            <main style={{ flex: 1 }}>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Hero />} />
+                <Route path="/property/:id" element={<PropertyPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<SignUp />} />
+                <Route path="/subscription" element={<Subscription />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/properties" element={<BuyListings />} />
+                <Route path="/exchange" element={<ExchangeListings />} />
+                <Route path="/rent" element={<RentListings />} />
+                <Route path="/addblog" element={<AddBlog />} />
+                {/* Routes to Protect */}
+                <Route element={<RequireAuth />}>
+                  <Route path="/booking/:id" element={<Booking />} />
+                  <Route path="/profile/:id" element={<ProfileSettings />} />
+                </Route>
+                {/* 404 Page */}
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </Router>
+        </div>
       </NotificationsProvider>
     </MantineProvider>
   )
