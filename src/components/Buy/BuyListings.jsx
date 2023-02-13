@@ -17,7 +17,7 @@ import BuyCards from './BuyCards'
 import axios from 'axios'
 import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Pagination } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
@@ -28,12 +28,20 @@ const BuyListings = () => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
 
+  const location = useLocation()
+
+  useEffect(() => {
+    setCity(location.state?.city)
+    setSubCategoryValue(location.state?.subCategoryValue)
+    setPriceValue(location.state?.priceValue)
+  }, [location])
+
   // Filter Hooks here
 
   //City Hooks
   const [city, setCity] = React.useState([])
   const [filteredData, setFilteredData] = React.useState([])
-  console.log('filteredData', filteredData)
+  // console.log('filteredData', filteredData)
 
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
@@ -61,6 +69,10 @@ const BuyListings = () => {
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost)
+
+  console.log('====================================JAJAJAJAJ')
+  console.log('City, subcategory, price', city, subCategoryValue, priceValue)
+  console.log('====================================JAJAJAJAJ')
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
@@ -233,7 +245,18 @@ const BuyListings = () => {
         </Grid>
       </Container>
       <Modal opened={opened} onClose={() => setOpened(false)}>
-        <Filter />
+        <Filter
+          city={city}
+          setCity={setCity}
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+          subCategoryValue={subCategoryValue}
+          setSubCategoryValue={setSubCategoryValue}
+          areaValue={areaValue}
+          setAreaValue={setAreaValue}
+          priceValue={priceValue}
+          setPriceValue={setPriceValue}
+        />
       </Modal>
     </>
   )

@@ -92,7 +92,7 @@ export default function Login() {
           setAuth({
             name: response.data.body?.name,
             email,
-            password,
+            // password,
             accessToken,
           })
           navigate(prevLocation, { replace: true })

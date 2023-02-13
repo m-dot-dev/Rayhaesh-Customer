@@ -28,6 +28,7 @@ export default function PropertyCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="Residential"
@@ -43,6 +44,7 @@ export default function PropertyCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
         </Checkbox.Group>
       </Input.Wrapper>

@@ -3,16 +3,14 @@ import {
   Overlay,
   Container,
   Title,
-  Input,
-  MultiSelect,
   Button,
   Box,
   Text,
   Select,
 } from '@mantine/core'
-import { IconChevronDown, IconLocation } from '@tabler/icons'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { PakistanCities } from '../Filters/cities'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
   hero: {
@@ -86,43 +84,10 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export default function SearchSection() {
-  // const [city, setCity] = useState([])
-  // const [error, setError] = useState(null)
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getAllProperties',
-  //     )
-  //     .then((data) => {
-  //       setCity(data.data.body.filter((item) => item?.propertySubCategory))
-  //     })
-  //     .catch((error) => {
-  //       setError(error)
-  //     })
-  // }, [])
-
-  // console.log('====================================')
-  // console.log(city)
-  // console.log('====================================')
-
-  // const cityData = city.map((item) => {
-  //   return {
-  //     value: item.propertySubCategory,
-  //     label: item.propertySubCategory,
-  //   }
-  // })
-
-  const cityData = [
-    { value: 'islamabad', label: 'Islamabad' },
-    { value: 'rawalpindi', label: 'Rawalpindi' },
-    { value: 'lahore', label: 'Lahore' },
-    { value: 'karachi', label: 'Karachi' },
-    { value: 'peshawar', label: 'Peshawar' },
-    { value: 'quetta', label: 'Quetta' },
-    { value: 'multan', label: 'Multan' },
-    { value: 'faisalabad', label: 'Faisalabad' },
-  ]
+  const cityData = PakistanCities.map((city) => ({
+    label: city.label,
+    value: city.value,
+  }))
 
   const typeData = [
     { value: 'house', label: 'House' },
@@ -132,17 +97,27 @@ export default function SearchSection() {
     { value: 'file', label: 'File' },
     { value: 'farmhouse', label: 'Farmhouse' },
     { value: 'building', label: 'Building' },
+    { value: 'villa', label: 'Villa' },
+    { value: 'penthouse', label: 'Penthouse' },
+    { value: 'shop', label: 'Shop' },
+    { value: 'plaza', label: 'Plaza' },
+    { value: 'building', label: 'Building' },
   ]
   const priceData = [
     { value: '15', label: '<15 Lac' },
-    { value: '30', label: '<30 Lac' },
     { value: '50', label: '<50 Lac' },
-    { value: '75', label: '<75 Lac' },
     { value: '1', label: '<1 Crore' },
     { value: '1', label: '>1 Crore' },
   ]
 
   const { classes } = useStyles()
+
+  const navigate = useNavigate()
+
+  //search hooks
+  const [city, setCity] = useState([])
+  const [subCategoryValue, setSubCategoryValue] = useState([])
+  const [priceValue, setPriceValue] = useState([])
 
   return (
     <div className={classes.hero}>
@@ -169,6 +144,8 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
+            value={city}
+            onChange={setCity}
           />
           <Select
             data={typeData}
@@ -181,6 +158,8 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
+            value={subCategoryValue}
+            onChange={setSubCategoryValue}
           />
           <Select
             data={priceData}
@@ -193,6 +172,8 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
+            value={priceValue}
+            onChange={setPriceValue}
           />
           <Box
             style={{
@@ -207,6 +188,15 @@ export default function SearchSection() {
               style={{
                 backgroundColor: '#D92228',
                 color: 'white',
+              }}
+              onClick={() => {
+                navigate(`/properties`, {
+                  state: {
+                    city: city,
+                    subCategoryValue: subCategoryValue,
+                    priceValue: priceValue,
+                  },
+                })
               }}
             >
               Search

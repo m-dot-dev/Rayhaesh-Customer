@@ -52,6 +52,33 @@ const Filter = ({
           Advance Filters
         </Text>
       )}
+      {!match1200 && (
+        <Group>
+          <Button
+            style={{
+              width: '100%',
+            }}
+            color="red"
+            my={'md'}
+            onClick={() => {
+              setCity([])
+              setCategoryValue([])
+              setSubCategoryValue([])
+              setAreaValue([])
+              setPriceValue([])
+            }}
+            disabled={
+              city.length === 0 &&
+              categoryValue.length === 0 &&
+              subCategoryValue.length === 0 &&
+              areaValue.length === 0 &&
+              priceValue.length === 0
+            }
+          >
+            Clear Filters
+          </Button>
+        </Group>
+      )}
       <MultiSelect
         data={cityData}
         label="City"
@@ -83,17 +110,15 @@ const Filter = ({
               backgroundColor: '#D92228',
               color: 'white',
             }}
-          >
-            Reset
-          </Button>
-          <Button
-            fullWidth
-            style={{
-              backgroundColor: '#D92228',
-              color: 'white',
+            onClick={() => {
+              setCity([])
+              setCategoryValue([])
+              setSubCategoryValue([])
+              setAreaValue([])
+              setPriceValue([])
             }}
           >
-            Apply
+            Reset
           </Button>
         </Group>
       )}

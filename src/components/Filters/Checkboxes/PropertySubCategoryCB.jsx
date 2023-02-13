@@ -13,9 +13,9 @@ export default function PropertySubCategoryCB({
           mb={'xl'}
         >
           <Checkbox
-            value="file"
-            label="File"
-            mt={'md'}
+            value="house"
+            label="House"
+            // mt={'md'}
             styles={{
               input: {
                 '&:checked': {
@@ -27,6 +27,24 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
+          />
+          <Checkbox
+            value="file"
+            label="File"
+            // mt={'md'}
+            styles={{
+              input: {
+                '&:checked': {
+                  backgroundColor: '#D92228',
+                  borderColor: '#D92228',
+                },
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              },
+            }}
+            unselectable="on"
           />
           <Checkbox
             value="plot"
@@ -42,6 +60,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="flat"
@@ -57,6 +76,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="villa"
@@ -72,6 +92,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="farmhosue"
@@ -87,6 +108,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="penthouse"
@@ -102,6 +124,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="shop"
@@ -117,6 +140,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="plaza"
@@ -132,6 +156,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="building"
@@ -147,6 +172,7 @@ export default function PropertySubCategoryCB({
                 },
               },
             }}
+            unselectable="on"
           />
         </Checkbox.Group>
       </Input.Wrapper>

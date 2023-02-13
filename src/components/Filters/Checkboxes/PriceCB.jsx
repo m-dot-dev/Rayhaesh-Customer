@@ -11,7 +11,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
         >
           <Checkbox
             value="1"
-            label="< 5 Lac"
+            label="< 15 Lac"
             mt={'md'}
             styles={{
               input: {
@@ -24,10 +24,11 @@ export default function PriceCB({ priceValue, setPriceValue }) {
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="2"
-            label="< 30 Lac"
+            label="< 50 Lac"
             styles={{
               input: {
                 '&:checked': {
@@ -39,6 +40,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="3"
@@ -54,6 +56,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
                 },
               },
             }}
+            unselectable="on"
           />
           <Checkbox
             value="4"
@@ -69,6 +72,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
                 },
               },
             }}
+            unselectable="on"
           />
         </Checkbox.Group>
       </Input.Wrapper>

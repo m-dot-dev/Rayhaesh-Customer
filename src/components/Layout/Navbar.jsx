@@ -113,9 +113,9 @@ export default function Navbar() {
 
   const { auth, setAuth } = useAuth()
 
-  console.log('====================================')
-  console.log('auth checking in the navbar: ', auth)
-  console.log('====================================')
+  // console.log('====================================')
+  // console.log('auth checking in the navbar: ', auth)
+  // console.log('====================================')
 
   const [
     drawerOpened,
@@ -318,7 +318,7 @@ export default function Navbar() {
                 }}
               >
                 <Menu.Target>
-                  <Avatar src={null} alt="" size={40} color="red" />
+                  <Avatar src={null} alt="" size={40} color="red" mr={'xl'} />
                 </Menu.Target>
 
                 <Menu.Dropdown style={{ borderColor: '#D92228' }}>
@@ -346,7 +346,7 @@ export default function Navbar() {
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
                     onClick={() => {
-                      navigate('/profile/:id')
+                      navigate('/profile')
                     }}
                   >
                     <Text style={{ fontFamily: 'poppins' }}>Settings</Text>
@@ -434,7 +434,7 @@ export default function Navbar() {
               size="md"
               leftIcon={<IconShoppingBag />}
               onClick={() => {
-                navigate('/buy')
+                navigate('/properties')
                 closeDrawer()
               }}
             >

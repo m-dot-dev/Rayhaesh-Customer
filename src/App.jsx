@@ -64,7 +64,7 @@ function App() {
                 {/* Routes to Protect */}
                 <Route element={<RequireAuth />}>
                   <Route path="/booking/:id" element={<Booking />} />
-                  <Route path="/profile/:id" element={<ProfileSettings />} />
+                  <Route path="/profile" element={<ProfileSettings />} />
                 </Route>
                 {/* 404 Page */}
                 <Route path="*" element={<ErrorPage />} />

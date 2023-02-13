@@ -7,6 +7,7 @@ import {
   Paper,
   PasswordInput,
   Select,
+  SimpleGrid,
   Stack,
   Text,
   Textarea,
@@ -70,9 +71,12 @@ const ProfileSettings = (props) => {
   const [validNumber, setValidNumber] = React.useState(false)
   const [validWhatsapp, setValidWhatsapp] = React.useState(false)
   const [validCnic, setValidCnic] = React.useState(false)
+  const [facebook, setFacebook] = React.useState('')
+  const [instagram, setInstagram] = React.useState('')
+  const [image, setImage] = React.useState('')
   const [user, setUser] = React.useState()
 
-  // const { auth } = useAuth()
+  const { auth } = useAuth()
 
   useEffect(() => {
     setValidName(USER_REGEX.test(name))
@@ -124,11 +128,61 @@ const ProfileSettings = (props) => {
       .then((res) => {
         setEmail(res.data?.body?.email)
         setName(res.data?.body?.name)
+        setPhone(res.data?.body?.cellPhoneNumber)
+        setWhatsapp(res.data?.body?.whatsappNumber)
+        setTempAddress(res.data?.body?.temporaryAddress)
+        setPermAddress(res.data?.body?.permanentAddress)
+        setAbout(res.data?.body?.aboutUser)
+        setZip(res.data?.body?.ZIPCode)
+        setCity(res.data?.body?.city)
+        setAgency(res.data?.body?.agency)
+        setCnic(res.data?.body?.CNIC)
+        setFacebook(res.data?.body?.facebook)
+        setInstagram(res.data?.body?.instagram)
+        setImage(res.data?.body?.profileImage)
+        setUser(res.data?.body)
       })
       .catch((err) => {
         console.log(err)
       })
   }, [])
+
+  console.log('====================================')
+  console.log('user: ', user)
+  console.log('====================================')
+
+  const handleSave = (e) => {
+    e.preventDefault()
+    axios
+      .patch(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/updateProfile',
+        {
+          name,
+          email,
+          password,
+          cellPhoneNumber: phone,
+          whatsappNumber: whatsapp,
+          temporaryAddress: tempAddress,
+          permanentAddress: permAddress,
+          aboutUser: about,
+          ZIPCode: zip,
+          city,
+          agency,
+          CNIC: cnic,
+        },
+        {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        },
+      )
+      .then((res) => {
+        console.log('update response: ', res)
+      })
+      .catch((err) => {
+        console.log('update error: ', err)
+      })
+  }
 
   return (
     <Container>
@@ -136,211 +190,121 @@ const ProfileSettings = (props) => {
         <Text weight={600} style={{ fontSize: 30 }} align="center" mb={'lg'}>
           Profile Settings
         </Text>
-        <Dropzone
-          onDrop={(files) => console.log('accepted files', files)}
-          onReject={(files) => console.log('rejected files', files)}
-          maxSize={3 * 1024 ** 2}
-          accept={IMAGE_MIME_TYPE}
-          {...props}
-          style={{
-            width: '30%',
-            height: '50%',
-            margin: 'auto',
-            borderRadius: 30,
-            padding: 10,
-            textAlign: 'center',
-            cursor: 'pointer',
-          }}
-        >
-          <Group
-            position="center"
-            spacing="xl"
-            style={{ minHeight: 220, pointerEvents: 'none' }}
+        <form onSubmit={handleSave}>
+          <Dropzone
+            onDrop={(files) => console.log('accepted files', files)}
+            onReject={(files) => console.log('rejected files', files)}
+            maxSize={3 * 1024 ** 2}
+            accept={IMAGE_MIME_TYPE}
+            {...props}
+            style={{
+              width: '30%',
+              height: '50%',
+              margin: 'auto',
+              borderRadius: 30,
+              padding: 10,
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
           >
-            <Dropzone.Accept>
-              <IconUpload size={50} stroke={1.5} />
-            </Dropzone.Accept>
-            <Dropzone.Reject>
-              <IconX size={50} stroke={1.5} />
-            </Dropzone.Reject>
-            <Dropzone.Idle>
-              <IconPhoto size={50} stroke={1.5} />
-            </Dropzone.Idle>
+            <Group
+              position="center"
+              spacing="xl"
+              style={{ minHeight: 220, pointerEvents: 'none' }}
+            >
+              <Dropzone.Accept>
+                <IconUpload size={50} stroke={1.5} />
+              </Dropzone.Accept>
+              <Dropzone.Reject>
+                <IconX size={50} stroke={1.5} />
+              </Dropzone.Reject>
+              <Dropzone.Idle>
+                <IconPhoto size={50} stroke={1.5} />
+              </Dropzone.Idle>
 
-            <div>
-              <Text size="xl" inline>
-                Drag image here or click to select file
-              </Text>
-              <Text size="sm" color="dimmed" inline mt={7}>
-                File should not exceed 5mb
-              </Text>
-            </div>
-          </Group>
-        </Dropzone>
-        <Grid mt={'xl'}>
-          <Grid.Col md={12}>
-            {!match786 ? (
-              <Group noWrap>
-                <TextInput
-                  required
-                  label="Username"
-                  placeholder="Tehseen Riaz"
-                  value={name}
-                  onChange={(e) => setName(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validName ? 'false' : 'true'}
-                />
-                <TextInput
-                  required
-                  label="Email"
-                  placeholder="hello@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validEmail ? 'false' : 'true'}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <TextInput
-                  required
-                  label="Username"
-                  placeholder="Tehseen Riaz"
-                  value={name}
-                  onChange={(e) => setName(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validName ? 'false' : 'true'}
-                />
-                <TextInput
-                  required
-                  label="Email"
-                  placeholder="hello@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validEmail ? 'false' : 'true'}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
+              <div>
+                <Text size="xl" inline>
+                  Drag image here or click to select file
+                </Text>
+                <Text size="sm" color="dimmed" inline mt={7}>
+                  File should not exceed 5mb
+                </Text>
+              </div>
+            </Group>
+          </Dropzone>
+          <Grid columns={12}>
+            <TextInput
+              required
+              label="Username"
+              placeholder="Tehseen Riaz"
+              value={name}
+              onChange={(e) => setName(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+              aria-invalid={validName ? 'false' : 'true'}
+            />
+            <TextInput
+              required
+              label="Email"
+              placeholder="hello@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+              aria-invalid={validEmail ? 'false' : 'true'}
+            />
 
-          <Grid.Col md={12}>
-            {!match786 ? (
-              <Group noWrap>
-                <PasswordInput
-                  required
-                  label="Password"
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                  }}
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                  aria-invalid={validPassword ? 'false' : 'true'}
-                />
-                <PasswordInput
-                  required
-                  label="Confirm Password"
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                  }}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-                  aria-invalid={validMatch ? 'false' : 'true'}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <PasswordInput
-                  required
-                  label="Password"
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                  }}
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                  aria-invalid={validPassword ? 'false' : 'true'}
-                />
-                <PasswordInput
-                  required
-                  label="Confirm Password"
-                  placeholder=""
-                  style={{
-                    width: '100%',
-                  }}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-                  aria-invalid={validMatch ? 'false' : 'true'}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
+            <PasswordInput
+              label="Password"
+              placeholder=""
+              style={{
+                width: '100%',
+              }}
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+              aria-invalid={validPassword ? 'false' : 'true'}
+              autoComplete={'off'}
+            />
+            <PasswordInput
+              label="Confirm Password"
+              placeholder=""
+              style={{
+                width: '100%',
+              }}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+              aria-invalid={validMatch ? 'false' : 'true'}
+            />
 
-          <Grid.Col md={12}>
-            {!match786 ? (
-              <Group noWrap>
-                <NumberInput
-                  label="Cell Number"
-                  placeholder=""
-                  value={phone}
-                  onChange={(e) => setPhone(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validNumber ? 'false' : 'true'}
-                />
-                <NumberInput
-                  label="WhatsApp Number"
-                  placeholder=""
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validWhatsapp ? 'false' : 'true'}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <NumberInput
-                  label="Cell Number"
-                  placeholder=""
-                  value={phone}
-                  onChange={(e) => setPhone(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validNumber ? 'false' : 'true'}
-                />
-                <NumberInput
-                  label="WhatsApp Number"
-                  placeholder=""
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validWhatsapp ? 'false' : 'true'}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
+            <TextInput
+              label="Cell Number"
+              placeholder=""
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value)
+              }}
+              hideControls
+              style={{
+                width: '100%',
+              }}
+              aria-invalid={validNumber ? 'false' : 'true'}
+            />
+            <TextInput
+              label="WhatsApp Number"
+              placeholder=""
+              value={whatsapp}
+              onChange={(e) => {
+                setWhatsapp(e.target.value)
+              }}
+              hideControls
+              style={{
+                width: '100%',
+              }}
+              aria-invalid={validWhatsapp ? 'false' : 'true'}
+            />
 
-          <Grid.Col>
             <Group
               noWrap
               style={{
@@ -357,171 +321,92 @@ const ProfileSettings = (props) => {
                 }}
               />
             </Group>
-          </Grid.Col>
 
-          <Grid.Col>
-            {!match786 ? (
-              <Group noWrap>
-                <Textarea
-                  label="Temporary Address"
-                  placeholder="Temporary Address"
-                  value={tempAddress}
-                  onChange={(e) => setTempAddress(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-                <Textarea
-                  label="Permanent Address"
-                  placeholder="Permanent Address"
-                  value={permAddress}
-                  onChange={(e) => setPermAddress(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <Textarea
-                  label="Temporary Address"
-                  placeholder="Temporary Address"
-                  value={tempAddress}
-                  onChange={(e) => setTempAddress(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-                <Textarea
-                  label="Permanent Address"
-                  placeholder="Permanent Address"
-                  value={permAddress}
-                  onChange={(e) => setPermAddress(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
+            <Textarea
+              label="Temporary Address"
+              placeholder="Temporary Address"
+              value={tempAddress}
+              onChange={(e) => setTempAddress(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+            />
+            <Textarea
+              label="Permanent Address"
+              placeholder="Permanent Address"
+              value={permAddress}
+              onChange={(e) => setPermAddress(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+            />
 
-          <Grid.Col>
-            {!match786 ? (
-              <Group noWrap>
-                <NumberInput
-                  label="Zip Code"
-                  placeholder="Zip Code"
-                  value={zip}
-                  onChange={(e) => setZip(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                />
-                <NumberInput
-                  hideControls
-                  label="CNIC"
-                  placeholder="CNIC"
-                  value={cnic}
-                  onChange={(e) => setCnic(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validCnic ? 'false' : 'true'}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <NumberInput
-                  label="Zip Code"
-                  placeholder="Zip Code"
-                  value={zip}
-                  onChange={(e) => setZip(e.currentTarget.value)}
-                  hideControls
-                  style={{
-                    width: '100%',
-                  }}
-                />
-                <NumberInput
-                  hideControls
-                  label="CNIC"
-                  placeholder="CNIC"
-                  value={cnic}
-                  onChange={(e) => setCnic(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  aria-invalid={validCnic ? 'false' : 'true'}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
+            <TextInput
+              label="Zip Code"
+              placeholder="Zip Code"
+              value={zip}
+              onChange={(e) => {
+                setZip(e.target.value)
+              }}
+              hideControls
+              style={{
+                width: '100%',
+              }}
+            />
+            <TextInput
+              hideControls
+              label="CNIC"
+              placeholder="CNIC"
+              value={cnic}
+              onChange={(e) => {
+                setCnic(e.target.value)
+              }}
+              style={{
+                width: '100%',
+              }}
+              aria-invalid={validCnic ? 'false' : 'true'}
+            />
 
-          <Grid.Col>
-            {!match786 ? (
-              <Group noWrap>
-                <Select
-                  label="City"
-                  placeholder="Select City"
-                  value={city}
-                  onChange={(e) => setCity(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  data={cityData}
-                />
-                <Select
-                  label="Agency"
-                  placeholder="Select Agency"
-                  value={agency}
-                  onChange={(e) => setAgency(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  data={agencyData}
-                />
-              </Group>
-            ) : (
-              <Stack>
-                <Select
-                  label="City"
-                  placeholder="Select City"
-                  value={city}
-                  onChange={(e) => setCity(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  data={cityData}
-                />
-                <Select
-                  label="Agency"
-                  placeholder="Select Agency"
-                  value={agency}
-                  onChange={(e) => setAgency(e.currentTarget.value)}
-                  style={{
-                    width: '100%',
-                  }}
-                  data={agencyData}
-                />
-              </Stack>
-            )}
-          </Grid.Col>
-        </Grid>
+            <Select
+              label="City"
+              placeholder="Select City"
+              value={city}
+              onChange={(e) => setCity(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+              data={cityData}
+            />
+            <Select
+              label="Agency"
+              placeholder="Select Agency"
+              value={agency}
+              onChange={(e) => setAgency(e.currentTarget.value)}
+              style={{
+                width: '100%',
+              }}
+              data={agencyData}
+            />
+          </Grid>
 
-        {/* dropzone(cnic) */}
-
-        <Group noWrap grow position="center" mt={'lg'}>
-          <Button fullWidth color="red" leftIcon={!match300 ? <IconX /> : null}>
-            Cancel
-          </Button>
-          <Button
-            fullWidth
-            color="green"
-            leftIcon={!match300 ? <IconCheck /> : null}
-          >
-            Save
-          </Button>
-        </Group>
+          <Group noWrap grow position="center" mt={'lg'}>
+            <Button
+              fullWidth
+              color="red"
+              leftIcon={!match300 ? <IconX /> : null}
+            >
+              Cancel
+            </Button>
+            <Button
+              fullWidth
+              color="green"
+              leftIcon={!match300 ? <IconCheck /> : null}
+              type="submit"
+            >
+              Save
+            </Button>
+          </Group>
+        </form>
       </Paper>
     </Container>
   )
