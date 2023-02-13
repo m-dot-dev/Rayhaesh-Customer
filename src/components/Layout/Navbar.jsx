@@ -222,17 +222,6 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
-                navigate('/')
-              }}
-            >
-              Sell
-            </Button>
-
-            <Button
-              variant="outline"
-              sx={{ borderColor: '#D92228' }}
-              className={classes.link}
-              onClick={() => {
                 navigate('/exchange')
               }}
             >
@@ -259,6 +248,17 @@ export default function Navbar() {
               }}
             >
               News & Insights
+            </Button>
+
+            <Button
+              variant="outline"
+              sx={{ borderColor: '#D92228' }}
+              className={classes.link}
+              onClick={() => {
+                navigate('/contact')
+              }}
+            >
+              Contact
             </Button>
           </Group>
 
@@ -457,23 +457,6 @@ export default function Navbar() {
               }}
               className={classes.mobileLink}
               size="md"
-              leftIcon={<IconCash />}
-              onClick={() => {
-                navigate('/')
-                closeDrawer()
-              }}
-            >
-              Sell
-            </Button>
-
-            <Button
-              sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
-              }}
-              className={classes.mobileLink}
-              size="md"
               leftIcon={<IconExchange />}
               onClick={() => {
                 navigate('/exchange')
@@ -532,6 +515,23 @@ export default function Navbar() {
               }}
             >
               Subscription
+            </Button>
+
+            <Button
+              sx={{
+                color: 'white',
+                backgroundColor: '#D92228',
+                fontFamily: 'poppins',
+              }}
+              className={classes.mobileLink}
+              size="md"
+              leftIcon={<IconCash />}
+              onClick={() => {
+                navigate('/contact')
+                closeDrawer()
+              }}
+            >
+              Contact
             </Button>
           </Group>
 

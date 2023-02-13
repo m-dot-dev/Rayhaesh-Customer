@@ -20,6 +20,7 @@ import RentListings from './components/Rent/RentListings'
 import AddBlog from './components/NewsInsights/AddBlog'
 import useAuth from './components/hooks/useAuth'
 import { useEffect, useState } from 'react'
+import Contact from './components/Generic/Contact'
 
 function App() {
   const { setAuth } = useAuth()
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/exchange" element={<ExchangeListings />} />
                 <Route path="/rent" element={<RentListings />} />
                 <Route path="/addblog" element={<AddBlog />} />
+                <Route path="/contact" element={<Contact />} />
                 {/* Routes to Protect */}
                 <Route element={<RequireAuth />}>
                   <Route path="/booking/:id" element={<Booking />} />
