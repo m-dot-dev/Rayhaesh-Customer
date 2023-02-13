@@ -223,13 +223,7 @@ export default function SignUp() {
               </Radio.Group>
             </Group>
           </Stack>
-          <Group position="apart" mt="lg">
-            <Checkbox
-              label="Remember me"
-              color={'red'}
-              sx={{ lineHeight: 1 }}
-            />
-          </Group>
+
           <Button
             fullWidth
             mt="xl"

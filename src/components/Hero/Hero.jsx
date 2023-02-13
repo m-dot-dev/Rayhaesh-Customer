@@ -60,7 +60,7 @@ const Hero = () => {
   return (
     <>
       <SearchSection />
-      <Box style={{ marginTop: 50 }}>
+      <Container size={'xl'} mt={'xl'}>
         <Box style={{ padding: 20 }}>
           <Text className={classes.listingText}>Premiere House Listings</Text>
           <ListingCarousel listings={house} loading={isLoaded} error={error} />
@@ -83,7 +83,7 @@ const Hero = () => {
           </Text>
           <AgenciesCarousel />
         </Box>
-      </Box>
+      </Container>
     </>
   )
 }

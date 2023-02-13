@@ -201,11 +201,6 @@ export default function Login() {
           </Stack>
 
           <Group position="apart" mt="lg">
-            <Checkbox
-              label="Remember me"
-              color={'red'}
-              sx={{ lineHeight: 1 }}
-            />
             <Anchor
               onClick={(event) => event.preventDefault()}
               href="#"

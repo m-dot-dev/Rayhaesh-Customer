@@ -12,9 +12,6 @@ import Footer from './components/Layout/Footer'
 import Navbar from './components/Layout/Navbar'
 import PropertyPage from './components/Listings/PropertyPage'
 import Blogs from './components/NewsInsights/Blogs'
-import AuthContext, {
-  AuthProvider,
-} from './components/PfpManagement/AuthProvider'
 import Login from './components/PfpManagement/Login'
 import ProfileSettings from './components/PfpManagement/ProfileSettings'
 import RequireAuth from './components/PfpManagement/RequireAuth'
@@ -23,6 +20,7 @@ import RentListings from './components/Rent/RentListings'
 import AddBlog from './components/NewsInsights/AddBlog'
 import useAuth from './components/hooks/useAuth'
 import { useEffect, useState } from 'react'
+
 function App() {
   const { setAuth } = useAuth()
   const [loading, setLoading] = useState(true)

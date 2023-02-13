@@ -20,6 +20,8 @@ import React from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import useAuth from '../hooks/useAuth'
+import DropZone from '../Generic/DropZone'
+import { uploadImage } from '../services/fileUpload'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')
@@ -39,6 +41,9 @@ const ProfileSettings = (props) => {
   const [city, setCity] = React.useState('')
   const [agency, setAgency] = React.useState('')
   const [cnic, setCnic] = React.useState('')
+  const [facebook, setFacebook] = React.useState('')
+  const [instagram, setInstagram] = React.useState('')
+  const [value, setValue] = React.useState(null)
 
   const cityData = [
     { value: 'islamabad', label: 'Islamabad' },
@@ -71,9 +76,6 @@ const ProfileSettings = (props) => {
   const [validNumber, setValidNumber] = React.useState(false)
   const [validWhatsapp, setValidWhatsapp] = React.useState(false)
   const [validCnic, setValidCnic] = React.useState(false)
-  const [facebook, setFacebook] = React.useState('')
-  const [instagram, setInstagram] = React.useState('')
-  const [image, setImage] = React.useState('')
   const [user, setUser] = React.useState()
 
   const { auth } = useAuth()
@@ -139,7 +141,7 @@ const ProfileSettings = (props) => {
         setCnic(res.data?.body?.CNIC)
         setFacebook(res.data?.body?.facebook)
         setInstagram(res.data?.body?.instagram)
-        setImage(res.data?.body?.profileImage)
+        setProfileImage(res.data?.body?.profileImage)
         setUser(res.data?.body)
       })
       .catch((err) => {
@@ -148,11 +150,14 @@ const ProfileSettings = (props) => {
   }, [])
 
   console.log('====================================')
-  console.log('user: ', user)
+  console.log('user ', user)
   console.log('====================================')
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
+
+    const imageURL = await uploadImage(profileImage, 'user-profile-images')
+
     axios
       .patch(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/updateProfile',
@@ -169,6 +174,7 @@ const ProfileSettings = (props) => {
           city,
           agency,
           CNIC: cnic,
+          profileImage: imageURL,
         },
         {
           headers: {
@@ -191,48 +197,15 @@ const ProfileSettings = (props) => {
           Profile Settings
         </Text>
         <form onSubmit={handleSave}>
-          <Dropzone
-            onDrop={(files) => console.log('accepted files', files)}
-            onReject={(files) => console.log('rejected files', files)}
-            maxSize={3 * 1024 ** 2}
-            accept={IMAGE_MIME_TYPE}
-            {...props}
+          <Group
             style={{
-              width: '30%',
-              height: '50%',
-              margin: 'auto',
-              borderRadius: 30,
-              padding: 10,
-              textAlign: 'center',
-              cursor: 'pointer',
+              width: '100%',
             }}
+            position="center"
           >
-            <Group
-              position="center"
-              spacing="xl"
-              style={{ minHeight: 220, pointerEvents: 'none' }}
-            >
-              <Dropzone.Accept>
-                <IconUpload size={50} stroke={1.5} />
-              </Dropzone.Accept>
-              <Dropzone.Reject>
-                <IconX size={50} stroke={1.5} />
-              </Dropzone.Reject>
-              <Dropzone.Idle>
-                <IconPhoto size={50} stroke={1.5} />
-              </Dropzone.Idle>
-
-              <div>
-                <Text size="xl" inline>
-                  Drag image here or click to select file
-                </Text>
-                <Text size="sm" color="dimmed" inline mt={7}>
-                  File should not exceed 5mb
-                </Text>
-              </div>
-            </Group>
-          </Dropzone>
-          <Grid columns={12}>
+            <DropZone value={profileImage} setValue={setProfileImage} />
+          </Group>
+          <Grid columns={12} mt={'xl'}>
             <TextInput
               required
               label="Username"
@@ -245,7 +218,7 @@ const ProfileSettings = (props) => {
               aria-invalid={validName ? 'false' : 'true'}
             />
             <TextInput
-              required
+              disabled={true}
               label="Email"
               placeholder="hello@gmail.com"
               value={email}

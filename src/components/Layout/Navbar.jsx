@@ -129,6 +129,7 @@ export default function Navbar() {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [profileImage, setProfileImage] = useState(null)
 
   useEffect(() => {
     axios
@@ -154,11 +155,12 @@ export default function Navbar() {
       .then((res) => {
         setName(res.data?.body?.name)
         setEmail(res.data?.body?.email)
+        setProfileImage(res.data?.body?.profileImage)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [email])
+  }, [])
 
   return (
     <>
@@ -318,13 +320,19 @@ export default function Navbar() {
                 }}
               >
                 <Menu.Target>
-                  <Avatar src={null} alt="" size={40} color="red" mr={'xl'} />
+                  <Avatar
+                    src={profileImage}
+                    alt=""
+                    size={40}
+                    color="red"
+                    mr={'xl'}
+                  />
                 </Menu.Target>
 
                 <Menu.Dropdown style={{ borderColor: '#D92228' }}>
                   <Menu.Item
                     onClick={() => {
-                      navigate('/profile/:id')
+                      navigate('/profile')
                     }}
                   >
                     <Group noWrap>

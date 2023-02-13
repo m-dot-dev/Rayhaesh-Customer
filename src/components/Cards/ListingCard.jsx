@@ -120,10 +120,6 @@ export default function ListingCard({ property }) {
       >
         Rs. {property?.totalPrice}
       </Text>
-
-      <Button variant="light" color="red" fullWidth mt="md" radius="md">
-        View
-      </Button>
     </Card>
   )
 }

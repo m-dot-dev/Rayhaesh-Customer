@@ -128,7 +128,7 @@ const Booking = () => {
               />
             </Group>
             <Group position="apart" mt="lg" noWrap>
-              <NumberInput
+              <TextInput
                 hideControls
                 placeholder="03xxxxxxxxx"
                 style={{
@@ -149,11 +149,11 @@ const Booking = () => {
                 required
                 size="md"
                 value={city}
-                onChange={(event) => setCity(event.currentTarget.value)}
+                onChange={(event) => setCity(event.target.value)}
               />
             </Group>
             <Group mt={'lg'}>
-              <NumberInput
+              <TextInput
                 hideControls
                 required
                 label="CNIC"
@@ -162,7 +162,7 @@ const Booking = () => {
                   width: '100%',
                 }}
                 value={cnic}
-                onChange={(event) => setCnic(event.currentTarget.value)}
+                onChange={(event) => setCnic(event.target.value)}
               />
             </Group>
             <Group mt={'lg'} noWrap>
@@ -173,7 +173,7 @@ const Booking = () => {
                 size="md"
                 style={{ width: '100%' }}
                 value={address}
-                onChange={(event) => setAddress(event.currentTarget.value)}
+                onChange={(event) => setAddress(event.target.value)}
               />
             </Group>
             <Group position="apart" mt="lg" noWrap>
@@ -189,7 +189,7 @@ const Booking = () => {
                   width: '100%',
                 }}
                 required
-                onChange={(event) => setBooking(event.currentTarget.value)}
+                onChange={(event) => setBooking(event.target.value)}
               />
               <NativeSelect
                 label="Payment Method"
@@ -204,7 +204,7 @@ const Booking = () => {
                   width: '100%',
                 }}
                 required
-                onChange={(event) => setPayment(event.currentTarget.value)}
+                onChange={(event) => setPayment(event.target.value)}
               />
             </Group>
           </Paper>
@@ -299,7 +299,7 @@ const Booking = () => {
             >
               <Stack>
                 <Group position="apart">
-                  <NumberInput
+                  <TextInput
                     hideControls
                     placeholder="1234 1234 1234 1234"
                     label="Card Number"
@@ -309,11 +309,9 @@ const Booking = () => {
                     icon={<IconCreditCard />}
                     required
                     value={cardNumber}
-                    onChange={(event) =>
-                      setCardNumber(event.currentTarget.value)
-                    }
+                    onChange={(event) => setCardNumber(event.target.value)}
                   />
-                  <NumberInput
+                  <TextInput
                     hideControls
                     placeholder="MM/YY"
                     label="Expiry Date"
@@ -322,11 +320,9 @@ const Booking = () => {
                     }}
                     required
                     value={expiryDate}
-                    onChange={(event) =>
-                      setExpiryDate(event.currentTarget.value)
-                    }
+                    onChange={(event) => setExpiryDate(event.target.value)}
                   />
-                  <NumberInput
+                  <TextInput
                     hideControls
                     placeholder="123"
                     label="CVC"
@@ -335,7 +331,7 @@ const Booking = () => {
                     }}
                     required
                     value={cvv}
-                    onChange={(event) => setCvv(event.currentTarget.value)}
+                    onChange={(event) => setCvv(event.target.value)}
                   />
                 </Group>
                 <Select
@@ -344,7 +340,7 @@ const Booking = () => {
                   placeholder="Choose a conutry"
                   required
                   value={country}
-                  onChange={(event) => setCountry(event.currentTarget.value)}
+                  onChange={(event) => setCountry(event.target.value)}
                 />
                 <Checkbox label="Remember payment details" color={'red'} />
                 <Group mt={'md'} position="apart" noWrap>
@@ -381,7 +377,7 @@ const Booking = () => {
             >
               <Stack>
                 <Group position="apart">
-                  <NumberInput
+                  <TextInput
                     hideControls
                     placeholder="03xxxxxxxxx"
                     label="Easy Paisa Number"
