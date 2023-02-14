@@ -5,7 +5,7 @@ import { Box, Container, Text, createStyles } from '@mantine/core'
 import AgenciesCarousel from '../Carousel/AgenciesCarousel'
 import axios from 'axios'
 
-const Hero = () => {
+const Hero = ({ setSearchFilters }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(true)
   const [house, setHouse] = useState([])
@@ -59,7 +59,7 @@ const Hero = () => {
 
   return (
     <>
-      <SearchSection />
+      <SearchSection setSearchFilters={setSearchFilters} />
       <Container size={'xl'} mt={'xl'}>
         <Box style={{ padding: 20 }}>
           <Text className={classes.listingText}>Premiere House Listings</Text>

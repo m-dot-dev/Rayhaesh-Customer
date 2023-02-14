@@ -27,6 +27,7 @@ import {
   IconExchange,
   IconHome2,
   IconNews,
+  IconCategory,
 } from '@tabler/icons'
 import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
@@ -330,6 +331,16 @@ export default function Navbar() {
                 </Menu.Target>
 
                 <Menu.Dropdown style={{ borderColor: '#D92228' }}>
+                  <Menu.Item
+                    icon={
+                      <IconCategory size={20} style={{ color: 'blueviolet' }} />
+                    }
+                    onClick={() => {
+                      navigate('/dashboard')
+                    }}
+                  >
+                    <Text style={{ fontFamily: 'poppins' }}>Dashboard</Text>
+                  </Menu.Item>
                   <Menu.Item
                     icon={
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />

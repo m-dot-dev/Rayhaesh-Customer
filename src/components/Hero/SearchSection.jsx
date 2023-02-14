@@ -83,7 +83,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export default function SearchSection() {
+export default function SearchSection({ setSearchFilters }) {
   const cityData = PakistanCities.map((city) => ({
     label: city.label,
     value: city.value,
@@ -115,9 +115,9 @@ export default function SearchSection() {
   const navigate = useNavigate()
 
   //search hooks
-  const [city, setCity] = useState([])
-  const [subCategoryValue, setSubCategoryValue] = useState([])
-  const [priceValue, setPriceValue] = useState([])
+  // const [city, setCity] = useState([])
+  // const [subCategoryValue, setSubCategoryValue] = useState([])
+  // const [priceValue, setPriceValue] = useState([])
 
   return (
     <div className={classes.hero}>
@@ -144,8 +144,8 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
-            value={city}
-            onChange={setCity}
+            // value={city}
+            onChange={(v) => setSearchFilters((a) => ({ ...a, city: v }))}
           />
           <Select
             data={typeData}
@@ -158,8 +158,10 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
-            value={subCategoryValue}
-            onChange={setSubCategoryValue}
+            // value={subCategoryValue}
+            onChange={(v) =>
+              setSearchFilters((a) => ({ ...a, subCategoryValue: v }))
+            }
           />
           <Select
             data={priceData}
@@ -172,8 +174,8 @@ export default function SearchSection() {
                 fontSize: 16,
               },
             }}
-            value={priceValue}
-            onChange={setPriceValue}
+            // value={priceValue}
+            onChange={(v) => setSearchFilters((a) => ({ ...a, priceValue: v }))}
           />
           <Box
             style={{
@@ -189,15 +191,9 @@ export default function SearchSection() {
                 backgroundColor: '#D92228',
                 color: 'white',
               }}
-              // onClick={() => {
-              //   navigate(`/properties`, {
-              //     state: {
-              //       city: city,
-              //       subCategoryValue: subCategoryValue,
-              //       priceValue: priceValue,
-              //     },
-              //   })
-              // }}
+              onClick={() => {
+                navigate('/properties')
+              }}
             >
               Search
             </Button>

@@ -24,27 +24,29 @@ import { IconSearch } from '@tabler/icons'
 import ListingPagination from '../Generic/ListingPagination'
 import { filtering } from './BuyFilter'
 
-const BuyListings = () => {
+const BuyListings = ({ searchFilters }) => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
 
   // Filter Hooks here
 
   //City Hooks
-  const [city, setCity] = React.useState([])
+  const [city, setCity] = React.useState(searchFilters.city || '')
   const [filteredData, setFilteredData] = React.useState([])
 
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
 
   //SubCategory Hooks
-  const [subCategoryValue, setSubCategoryValue] = useState([])
+  const [subCategoryValue, setSubCategoryValue] = useState(
+    searchFilters.subCategoryValue || '',
+  )
 
   //Area Hooks
   const [areaValue, setAreaValue] = useState([])
 
   //Price Hooks
-  const [priceValue, setPriceValue] = useState([])
+  const [priceValue, setPriceValue] = useState(searchFilters.priceValue || '')
 
   // ----------------------------------------------
 
@@ -75,7 +77,14 @@ const BuyListings = () => {
       ),
     )
   }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
-
+  console.log(
+    city,
+    categoryValue,
+    areaValue,
+    priceValue,
+    subCategoryValue,
+    'aaa',
+  )
   useEffect(() => {
     axios
       .get(

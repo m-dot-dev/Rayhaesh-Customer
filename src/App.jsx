@@ -21,10 +21,12 @@ import AddBlog from './components/NewsInsights/AddBlog'
 import useAuth from './components/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import Contact from './components/Generic/Contact'
+import Dashboard from './components/PfpManagement/Dashboard'
 
 function App() {
   const { setAuth } = useAuth()
   const [loading, setLoading] = useState(true)
+  const [searchFilters, setSearchFilters] = useState({})
   useEffect(() => {
     let token = localStorage.getItem('token')
     if (token) {
@@ -33,7 +35,7 @@ function App() {
     }
     setLoading(false)
   }, [])
-
+  console.log('searchFilters', searchFilters)
   return loading ? null : (
     <MantineProvider theme={{ fontFamily: 'Poppins' }}>
       <NotificationsProvider>
@@ -50,13 +52,19 @@ function App() {
             <main style={{ flex: 1 }}>
               <Routes>
                 {/* Public Routes */}
-                <Route path="/" element={<Hero />} />
+                <Route
+                  path="/"
+                  element={<Hero setSearchFilters={setSearchFilters} />}
+                />
                 <Route path="/property/:id" element={<PropertyPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/blogs" element={<Blogs />} />
-                <Route path="/properties" element={<BuyListings />} />
+                <Route
+                  path="/properties"
+                  element={<BuyListings searchFilters={searchFilters} />}
+                />
                 <Route path="/exchange" element={<ExchangeListings />} />
                 <Route path="/rent" element={<RentListings />} />
                 <Route path="/addblog" element={<AddBlog />} />
@@ -65,6 +73,7 @@ function App() {
                   <Route path="/booking/:id" element={<Booking />} />
                   <Route path="/profile" element={<ProfileSettings />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                 </Route>
                 {/* 404 Page */}
                 <Route path="*" element={<ErrorPage />} />
