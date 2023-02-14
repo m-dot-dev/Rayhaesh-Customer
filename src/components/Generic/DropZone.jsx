@@ -1,7 +1,7 @@
-import { Box, ActionIcon } from '@mantine/core'
+import { Box, ActionIcon, Text } from '@mantine/core'
 import React from 'react'
 import { useDropzone } from 'react-dropzone'
-import { IconCircleX } from '@tabler/icons'
+import { IconCircleX, IconPaperclip } from '@tabler/icons'
 
 export default function DropZone({ value, setValue }) {
   const {
@@ -63,15 +63,15 @@ export default function DropZone({ value, setValue }) {
               setValue(file)
             }}
           />
-          Attach
+          <IconPaperclip size={28} />
           {isDragActive ? (
-            <p>Drop the files here ...</p>
+            <Text mt={'xs'}>Drop the files here ...</Text>
           ) : (
-            <p>
+            <Text mt={'xs'}>
               Drag and drop some files here,
               <br />
               or click to select files
-            </p>
+            </Text>
           )}
         </>
       ) : (

@@ -4,6 +4,7 @@ import {
   Grid,
   Group,
   Image,
+  Indicator,
   List,
   Paper,
   Text,
@@ -13,10 +14,12 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useMediaQuery } from '@mantine/hooks'
 import { useNavigate } from 'react-router-dom'
+import { IconPlus } from '@tabler/icons'
 
 const Blogs = () => {
   const match1000 = useMediaQuery('(max-width: 1000px)')
   const match700 = useMediaQuery('(max-width: 700px)')
+  const match400 = useMediaQuery('(max-width: 400px)')
 
   const [blogs, setBlogs] = useState([])
 
@@ -26,7 +29,7 @@ const Blogs = () => {
     axios
       .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/getAllBlogs')
       .then((res) => {
-        setBlogs(res.data)
+        setBlogs(res.data?.body)
         console.log('====================================')
         console.log('blogs', blogs)
         console.log('====================================')
@@ -35,6 +38,10 @@ const Blogs = () => {
         console.log(err)
       })
   }, [])
+
+  console.log('====================================')
+  console.log('Blogs: ', blogs)
+  console.log('====================================')
 
   return (
     <Container size={'xl'}>
@@ -55,93 +62,60 @@ const Blogs = () => {
         >
           REMS BLOGS
         </Text>
-        <Button
-          variant="filled"
-          sx={{
-            backgroundColor: '#e6294c',
-            color: '#fff',
-            '&:hover': {
-              backgroundColor: '#e6114c',
-            },
-          }}
+
+        <Group
+          mt={0}
           style={{
-            float: 'right',
+            width: '100%',
           }}
-          compact={match700 ? true : false}
-          onClick={() => {
-            navigate('/addblog')
-          }}
+          position={match700 ? 'center' : 'right'}
+          mb={match700 ? 'xl' : 0}
         >
-          Add New Blog
-        </Button>
+          <Button color="red" onClick={() => navigate('/addblog')}>
+            Add Blog
+          </Button>
+        </Group>
 
         <Grid>
-          <Grid.Col md={3} hidden={match1000 ? true : false}>
-            <Paper bg={'#fcfcfc'} px={'xs'}>
-              <Text
-                style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 500,
-                  textAlign: 'left',
-                  color: '#000000',
-                  marginBottom: '1rem',
-                }}
-              >
-                Table of Contents
-              </Text>
-
-              <List type="ordered">
-                <List.Item>Blogs Titles List</List.Item>
-              </List>
-            </Paper>
-          </Grid.Col>
-
-          {/* Blogs */}
-          <Grid.Col md={!match1000 ? 9 : 12}>
-            <Paper px={'xs'}>
-              <Group noWrap spacing={'sm'}>
-                <Text weight={600} size={'xl'}>
-                  1.
-                </Text>
-                <Text weight={600} size={'xl'}>
-                  DELL XPS 15
-                </Text>
-              </Group>
-              <Group noWrap spacing={'xs'} mt={'sm'}>
-                <Text>Posted by: </Text>
-                <Text italic>Hashaam Khan </Text>
-              </Group>
-              <Group noWrap spacing={'xs'}>
-                <Text>Posted on: </Text>
-                <Text italic>12/12/2021</Text>
-              </Group>
-              <Image
-                radius="xs"
-                src="https://images.unsplash.com/photo-1661961110372-8a7682543120?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                alt="Random unsplash image"
-                width={match700 ? 320 : 600}
-                height={match700 ? 220 : 400}
-                mt={'md'}
-                style={{
-                  display: 'block',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-                px={match1000 ? 20 : 0}
-              />
-              <Group noWrap mt={'xl'}>
-                <Text>
-                  Dell made a name for itself in the laptop industry with its
-                  XPS 15. The XPS 15 is a powerful laptop that is great for both
-                  work and play. It has a 15.6-inch display, a 10th-generation
-                  Intel Core i7 processor, 16GB of RAM, and a 512GB SSD. It also
-                  has a 4K touchscreen, a fingerprint reader, and a Thunderbolt
-                  3 port. The XPS 15 is a great laptop for anyone who wants a
-                  powerful laptop that can handle both work and play.
-                </Text>
-              </Group>
-            </Paper>
-          </Grid.Col>
+          <Paper px={'xs'}>
+            {blogs.map((blog) => (
+              <>
+                <Group noWrap spacing={'sm'} mt={'xl'}>
+                  <Text weight={600} size={'xl'}>
+                    {blogs.indexOf(blog) + 1}.
+                  </Text>
+                  <Text weight={600} size={'xl'}>
+                    {blog.title}
+                  </Text>
+                </Group>
+                <Group noWrap spacing={'xs'} mt={'sm'}>
+                  <Text>Posted by: </Text>
+                  <Text italic>{blog?.addedBy?.name} </Text>
+                </Group>
+                <Group noWrap spacing={'xs'}>
+                  <Text>Posted on: </Text>
+                  <Text italic>{blog?.createdAt}</Text>
+                </Group>
+                <Image
+                  radius="xs"
+                  src={blog?.coverImage}
+                  alt="Random unsplash image"
+                  width={match700 ? 300 : 600}
+                  height={match700 ? 200 : 400}
+                  mt={'md'}
+                  style={{
+                    display: 'block',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                  px={match1000 ? 20 : 0}
+                />
+                <Group noWrap mt={'xl'} mb={'xl'}>
+                  <Text>{blog?.blog}</Text>
+                </Group>
+              </>
+            ))}
+          </Paper>
         </Grid>
       </Paper>
     </Container>

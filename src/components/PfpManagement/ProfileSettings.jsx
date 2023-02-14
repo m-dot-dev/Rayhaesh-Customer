@@ -3,25 +3,23 @@ import {
   Container,
   Grid,
   Group,
-  NumberInput,
   Paper,
   PasswordInput,
   Select,
   SimpleGrid,
-  Stack,
   Text,
   Textarea,
   TextInput,
 } from '@mantine/core'
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { useMediaQuery } from '@mantine/hooks'
-import { IconAt, IconCheck, IconPhoto, IconUpload, IconX } from '@tabler/icons'
+import { IconCheck, IconX } from '@tabler/icons'
 import React from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import useAuth from '../hooks/useAuth'
 import DropZone from '../Generic/DropZone'
 import { uploadImage } from '../services/fileUpload'
+import { PakistanCities } from '../Filters/cities'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')
@@ -45,23 +43,10 @@ const ProfileSettings = (props) => {
   const [instagram, setInstagram] = React.useState('')
   const [value, setValue] = React.useState(null)
 
-  const cityData = [
-    { value: 'islamabad', label: 'Islamabad' },
-    { value: 'rawalpindi', label: 'Rawalpindi' },
-    { value: 'lahore', label: 'Lahore' },
-    { value: 'karachi', label: 'Karachi' },
-    { value: 'peshawar', label: 'Peshawar' },
-    { value: 'quetta', label: 'Quetta' },
-    { value: 'multan', label: 'Multan' },
-    { value: 'faisalabad', label: 'Faisalabad' },
-  ]
-
-  const agencyData = [
-    { value: 'agency1', label: 'Agency 1' },
-    { value: 'agency2', label: 'Agency 2' },
-    { value: 'agency3', label: 'Agency 3' },
-    { value: 'agency4', label: 'Agency 4' },
-  ]
+  const cityData = PakistanCities.map((city) => ({
+    label: city.label,
+    value: city.value,
+  }))
 
   const NUM_REGEX = /^(03[0-9]{2})\d{7}$/
   const CNIC_REGEX = /^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$/
@@ -206,28 +191,35 @@ const ProfileSettings = (props) => {
             <DropZone value={profileImage} setValue={setProfileImage} />
           </Group>
           <Grid columns={12} mt={'xl'}>
-            <TextInput
-              required
-              label="Username"
-              placeholder="Tehseen Riaz"
-              value={name}
-              onChange={(e) => setName(e.currentTarget.value)}
-              style={{
-                width: '100%',
-              }}
-              aria-invalid={validName ? 'false' : 'true'}
-            />
-            <TextInput
-              disabled={true}
-              label="Email"
-              placeholder="hello@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              style={{
-                width: '100%',
-              }}
-              aria-invalid={validEmail ? 'false' : 'true'}
-            />
+            <SimpleGrid
+              cols={2}
+              mt="xl"
+              breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
+            >
+              <TextInput
+                required
+                label="Username"
+                placeholder="Tehseen Riaz"
+                value={name}
+                onChange={(e) => setName(e.currentTarget.value)}
+                style={{
+                  width: '100%',
+                }}
+                aria-invalid={validName ? 'false' : 'true'}
+                autoComplete="off"
+              />
+              <TextInput
+                disabled={true}
+                label="Email"
+                placeholder="hello@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                style={{
+                  width: '100%',
+                }}
+                aria-invalid={validEmail ? 'false' : 'true'}
+              />
+            </SimpleGrid>
 
             <PasswordInput
               label="Password"
@@ -349,16 +341,6 @@ const ProfileSettings = (props) => {
                 width: '100%',
               }}
               data={cityData}
-            />
-            <Select
-              label="Agency"
-              placeholder="Select Agency"
-              value={agency}
-              onChange={(e) => setAgency(e.currentTarget.value)}
-              style={{
-                width: '100%',
-              }}
-              data={agencyData}
             />
           </Grid>
 
