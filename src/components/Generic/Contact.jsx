@@ -39,6 +39,7 @@ export default function Contact() {
             styles={{ input: { border: '1px solid #a7a7a8' } }}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            size="md"
           />
           <TextInput
             label="Email"
@@ -48,6 +49,7 @@ export default function Contact() {
             styles={{ input: { border: '1px solid #a7a7a8' } }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            size="md"
           />
         </SimpleGrid>
 
@@ -60,6 +62,7 @@ export default function Contact() {
           styles={{ input: { border: '1px solid #a7a7a8' } }}
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
+          size="md"
         />
         <Textarea
           mt="md"
@@ -73,6 +76,7 @@ export default function Contact() {
           styles={{ input: { border: '1px solid #a7a7a8' } }}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          size="md"
         />
 
         <Group position="center" mt="xl">

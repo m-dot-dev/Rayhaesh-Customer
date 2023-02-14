@@ -16,10 +16,28 @@ import { Link } from 'react-router-dom'
 import ListingPagination from '../Generic/ListingPagination'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
+import { filtering } from '../Buy/BuyFilter'
 
 const RentListings = () => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
+
+  //Filter hooks here
+  //City Hooks
+  const [city, setCity] = React.useState([])
+  const [filteredData, setFilteredData] = React.useState([])
+
+  //Category Hooks
+  const [categoryValue, setCategoryValue] = useState([])
+
+  //SubCategory Hooks
+  const [subCategoryValue, setSubCategoryValue] = useState([])
+
+  //Area Hooks
+  const [areaValue, setAreaValue] = useState([])
+
+  //Price Hooks
+  const [priceValue, setPriceValue] = useState([])
 
   const [allproperties, setAllProperties] = useState([])
   const [error, setError] = useState('')
@@ -37,6 +55,19 @@ const RentListings = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   useEffect(() => {
+    setFilteredData(
+      filtering(
+        city,
+        categoryValue,
+        subCategoryValue,
+        areaValue,
+        priceValue,
+        allproperties,
+      ),
+    )
+  }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
+
+  useEffect(() => {
     axios
       .get(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getAllProperties',
@@ -44,6 +75,11 @@ const RentListings = () => {
       .then((data) => {
         setIsLoaded(false)
         setAllProperties(
+          data.data.body.filter(
+            (property) => property?.propertyIs === 'For Rent',
+          ),
+        )
+        setFilteredData(
           data.data.body.filter(
             (property) => property?.propertyIs === 'For Rent',
           ),
@@ -64,7 +100,18 @@ const RentListings = () => {
       <Container size="xl">
         <Grid py="md">
           <Grid.Col md={3} hidden={match1200 ? true : false}>
-            <Filter />
+            <Filter
+              city={city}
+              setCity={setCity}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
+              subCategoryValue={subCategoryValue}
+              setSubCategoryValue={setSubCategoryValue}
+              areaValue={areaValue}
+              setAreaValue={setAreaValue}
+              priceValue={priceValue}
+              setPriceValue={setPriceValue}
+            />
           </Grid.Col>
 
           <Grid.Col md={!match1200 ? 9 : 12}>
@@ -102,7 +149,7 @@ const RentListings = () => {
                       }).length
                     }{' '}
                   </Text>
-                  <Text>Results for Rentable Properties</Text>
+                  <Text>Results</Text>
                 </Group>
 
                 {match1200 ? (
@@ -184,7 +231,18 @@ const RentListings = () => {
         </Grid>
       </Container>
       <Modal opened={opened} onClose={() => setOpened(false)}>
-        <Filter />
+        <Filter
+          city={city}
+          setCity={setCity}
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+          subCategoryValue={subCategoryValue}
+          setSubCategoryValue={setSubCategoryValue}
+          areaValue={areaValue}
+          setAreaValue={setAreaValue}
+          priceValue={priceValue}
+          setPriceValue={setPriceValue}
+        />
       </Modal>
     </>
   )

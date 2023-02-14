@@ -189,15 +189,15 @@ export default function SearchSection() {
                 backgroundColor: '#D92228',
                 color: 'white',
               }}
-              onClick={() => {
-                navigate(`/properties`, {
-                  state: {
-                    city: city,
-                    subCategoryValue: subCategoryValue,
-                    priceValue: priceValue,
-                  },
-                })
-              }}
+              // onClick={() => {
+              //   navigate(`/properties`, {
+              //     state: {
+              //       city: city,
+              //       subCategoryValue: subCategoryValue,
+              //       priceValue: priceValue,
+              //     },
+              //   })
+              // }}
             >
               Search
             </Button>

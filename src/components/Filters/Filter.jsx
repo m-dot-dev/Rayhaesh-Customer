@@ -35,7 +35,14 @@ const Filter = ({
     label: city.label,
     value: city.value,
   }))
-
+  console.log(
+    'dasdsaasdadasd: ',
+    city,
+    categoryValue,
+    subCategoryValue,
+    areaValue,
+    priceValue,
+  )
   return (
     <Box
       style={{
@@ -68,11 +75,11 @@ const Filter = ({
               setPriceValue([])
             }}
             disabled={
-              city.length === 0 &&
-              categoryValue.length === 0 &&
-              subCategoryValue.length === 0 &&
-              areaValue.length === 0 &&
-              priceValue.length === 0
+              city?.length === 0 &&
+              categoryValue?.length === 0 &&
+              subCategoryValue?.length === 0 &&
+              areaValue?.length === 0 &&
+              priceValue?.length === 0
             }
           >
             Clear Filters

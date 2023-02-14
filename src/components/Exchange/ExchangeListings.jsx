@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import ListingPagination from '../Generic/ListingPagination'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
+import { filtering } from '../Buy/BuyFilter'
 
 const ExchangeListings = () => {
   const [opened, setOpened] = useState(false)
@@ -28,14 +29,43 @@ const ExchangeListings = () => {
 
   const [query, setQuery] = useState('')
 
+  //City Hooks
+  const [city, setCity] = React.useState([])
+  const [filteredData, setFilteredData] = React.useState([])
+
+  //Category Hooks
+  const [categoryValue, setCategoryValue] = useState([])
+
+  //SubCategory Hooks
+  const [subCategoryValue, setSubCategoryValue] = useState([])
+
+  //Area Hooks
+  const [areaValue, setAreaValue] = useState([])
+
+  //Price Hooks
+  const [priceValue, setPriceValue] = useState([])
+
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(9)
 
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
-  const currentPosts = allproperties.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost)
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+  useEffect(() => {
+    setFilteredData(
+      filtering(
+        city,
+        categoryValue,
+        subCategoryValue,
+        areaValue,
+        priceValue,
+        allproperties,
+      ),
+    )
+  }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
 
   useEffect(() => {
     axios
@@ -45,6 +75,11 @@ const ExchangeListings = () => {
       .then((data) => {
         setIsLoaded(false)
         setAllProperties(
+          data.data.body.filter(
+            (property) => property?.propertyIs === 'For Exchange',
+          ),
+        )
+        setFilteredData(
           data.data.body.filter(
             (property) => property?.propertyIs === 'For Exchange',
           ),
@@ -65,7 +100,18 @@ const ExchangeListings = () => {
       <Container size="xl">
         <Grid py="md">
           <Grid.Col md={3} hidden={match1200 ? true : false}>
-            <Filter />
+            <Filter
+              city={city}
+              setCity={setCity}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
+              subCategoryValue={subCategoryValue}
+              setSubCategoryValue={setSubCategoryValue}
+              areaValue={areaValue}
+              setAreaValue={setAreaValue}
+              priceValue={priceValue}
+              setPriceValue={setPriceValue}
+            />
           </Grid.Col>
 
           <Grid.Col md={!match1200 ? 9 : 12}>
@@ -103,7 +149,7 @@ const ExchangeListings = () => {
                       }).length
                     }{' '}
                   </Text>
-                  <Text>Results for Exchangeable Properties</Text>
+                  {!match1200 && <Text>Results</Text>}
                 </Group>
 
                 {match1200 ? (
@@ -185,7 +231,18 @@ const ExchangeListings = () => {
         </Grid>
       </Container>
       <Modal opened={opened} onClose={() => setOpened(false)}>
-        <Filter />
+        <Filter
+          city={city}
+          setCity={setCity}
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+          subCategoryValue={subCategoryValue}
+          setSubCategoryValue={setSubCategoryValue}
+          areaValue={areaValue}
+          setAreaValue={setAreaValue}
+          priceValue={priceValue}
+          setPriceValue={setPriceValue}
+        />
       </Modal>
     </>
   )

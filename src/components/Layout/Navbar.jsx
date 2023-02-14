@@ -331,25 +331,6 @@ export default function Navbar() {
 
                 <Menu.Dropdown style={{ borderColor: '#D92228' }}>
                   <Menu.Item
-                    onClick={() => {
-                      navigate('/profile')
-                    }}
-                  >
-                    <Group noWrap>
-                      <Avatar />
-                      <Stack spacing={0}>
-                        <Text>{auth.name}</Text>
-                        <Text
-                          style={{
-                            fontSize: '11px',
-                          }}
-                        >
-                          {auth.email}
-                        </Text>
-                      </Stack>
-                    </Group>
-                  </Menu.Item>
-                  <Menu.Item
                     icon={
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
@@ -405,6 +386,39 @@ export default function Navbar() {
         }}
       >
         <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
+          <Group
+            style={{
+              justifyContent: 'left',
+            }}
+            pl={35}
+            noWrap
+            p={'xs'}
+            bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
+            onClick={() => {
+              navigate('/profile')
+              closeDrawer()
+            }}
+          >
+            <Avatar
+              src={profileImage}
+              alt=""
+              size={50}
+              color="red"
+              radius={50}
+            />
+
+            <Stack spacing={0}>
+              <Text
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 500,
+                }}
+              >
+                {auth.email}
+              </Text>
+            </Stack>
+          </Group>
+
           <Divider
             my="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
@@ -567,13 +581,14 @@ export default function Navbar() {
               </Button>
             </Group>
           ) : (
-            <Group position="center" grow pb="xl" px="md">
+            <Group position="center" grow pb="xl" px={32}>
               <Button
-                variant="default"
+                variant="outline"
                 onClick={() => {
                   setAuth(null)
                   closeDrawer()
                 }}
+                style={{ color: '#D92228', borderColor: '#D92228' }}
               >
                 Sign Out
               </Button>

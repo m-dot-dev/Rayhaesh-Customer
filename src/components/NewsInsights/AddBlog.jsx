@@ -120,9 +120,12 @@ const AddBlog = (props) => {
               styles={{
                 input: { border: '1px solid #a7a7a8' },
                 label: {
-                  fontSize: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
                 },
               }}
+              size="md"
+              variant="filled"
             />
 
             <TextInput
@@ -137,9 +140,12 @@ const AddBlog = (props) => {
               styles={{
                 input: { border: '1px solid #a7a7a8' },
                 label: {
-                  fontSize: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
                 },
               }}
+              size="md"
+              variant="filled"
             />
 
             <TextInput
@@ -154,9 +160,12 @@ const AddBlog = (props) => {
               styles={{
                 input: { border: '1px solid #a7a7a8' },
                 label: {
-                  fontSize: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
                 },
               }}
+              size="md"
+              variant="filled"
             />
             <Textarea
               label="Blog Content"
@@ -171,9 +180,12 @@ const AddBlog = (props) => {
               styles={{
                 input: { border: '1px solid #a7a7a8' },
                 label: {
-                  fontSize: '1rem',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
                 },
               }}
+              size="md"
+              variant="filled"
             />
 
             <Group position="center">

@@ -3,6 +3,7 @@ import {
   Container,
   Grid,
   Group,
+  NativeSelect,
   Paper,
   PasswordInput,
   Select,
@@ -23,15 +24,15 @@ import { PakistanCities } from '../Filters/cities'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')
-  const match300 = useMediaQuery('(max-width: 300px)')
+  const match310 = useMediaQuery('(max-width: 310px)')
 
   const [profileImage, setProfileImage] = React.useState(null)
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
-  const [phone, setPhone] = React.useState('')
-  const [whatsapp, setWhatsapp] = React.useState('')
+  const [phone, setPhone] = React.useState('+92')
+  const [whatsapp, setWhatsapp] = React.useState('+92')
   const [tempAddress, setTempAddress] = React.useState('')
   const [permAddress, setPermAddress] = React.useState('')
   const [about, setAbout] = React.useState('')
@@ -61,7 +62,23 @@ const ProfileSettings = (props) => {
   const [validNumber, setValidNumber] = React.useState(false)
   const [validWhatsapp, setValidWhatsapp] = React.useState(false)
   const [validCnic, setValidCnic] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [user, setUser] = React.useState()
+
+  const data = [{ label: 'PK', value: '+92' }]
+
+  const countrySelect = (
+    <NativeSelect
+      data={data}
+      styles={{
+        input: {
+          fontWeight: 500,
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+        },
+      }}
+    />
+  )
 
   const { auth } = useAuth()
 
@@ -150,8 +167,8 @@ const ProfileSettings = (props) => {
           name,
           email,
           password,
-          cellPhoneNumber: phone,
-          whatsappNumber: whatsapp,
+          cellPhoneNumber: '+92' + phone,
+          whatsappNumber: '+92' + whatsapp,
           temporaryAddress: tempAddress,
           permanentAddress: permAddress,
           aboutUser: about,
@@ -169,9 +186,28 @@ const ProfileSettings = (props) => {
       )
       .then((res) => {
         console.log('update response: ', res)
+        setLoading(false)
+        if (res?.data?.success === true) {
+          showNotification({
+            title: 'Profile Updated',
+            message: 'Changes Saved!',
+            color: 'green',
+            icon: <IconCheck size={14} />,
+            autoClose: true,
+          })
+        } else {
+          showNotification({
+            title: 'Profile Upload Failed',
+            message: 'Upload failed. Please try again.',
+            color: 'red',
+            icon: <IconX size={14} />,
+            autoClose: true,
+          })
+        }
       })
       .catch((err) => {
         console.log('update error: ', err)
+        setLoading(false)
       })
   }
 
@@ -195,6 +231,9 @@ const ProfileSettings = (props) => {
               cols={2}
               mt="xl"
               breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
+              style={{
+                width: '100%',
+              }}
             >
               <TextInput
                 required
@@ -207,6 +246,8 @@ const ProfileSettings = (props) => {
                 }}
                 aria-invalid={validName ? 'false' : 'true'}
                 autoComplete="off"
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
               />
               <TextInput
                 disabled={true}
@@ -218,63 +259,90 @@ const ProfileSettings = (props) => {
                   width: '100%',
                 }}
                 aria-invalid={validEmail ? 'false' : 'true'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
               />
             </SimpleGrid>
 
-            <PasswordInput
-              label="Password"
-              placeholder=""
+            <SimpleGrid
+              cols={2}
+              mt="xl"
+              breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
               style={{
                 width: '100%',
               }}
-              value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
-              aria-invalid={validPassword ? 'false' : 'true'}
-              autoComplete={'off'}
-            />
-            <PasswordInput
-              label="Confirm Password"
-              placeholder=""
-              style={{
-                width: '100%',
-              }}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-              aria-invalid={validMatch ? 'false' : 'true'}
-            />
+            >
+              <PasswordInput
+                label="Password"
+                placeholder=""
+                style={{
+                  width: '100%',
+                }}
+                value={password}
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                aria-invalid={validPassword ? 'false' : 'true'}
+                autoComplete={'off'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+              <PasswordInput
+                label="Confirm Password"
+                placeholder=""
+                style={{
+                  width: '100%',
+                }}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+                aria-invalid={validMatch ? 'false' : 'true'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+            </SimpleGrid>
 
-            <TextInput
-              label="Cell Number"
-              placeholder=""
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value)
-              }}
-              hideControls
+            <SimpleGrid
+              cols={2}
+              mt="xl"
+              breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
               style={{
                 width: '100%',
               }}
-              aria-invalid={validNumber ? 'false' : 'true'}
-            />
-            <TextInput
-              label="WhatsApp Number"
-              placeholder=""
-              value={whatsapp}
-              onChange={(e) => {
-                setWhatsapp(e.target.value)
-              }}
-              hideControls
-              style={{
-                width: '100%',
-              }}
-              aria-invalid={validWhatsapp ? 'false' : 'true'}
-            />
+            >
+              <TextInput
+                label="Cell Number"
+                placeholder=""
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value)
+                }}
+                style={{
+                  width: '100%',
+                }}
+                aria-invalid={validNumber ? 'false' : 'true'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+              <TextInput
+                label="WhatsApp Number"
+                placeholder=""
+                value={whatsapp}
+                onChange={(e) => {
+                  setWhatsapp(e.target.value)
+                }}
+                style={{
+                  width: '100%',
+                }}
+                aria-invalid={validWhatsapp ? 'false' : 'true'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+            </SimpleGrid>
 
             <Group
               noWrap
               style={{
                 width: '100%',
               }}
+              mt={'xl'}
             >
               <Textarea
                 label="About Yourself"
@@ -284,53 +352,81 @@ const ProfileSettings = (props) => {
                 style={{
                   width: '100%',
                 }}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
               />
             </Group>
 
-            <Textarea
-              label="Temporary Address"
-              placeholder="Temporary Address"
-              value={tempAddress}
-              onChange={(e) => setTempAddress(e.currentTarget.value)}
+            <SimpleGrid
+              cols={2}
+              mt="xl"
+              breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
               style={{
                 width: '100%',
               }}
-            />
-            <Textarea
-              label="Permanent Address"
-              placeholder="Permanent Address"
-              value={permAddress}
-              onChange={(e) => setPermAddress(e.currentTarget.value)}
-              style={{
-                width: '100%',
-              }}
-            />
+            >
+              <Textarea
+                label="Temporary Address"
+                placeholder="Temporary Address"
+                value={tempAddress}
+                onChange={(e) => setTempAddress(e.currentTarget.value)}
+                style={{
+                  width: '100%',
+                }}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+              <Textarea
+                label="Permanent Address"
+                placeholder="Permanent Address"
+                value={permAddress}
+                onChange={(e) => setPermAddress(e.currentTarget.value)}
+                style={{
+                  width: '100%',
+                }}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+            </SimpleGrid>
 
-            <TextInput
-              label="Zip Code"
-              placeholder="Zip Code"
-              value={zip}
-              onChange={(e) => {
-                setZip(e.target.value)
-              }}
-              hideControls
+            <SimpleGrid
+              cols={2}
+              mt="xl"
+              breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
               style={{
                 width: '100%',
               }}
-            />
-            <TextInput
-              hideControls
-              label="CNIC"
-              placeholder="CNIC"
-              value={cnic}
-              onChange={(e) => {
-                setCnic(e.target.value)
-              }}
-              style={{
-                width: '100%',
-              }}
-              aria-invalid={validCnic ? 'false' : 'true'}
-            />
+            >
+              <TextInput
+                label="Zip Code"
+                placeholder="Zip Code"
+                value={zip}
+                onChange={(e) => {
+                  setZip(e.target.value)
+                }}
+                hideControls
+                style={{
+                  width: '100%',
+                }}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+              <TextInput
+                hideControls
+                label="CNIC"
+                placeholder="CNIC"
+                value={cnic}
+                onChange={(e) => {
+                  setCnic(e.target.value)
+                }}
+                style={{
+                  width: '100%',
+                }}
+                aria-invalid={validCnic ? 'false' : 'true'}
+                size="md"
+                styles={{ input: { border: '1px solid #a7a7a8' } }}
+              />
+            </SimpleGrid>
 
             <Select
               label="City"
@@ -341,22 +437,28 @@ const ProfileSettings = (props) => {
                 width: '100%',
               }}
               data={cityData}
+              size="md"
+              mt={'xl'}
+              styles={{ input: { border: '1px solid #a7a7a8' } }}
             />
           </Grid>
 
-          <Group noWrap grow position="center" mt={'lg'}>
-            <Button
-              fullWidth
-              color="red"
-              leftIcon={!match300 ? <IconX /> : null}
-            >
+          <Group
+            mt={'xl'}
+            style={{
+              width: '100%',
+            }}
+            position="right"
+          >
+            <Button color="red" leftIcon={!match310 ? <IconX /> : null}>
               Cancel
             </Button>
             <Button
-              fullWidth
               color="green"
-              leftIcon={!match300 ? <IconCheck /> : null}
+              leftIcon={!match310 ? <IconCheck /> : null}
               type="submit"
+              loading={loading}
+              onClick={() => setLoading(true)}
             >
               Save
             </Button>

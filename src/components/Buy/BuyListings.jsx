@@ -28,20 +28,11 @@ const BuyListings = () => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
 
-  const location = useLocation()
-
-  useEffect(() => {
-    setCity(location.state?.city)
-    setSubCategoryValue(location.state?.subCategoryValue)
-    setPriceValue(location.state?.priceValue)
-  }, [location])
-
   // Filter Hooks here
 
   //City Hooks
   const [city, setCity] = React.useState([])
   const [filteredData, setFilteredData] = React.useState([])
-  // console.log('filteredData', filteredData)
 
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
@@ -69,10 +60,6 @@ const BuyListings = () => {
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost)
-
-  console.log('====================================JAJAJAJAJ')
-  console.log('City, subcategory, price', city, subCategoryValue, priceValue)
-  console.log('====================================JAJAJAJAJ')
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
