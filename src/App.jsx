@@ -60,11 +60,11 @@ function App() {
                 <Route path="/exchange" element={<ExchangeListings />} />
                 <Route path="/rent" element={<RentListings />} />
                 <Route path="/addblog" element={<AddBlog />} />
-                <Route path="/contact" element={<Contact />} />
                 {/* Routes to Protect */}
                 <Route element={<RequireAuth />}>
                   <Route path="/booking/:id" element={<Booking />} />
                   <Route path="/profile" element={<ProfileSettings />} />
+                  <Route path="/contact" element={<Contact />} />
                 </Route>
                 {/* 404 Page */}
                 <Route path="*" element={<ErrorPage />} />
