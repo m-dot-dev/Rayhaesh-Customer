@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createStyles, Table, ScrollArea, Container, Text } from '@mantine/core'
 import ActionIcons from '../Generic/ActionIcons'
+import axios from 'axios'
 
 const data = [
   {
@@ -45,6 +46,23 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export default function BlogsPosted() {
+  //   const [blog, setBlog] = useState([])
+
+  //   useEffect(() => {
+  //     axios
+  //       .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/getAllBlogs', {
+  //         headers: {
+  //           token: localStorage.getItem('token'),
+  //         },
+  //       })
+  //       .then((res) => {
+  //         setBlog(res.data?.body)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //   }, [])
+
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
 

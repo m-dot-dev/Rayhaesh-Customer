@@ -3,10 +3,12 @@ import { IconDownload, IconEdit, IconEye, IconTrash } from '@tabler/icons'
 import React, { useState } from 'react'
 import ViewBooking from './ViewBooking'
 import ViewBlogs from './ViewBlogs'
+import ViewFeedback from './ViewFeedback'
 
 const ActionIcons = ({ type }) => {
   const [opened, setOpened] = useState(false)
   const [blogOpened, setBlogOpened] = useState(false)
+  const [feedbackOpened, setFeedbackOpened] = useState(false)
 
   return (
     <>
@@ -28,6 +30,19 @@ const ActionIcons = ({ type }) => {
             </ActionIcon>
           </Tooltip>
         </Group>
+      ) : type === 'feedback' ? (
+        <Group spacing={'xs'} position="left" noWrap>
+          <Tooltip label="View">
+            <ActionIcon onClick={() => setFeedbackOpened(true)}>
+              <IconEye size={20} color="purple" />
+            </ActionIcon>
+          </Tooltip>
+          <Tooltip label="Delete Feedback">
+            <ActionIcon>
+              <IconTrash size={20} color="red" />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
       ) : (
         <Group spacing={'xs'} position="left" noWrap>
           <Tooltip label="View">
@@ -44,6 +59,10 @@ const ActionIcons = ({ type }) => {
       )}
       <ViewBooking opened={opened} setOpened={setOpened} />
       <ViewBlogs blogOpened={blogOpened} setBlogOpened={setBlogOpened} />
+      <ViewFeedback
+        feedbackOpened={feedbackOpened}
+        setFeedbackOpened={setFeedbackOpened}
+      />
     </>
   )
 }

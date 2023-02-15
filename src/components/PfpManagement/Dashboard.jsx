@@ -9,9 +9,10 @@ import ProfileSettings from './ProfileSettings'
 import { useState } from 'react'
 import BookedProperties from './BookedProperties'
 import BlogsPosted from './BlogsPosted'
+import FeedbackPosted from './FeedbackPosted'
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState('settings')
+  const [activeTab, setActiveTab] = useState('feedback')
 
   return (
     <Container size={'xl'} mt={'xl'}>
@@ -29,9 +30,9 @@ export default function Dashboard() {
           <Tabs.Tab value="properties" icon={<IconCheckupList size={14} />}>
             Properties
           </Tabs.Tab>
-          <Tabs.Tab value="blogs" icon={<IconNotes size={14} />}>
+          {/* <Tabs.Tab value="blogs" icon={<IconNotes size={14} />}>
             Blogs
-          </Tabs.Tab>
+          </Tabs.Tab> */}
           <Tabs.Tab value="feedback" icon={<IconMessage size={14} />}>
             Feedbacks
           </Tabs.Tab>
@@ -45,12 +46,12 @@ export default function Dashboard() {
           <BookedProperties />
         </Tabs.Panel>
 
-        <Tabs.Panel value="blogs" pl="xs">
+        {/* <Tabs.Panel value="blogs" pl="xs">
           <BlogsPosted />
-        </Tabs.Panel>
+        </Tabs.Panel> */}
 
         <Tabs.Panel value="feedback" pl="xs">
-          <Text>Feedback the user has submitted</Text>
+          <FeedbackPosted />
         </Tabs.Panel>
       </Tabs>
     </Container>

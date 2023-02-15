@@ -71,7 +71,6 @@ function App() {
                 {/* Routes to Protect */}
                 <Route element={<RequireAuth />}>
                   <Route path="/booking/:id" element={<Booking />} />
-                  {/* <Route path="/profile" element={<ProfileSettings />} /> */}
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                 </Route>
