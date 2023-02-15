@@ -5,11 +5,22 @@ import {
   IconNotes,
   IconMessage,
 } from '@tabler/icons'
+import ProfileSettings from './ProfileSettings'
+import { useState } from 'react'
+import BookedProperties from './BookedProperties'
 
 export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState('settings')
+
   return (
     <Container size={'xl'} mt={'xl'}>
-      <Tabs orientation="horizontal" defaultValue="gallery">
+      <Tabs
+        orientation="horizontal"
+        defaultValue="gallery"
+        color="red"
+        value={activeTab}
+        onTabChange={setActiveTab}
+      >
         <Tabs.List>
           <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>
             Settings
@@ -26,11 +37,11 @@ export default function Dashboard() {
         </Tabs.List>
 
         <Tabs.Panel value="settings" pl="xs">
-          <Text>Settings Page here</Text>
+          <ProfileSettings />
         </Tabs.Panel>
 
         <Tabs.Panel value="properties" pl="xs">
-          <Text>Booked Properties here</Text>
+          <BookedProperties />
         </Tabs.Panel>
 
         <Tabs.Panel value="blogs" pl="xs">

@@ -346,7 +346,7 @@ export default function Navbar() {
                       <IconSettings size={20} style={{ color: 'blueviolet' }} />
                     }
                     onClick={() => {
-                      navigate('/profile')
+                      navigate('/dashboard')
                     }}
                   >
                     <Text style={{ fontFamily: 'poppins' }}>Settings</Text>
@@ -400,13 +400,14 @@ export default function Navbar() {
           <Group
             style={{
               justifyContent: 'left',
+              cursor: 'pointer',
             }}
             pl={35}
             noWrap
             p={'xs'}
             bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
             onClick={() => {
-              navigate('/profile')
+              navigate('/dashboard')
               closeDrawer()
             }}
           >
