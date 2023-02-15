@@ -8,6 +8,7 @@ import {
 import ProfileSettings from './ProfileSettings'
 import { useState } from 'react'
 import BookedProperties from './BookedProperties'
+import BlogsPosted from './BlogsPosted'
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('settings')
@@ -45,7 +46,7 @@ export default function Dashboard() {
         </Tabs.Panel>
 
         <Tabs.Panel value="blogs" pl="xs">
-          <Text>Blogs that the user posted here</Text>
+          <BlogsPosted />
         </Tabs.Panel>
 
         <Tabs.Panel value="feedback" pl="xs">

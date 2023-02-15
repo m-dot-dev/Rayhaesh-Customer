@@ -4,20 +4,16 @@ import ActionIcons from '../Generic/ActionIcons'
 
 const data = [
   {
-    title: '10 Marla File in Burewala',
-    city: 'Burewala',
-    category: 'Residential',
-    subCategory: 'File',
-    type: 'Interested In',
-    action: <ActionIcons type="booking" />,
+    title: 'Blog Title Here',
+    content:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque quianihil mollitia, quibusdam sunt tempore quos nobis recusandae officiaaccusamus at maxime incidunt autem in ea adipisci esse eumvoluptatibus',
+    action: <ActionIcons type="blog" />,
   },
   {
-    title: '10 Marla File in Burewala',
-    city: 'Burewala',
-    category: 'Residential',
-    subCategory: 'File',
-    type: 'Paid',
-    action: <ActionIcons type="booking" />,
+    title: 'Blog Title Here',
+    content:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque quianihil mollitia, quibusdam sunt tempore quos nobis recusandae officiaaccusamus at maxime incidunt autem in ea adipisci esse eumvoluptatibus',
+    action: <ActionIcons type="blog" />,
   },
 ]
 
@@ -48,18 +44,30 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export default function BookedProperties() {
+export default function BlogsPosted() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
 
   const rows = data.map((row) => (
     <tr key={row.name}>
       <td>{row.title}</td>
-      <td>{row.city}</td>
-      <td>{row.category}</td>
-      <td>{row.subCategory}</td>
-      <td>{row.type}</td>
-      <td>{row.action}</td>
+      <td
+        style={{
+          maxWidth: '200px',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {row.content}
+      </td>
+      <td
+        style={{
+          paddingLeft: '20px',
+        }}
+      >
+        {row.action}
+      </td>
     </tr>
   ))
 
@@ -77,12 +85,15 @@ export default function BookedProperties() {
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
             <tr>
-              <th>Property Title</th>
-              <th>Property City</th>
-              <th>Category</th>
-              <th>Sub Category</th>
-              <th>Booking Type</th>
-              <th>Actions</th>
+              <th>Blog Title</th>
+              <th>Blog Content</th>
+              <th
+                style={{
+                  paddingLeft: '20px',
+                }}
+              >
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
