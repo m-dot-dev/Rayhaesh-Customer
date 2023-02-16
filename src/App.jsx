@@ -52,19 +52,13 @@ function App() {
             <main style={{ flex: 1 }}>
               <Routes>
                 {/* Public Routes */}
-                <Route
-                  path="/"
-                  element={<Hero setSearchFilters={setSearchFilters} />}
-                />
+                <Route path="/" element={<Hero />} />
                 <Route path="/property/:id" element={<PropertyPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/blogs" element={<Blogs />} />
-                <Route
-                  path="/properties"
-                  element={<BuyListings searchFilters={searchFilters} />}
-                />
+                <Route path="/properties" element={<BuyListings />} />
                 <Route path="/exchange" element={<ExchangeListings />} />
                 <Route path="/rent" element={<RentListings />} />
                 <Route path="/addblog" element={<AddBlog />} />

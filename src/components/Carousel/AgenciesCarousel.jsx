@@ -6,8 +6,11 @@ import graanaImage from '../../assets/images/graana-logo.png'
 import agency21Image from '../../assets/images/agency-21-logo.png'
 import shahbazImage from '../../assets/images/shahbaz-logo.png'
 import bahriaTownImage from '../../assets/images/bahria-town-logo.png'
+import { useMediaQuery } from '@mantine/hooks'
 
 const AgenciesCarousel = () => {
+  const match768 = useMediaQuery('(max-width: 768px)')
+
   const images = [
     {
       id: 1,
@@ -42,7 +45,7 @@ const AgenciesCarousel = () => {
       loop
       align="center"
       controlsOffset={0}
-      slidesToScroll={3}
+      slidesToScroll={match768 ? 1 : 3}
       nextControlIcon={<IconArrowRight size={18} style={{ color: '#fff' }} />}
       previousControlIcon={
         <IconArrowLeft size={18} style={{ color: '#fff' }} />

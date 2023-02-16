@@ -14,11 +14,6 @@ export function filtering(
   const sqmt = 'Sq.Yard'
   const cnl = 'canal'
 
-  const marlaToSquareFeet = 272.25 * m
-  const squareYardToSquareFeet = 9 * sqyd
-  const squareMeterToSquareFeet = 10.7639 * sqmt
-  const canalToSquareFeet = 6272 * cnl
-
   if (
     city.length === 0 &&
     categoryValue.length === 0 &&

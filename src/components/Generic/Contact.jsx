@@ -8,21 +8,25 @@ import {
   Container,
   Select,
 } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck, IconX } from '@tabler/icons'
 import axios from 'axios'
 import { useState } from 'react'
 
 export default function Contact() {
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = (values) => {
+    setLoading(true)
+    console.log(values)
+    // event.preventDefault()
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/addSystemFeedback',
-        {
-          feedbackType: type,
-          feedback: message,
-        },
+        // {
+        //   feedbackType: feedbackType,
+        //   feedback: feedback,
+        // },
+        values,
         {
           headers: {
             token: localStorage.getItem('token'),
@@ -34,7 +38,7 @@ export default function Contact() {
         if (res?.data?.success === true) {
           showNotification({
             title: 'Feedback Sent',
-            message: 'Your message has been sent!',
+            feedback: 'Your feedback has been sent!',
             color: 'green',
             icon: <IconCheck size={14} />,
             autoClose: true,
@@ -42,14 +46,13 @@ export default function Contact() {
         } else {
           showNotification({
             title: 'Feedback Sending Failed',
-            message: 'Please try again.',
+            feedback: 'Please try again.',
             color: 'red',
             icon: <IconX size={14} />,
             autoClose: true,
           })
         }
         setLoading(false)
-        setMessage('')
       })
       .catch((error) => {
         console.log(error)
@@ -57,14 +60,23 @@ export default function Contact() {
       })
   }
 
-  const [type, setType] = useState('feedback')
-  const [message, setMessage] = useState('')
+  const form = useForm({
+    initialValues: { feedback: '', feedbackType: '' },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      feedback: (value) =>
+        value.length < 10 ? 'Message must have at least 10 letters' : null,
+      feedbackType: (value) =>
+        !value ? 'Please select a feedback type' : null,
+    },
+  })
 
   const [loading, setLoading] = useState(false)
 
   return (
     <Container size={'xl'} mt={'xl'}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title order={2} size="h1" weight={800} align="center">
           Get in touch
         </Title>
@@ -82,35 +94,37 @@ export default function Contact() {
           }}
           size="md"
           variant="filled"
-          value={type}
-          onChange={setType}
-          required
+          // value={feedbackType}
+          // onChange={setType}
+          // required
+          {...form.getInputProps('feedbackType')}
         />
         <Textarea
           mt="md"
           label="Message"
-          placeholder="Your message"
+          placeholder="Your feedback"
           maxRows={10}
           minRows={5}
           autosize
-          name="message"
+          name="feedback"
           variant="filled"
           styles={{ input: { border: '1px solid #a7a7a8' } }}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          // value={feedback}
+          // onChange={(e) => setMessage(e.target.value)}
           size="md"
-          required
+          // required
+          {...form.getInputProps('feedback')}
         />
 
         <Group position="center" mt="xl">
           <Button
-            type="submit"
+            // feedbackType="submit"
             size="md"
             color="red"
             loading={loading}
-            onClick={() => setLoading(true)}
+            type="submit"
           >
-            Send message
+            Send feedback
           </Button>
         </Group>
       </form>

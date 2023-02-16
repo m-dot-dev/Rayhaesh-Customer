@@ -24,29 +24,27 @@ import { IconSearch } from '@tabler/icons'
 import ListingPagination from '../Generic/ListingPagination'
 import { filtering } from './BuyFilter'
 
-const BuyListings = ({ searchFilters }) => {
+const BuyListings = () => {
   const [opened, setOpened] = useState(false)
   const match1200 = useMediaQuery('(max-width: 1280px)')
 
   // Filter Hooks here
 
   //City Hooks
-  const [city, setCity] = React.useState(searchFilters.city || '')
+  const [city, setCity] = React.useState([])
   const [filteredData, setFilteredData] = React.useState([])
 
   //Category Hooks
   const [categoryValue, setCategoryValue] = useState([])
 
   //SubCategory Hooks
-  const [subCategoryValue, setSubCategoryValue] = useState(
-    searchFilters.subCategoryValue || '',
-  )
+  const [subCategoryValue, setSubCategoryValue] = useState([])
 
   //Area Hooks
   const [areaValue, setAreaValue] = useState([])
 
   //Price Hooks
-  const [priceValue, setPriceValue] = useState(searchFilters.priceValue || '')
+  const [priceValue, setPriceValue] = useState([])
 
   // ----------------------------------------------
 
@@ -65,6 +63,23 @@ const BuyListings = ({ searchFilters }) => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
+  // const location = useLocation()
+
+  // useEffect(() => {
+  //   setCity(location.state?.city)
+  //   setSubCategoryValue(location.state?.subCategory)
+  //   setPriceValue(location.state?.price)
+  // }, [location])
+
+  // console.log('====================================')
+  // console.log('city that is coming from Search button-->', city)
+  // console.log(
+  //   'subCategoryValue that is coming from Search button-->',
+  //   subCategoryValue,
+  // )
+  // console.log('priceValue that is coming from Search button-->', priceValue)
+  // console.log('====================================')
+
   useEffect(() => {
     setFilteredData(
       filtering(
@@ -77,14 +92,7 @@ const BuyListings = ({ searchFilters }) => {
       ),
     )
   }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
-  console.log(
-    city,
-    categoryValue,
-    areaValue,
-    priceValue,
-    subCategoryValue,
-    'aaa',
-  )
+
   useEffect(() => {
     axios
       .get(

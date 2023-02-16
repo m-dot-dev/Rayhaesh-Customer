@@ -5,8 +5,11 @@ import axios from 'axios'
 import { Group, Paper } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import CardSkeleton from '../Skeletons/CardSkeleton'
+import { useMediaQuery } from '@mantine/hooks'
 
 export default function ListingCarousel({ listings, loading, error }) {
+  const match768 = useMediaQuery('(max-width: 768px)')
+
   if (error) {
     return <div>Error: {error.message}</div>
   }
@@ -27,12 +30,12 @@ export default function ListingCarousel({ listings, loading, error }) {
           slideGap="md"
           breakpoints={[
             { maxWidth: 'md', slideSize: '50%' },
-            { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
+            { maxWidth: 'sm', slideSize: '100%', slideGap: 10 },
           ]}
           loop
           align="center"
           controlsOffset={0}
-          slidesToScroll={3}
+          slidesToScroll={match768 ? 1 : 3}
           nextControlIcon={
             <IconArrowRight size={18} style={{ color: '#fff' }} />
           }
