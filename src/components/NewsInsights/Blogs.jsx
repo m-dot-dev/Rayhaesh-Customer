@@ -31,9 +31,9 @@ const Blogs = () => {
       .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/getAllBlogs')
       .then((res) => {
         setBlogs(res.data?.body)
-        console.log('====================================')
-        console.log('blogs', blogs)
-        console.log('====================================')
+        // console.log('====================================')
+        // console.log('blogs:', blogs[0]?.createdAt)
+        // console.log('====================================')
       })
       .catch((err) => {
         console.log(err)
@@ -41,8 +41,11 @@ const Blogs = () => {
   }, [])
 
   console.log('====================================')
-  console.log('Blogs: ', blogs)
+  console.log('Blogs: ', blogs[0]?.createdAt)
   console.log('====================================')
+
+  const blogDate = new Date(blogs[0]?.createdAt)
+  const formattedBlogDate = blogDate.toDateString()
 
   return (
     <Container size={'xl'}>
@@ -114,7 +117,7 @@ const Blogs = () => {
                 </Group>
                 <Group noWrap spacing={'xs'}>
                   <Text>Posted on: </Text>
-                  <Text italic>{blog?.createdAt}</Text>
+                  <Text italic>{formattedBlogDate}</Text>
                 </Group>
                 <Center>
                   <Group
