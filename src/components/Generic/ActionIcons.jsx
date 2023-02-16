@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 import ViewBooking from './ViewBooking'
 import ViewBlogs from './ViewBlogs'
 import ViewFeedback from './ViewFeedback'
+import DeleteConfirmation from './DeleteConfirmation'
 
-const ActionIcons = ({ type }) => {
+const ActionIcons = ({ type, data }) => {
   const [opened, setOpened] = useState(false)
   const [blogOpened, setBlogOpened] = useState(false)
   const [feedbackOpened, setFeedbackOpened] = useState(false)
+  const [deleteOpened, setDeleteOpened] = useState(false)
 
   return (
     <>
@@ -38,7 +40,7 @@ const ActionIcons = ({ type }) => {
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Delete Feedback">
-            <ActionIcon>
+            <ActionIcon onClick={() => setDeleteOpened(true)}>
               <IconTrash size={20} color="red" />
             </ActionIcon>
           </Tooltip>
@@ -62,6 +64,12 @@ const ActionIcons = ({ type }) => {
       <ViewFeedback
         feedbackOpened={feedbackOpened}
         setFeedbackOpened={setFeedbackOpened}
+        data={data}
+      />
+      <DeleteConfirmation
+        deleteOpened={deleteOpened}
+        setDeleteOpened={setDeleteOpened}
+        data={data}
       />
     </>
   )

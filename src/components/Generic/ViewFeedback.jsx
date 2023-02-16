@@ -1,6 +1,16 @@
 import { Modal, Stack, Text } from '@mantine/core'
 
-export default function ViewFeedback({ feedbackOpened, setFeedbackOpened }) {
+export default function ViewFeedback({
+  feedbackOpened,
+  setFeedbackOpened,
+  data,
+}) {
+  const adminResponseDate = new Date(data?.adminReplyDate)
+  const responseDate = adminResponseDate.toDateString()
+
+  const feedbackDate = new Date(data?.createdAt)
+  const myFeedbackDate = feedbackDate.toDateString()
+
   return (
     <>
       <Modal
@@ -28,16 +38,25 @@ export default function ViewFeedback({ feedbackOpened, setFeedbackOpened }) {
         overlayBlur={3}
       >
         <Stack>
-          <Text weight={500}>Feedback Type Here</Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque quia
-            nihil mollitia, quibusdam sunt tempore quos nobis recusandae officia
-            accusamus at maxime incidunt autem in ea adipisci esse eum
-            voluptatibus.
-          </Text>
           <Stack spacing={0}>
-            <Text>Response by the Admin:</Text>
-            <Text>response by the admin here</Text>
+            <Text weight={500}>Feedback Posted on:</Text>
+            <Text>{myFeedbackDate}</Text>
+          </Stack>
+          <Stack spacing={0}>
+            <Text weight={500}>My {data?.feedbackType}:</Text>
+            <Text>{data?.feedback}</Text>
+          </Stack>
+          <Stack spacing={0}>
+            <Text weight={500}>Response by the Admin:</Text>
+            <Text>
+              {data?.adminReply ? data?.adminReply : 'No Response Yet'}
+            </Text>
+          </Stack>
+          <Stack spacing={0}>
+            <Text weight={500}>Admin Response Data:</Text>
+            <Text>
+              {data?.adminReplyDate ? responseDate : 'No Response Yet'}
+            </Text>
           </Stack>
         </Stack>
       </Modal>

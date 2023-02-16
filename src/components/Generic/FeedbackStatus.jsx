@@ -1,12 +1,22 @@
 import { Badge } from '@mantine/core'
 import React from 'react'
 
-const FeedbackStatus = () => {
+const FeedbackStatus = ({ status }) => {
+  console.log('====================================')
+  console.log('row', status?.adminReply)
+  console.log('====================================')
+
   return (
     <>
-      <Badge>
-        <Badge>Not Replied</Badge>
-      </Badge>
+      {status?.adminReply ? (
+        <Badge color="green" variant="filled">
+          Replied
+        </Badge>
+      ) : (
+        <Badge color="blue" variant="filled">
+          Pending
+        </Badge>
+      )}
     </>
   )
 }

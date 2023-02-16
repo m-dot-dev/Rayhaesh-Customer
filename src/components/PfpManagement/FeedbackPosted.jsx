@@ -6,25 +6,12 @@ import {
   Container,
   Text,
   Badge,
+  Loader,
+  Group,
 } from '@mantine/core'
 import ActionIcons from '../Generic/ActionIcons'
 import FeedbackStatus from '../Generic/FeedbackStatus'
 import axios from 'axios'
-
-// const data = [
-//   {
-//     type: 'Feedback',
-//     message: 'BHT ACHA FEEDBACK RAHA MERA',
-//     status: <FeedbackStatus />,
-//     action: <ActionIcons type="feedback" />,
-//   },
-//   {
-//     type: 'Feedback',
-//     message: 'BHT ACHA FEEDBACK RAHA MERA',
-//     status: <FeedbackStatus />,
-//     action: <ActionIcons type="feedback" />,
-//   },
-// ]
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -59,15 +46,7 @@ export default function FeedbackPosted() {
 
   const [myFeedback, setMyFeedback] = useState([])
 
-  const data = [
-    {
-      _id: '60f9b0b0b0b0b0b0b0b0b0b0',
-      feedbackType: 'Feedback',
-      feedback: 'BHT ACHA FEEDBACK RAHA MERA',
-      status: <FeedbackStatus />,
-      action: <ActionIcons type="feedback" />,
-    },
-  ]
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios
@@ -81,7 +60,8 @@ export default function FeedbackPosted() {
         },
       )
       .then((res) => {
-        setMyFeedback(res?.data?.body?.data)
+        setMyFeedback(res)
+        setLoading(false)
         console.log('myFeedback--->', myFeedback)
       })
       .catch((err) => {
@@ -89,35 +69,55 @@ export default function FeedbackPosted() {
       })
   }, [])
 
-  //   const rows =
-  //     myFeedback &&
-  //     myFeedback.map((row) => (
-  //       <tr key={row?._id || 1}>
-  //         <td>{row?.feedbackType || 'feedback'}</td>
-  //         <td
-  //           style={{
-  //             maxWidth: '200px',
-  //             overflow: 'hidden',
-  //             whiteSpace: 'nowrap',
-  //             textOverflow: 'ellipsis',
-  //           }}
-  //         >
-  //           {row?.feedback || 'feedback Content'}
-  //         </td>
-  //         <td>{row.status || 'feedback Status'}</td>
-  //         <td>
-  //           <ActionIcons
-  //             type={row?.feedbackType || 'feedback'}
-  //             id={row?._id || 1}
-  //           />{' '}
-  //         </td>
-  //       </tr>
-  //     ))
+  const rows =
+    loading === true ? (
+      <tr>
+        <td colSpan={4}>
+          <Group position="center">
+            <Loader variant="dots" color="red" />
+          </Group>
+        </td>
+      </tr>
+    ) : myFeedback?.data?.data?.length !== 0 ? (
+      myFeedback?.data?.data?.map((row) => (
+        <tr key={row?._id || 1}>
+          <td>{row?.feedbackType || 'feedback'}</td>
+          <td
+            style={{
+              maxWidth: '200px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {row?.feedback || 'feedback Content'}
+          </td>
+          <td>
+            <FeedbackStatus status={row} />
+          </td>
+          <td>
+            <ActionIcons
+              type={row?.feedbackType || 'feedback'}
+              data={row}
+              id={row?._id || 1}
+            />{' '}
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan={4}>
+          <Text align="center" size={20} weight={600}>
+            No Feedback Posted
+          </Text>
+        </td>
+      </tr>
+    )
 
   return (
     <Container size={'xl'} mt={'xl'}>
       <Text weight={600} align="center" size={26} mb={'xl'}>
-        My Booked Properties
+        My Feedbacks
       </Text>
       <ScrollArea
         sx={{ height: 300 }}
@@ -134,8 +134,7 @@ export default function FeedbackPosted() {
               <th>Action</th>
             </tr>
           </thead>
-          {/* <tbody>{rows}</tbody> */}
-          <tbody>jaja</tbody>
+          <tbody>{rows}</tbody>
         </Table>
       </ScrollArea>
     </Container>
