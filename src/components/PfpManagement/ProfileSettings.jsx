@@ -21,6 +21,7 @@ import useAuth from '../hooks/useAuth'
 import DropZone from '../Generic/DropZone'
 import { uploadImage } from '../services/fileUpload'
 import { PakistanCities } from '../Filters/cities'
+import { showNotification } from '@mantine/notifications'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')

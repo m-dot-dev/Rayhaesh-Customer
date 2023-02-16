@@ -12,13 +12,13 @@ import BlogsPosted from './BlogsPosted'
 import FeedbackPosted from './FeedbackPosted'
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState('feedback')
+  const [activeTab, setActiveTab] = useState('settings')
 
   return (
     <Container size={'xl'} mt={'xl'}>
       <Tabs
         orientation="horizontal"
-        defaultValue="gallery"
+        defaultValue="settings"
         color="red"
         value={activeTab}
         onTabChange={setActiveTab}

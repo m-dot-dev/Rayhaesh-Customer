@@ -259,47 +259,33 @@ const PropertyPage = () => {
 
               <Tabs.Panel value="about" pt="xs">
                 <Text>{property?.propertyDescription}</Text>
-                <Group
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                  }}
-                  noWrap
-                >
+                <Group noWrap mt={'xs'}>
                   <Text className={classes.aboutText}>Property Category:</Text>
                   <Text>{property?.propertyCategory}</Text>
                 </Group>
-                <Group
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: 5,
-                  }}
-                  noWrap
-                >
+                <Group noWrap mt={'xs'}>
                   <Text className={classes.aboutText}>
                     Property Sub Category:
                   </Text>
                   <Text>{property?.propertySubCategory}</Text>
                 </Group>
-                <Group
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: 5,
-                  }}
-                  noWrap
-                >
+                <Group noWrap mt={'xs'}>
                   <Text className={classes.aboutText}>Property is:</Text>
                   <Text>{property?.propertyIs}</Text>
                 </Group>
-                <Group
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: 5,
-                  }}
-                >
+                <Group noWrap mt={'xs'}>
+                  <Text className={classes.aboutText}>Property price:</Text>
+                  <Text>{property?.totalPrice}</Text>
+                </Group>
+                <Group noWrap mt={'xs'}>
+                  <Text className={classes.aboutText}>Property area:</Text>
+                  <Group>
+                    <Text>
+                      {property?.areaSize} {property?.areaSizeUnit}
+                    </Text>
+                  </Group>
+                </Group>
+                <Group mt={'xs'}>
                   {property?.propertyIs === 'For Exchange' ? (
                     <Stack spacing={2}>
                       <Group noWrap>
@@ -308,7 +294,7 @@ const PropertyPage = () => {
                         </Text>
                         <Text>{property?.exchangeWith}</Text>
                       </Group>
-                      <Group noWrap>
+                      <Group noWrap mt={'xs'}>
                         <Text className={classes.aboutText}>
                           Minimum Exchange Value:{' '}
                         </Text>
