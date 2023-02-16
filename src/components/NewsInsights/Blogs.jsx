@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   Container,
   Grid,
   Group,
@@ -49,6 +50,10 @@ const Blogs = () => {
         mt={'xl'}
         style={{
           width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Text
@@ -76,11 +81,26 @@ const Blogs = () => {
           </Button>
         </Group>
 
-        <Grid>
-          <Paper px={'xs'}>
+        <Grid
+          style={{
+            width: '100%',
+          }}
+        >
+          <Paper
+            px={'xs'}
+            style={{
+              width: '100%',
+            }}
+          >
             {blogs.map((blog) => (
-              <>
-                <Group noWrap spacing={'sm'} mt={'xl'}>
+              <Paper
+                style={{
+                  backgroundColor: '#f9f9f9',
+                }}
+                mt={80}
+                p={'xs'}
+              >
+                <Group noWrap spacing={'sm'} mt={'xs'}>
                   <Text weight={600} size={'xl'}>
                     {blogs.indexOf(blog) + 1}.
                   </Text>
@@ -96,24 +116,36 @@ const Blogs = () => {
                   <Text>Posted on: </Text>
                   <Text italic>{blog?.createdAt}</Text>
                 </Group>
-                <Image
-                  radius="xs"
-                  src={blog?.coverImage}
-                  alt="Random unsplash image"
-                  width={match700 ? 300 : 600}
-                  height={match700 ? 200 : 400}
-                  mt={'md'}
-                  style={{
-                    display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                  px={match1000 ? 20 : 0}
-                />
+                <Center>
+                  <Group
+                    style={{
+                      maxWidth: 500,
+                      overflow: 'hidden',
+                      maxHeight: 400,
+                    }}
+                    position={'center'}
+                    align="center"
+                  >
+                    <Image
+                      radius="xs"
+                      src={blog?.coverImage}
+                      alt="Random unsplash image"
+                      mt={'md'}
+                      px={match1000 ? 20 : 0}
+                    />
+                  </Group>
+                </Center>
                 <Group noWrap mt={'xl'} mb={'xl'}>
-                  <Text>{blog?.blog}</Text>
+                  <Text
+                    style={{
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
+                    }}
+                  >
+                    {blog?.blog}
+                  </Text>
                 </Group>
-              </>
+              </Paper>
             ))}
           </Paper>
         </Grid>

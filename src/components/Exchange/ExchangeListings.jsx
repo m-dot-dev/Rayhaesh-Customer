@@ -149,6 +149,7 @@ const ExchangeListings = () => {
                       }).length
                     }{' '}
                   </Text>
+                  <Text>Results</Text>
                   {!match1200 && <Text>Results</Text>}
                 </Group>
 
