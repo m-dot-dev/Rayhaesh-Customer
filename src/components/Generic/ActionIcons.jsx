@@ -52,11 +52,6 @@ const ActionIcons = ({ type, data }) => {
               <IconEye size={20} color="purple" />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Export to CSV">
-            <ActionIcon>
-              <IconDownload size={20} color="red" />
-            </ActionIcon>
-          </Tooltip>
         </Group>
       )}
       <ViewBooking opened={opened} setOpened={setOpened} />
