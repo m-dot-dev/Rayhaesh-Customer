@@ -45,15 +45,15 @@ export default function ListingCard({ property }) {
       property?.propertySubCategory !== 'file' &&
       property?.propertySubCategory !== 'shop' ? (
         <Group mt={'xs'} position="apart" noWrap>
-          <Group spacing={'xs'}>
+          <Group spacing={1}>
             <IconBed opacity={0.6} />
             <Text>{property?.noOfBedRooms}</Text>
           </Group>
-          <Group spacing={'xs'}>
+          <Group spacing={1}>
             <IconBath opacity={0.6} />
             <Text>{property?.noOfBathrooms}</Text>
           </Group>
-          <Group spacing={'xs'}>
+          <Group spacing={1}>
             <IconAspectRatio opacity={0.6} />
             <Text>
               {property?.areaSize} {property?.areaSizeUnit}

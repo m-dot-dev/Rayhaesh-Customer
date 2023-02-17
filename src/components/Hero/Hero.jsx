@@ -4,6 +4,7 @@ import ListingCarousel from '../Carousel/ListingCarousel'
 import { Box, Container, Text, createStyles } from '@mantine/core'
 import AgenciesCarousel from '../Carousel/AgenciesCarousel'
 import axios from 'axios'
+import { useMediaQuery } from '@mantine/hooks'
 
 const Hero = () => {
   const [error, setError] = useState(null)
@@ -12,6 +13,8 @@ const Hero = () => {
   const [flat, setFlat] = useState([])
   const [plot, setPlot] = useState([])
   const [file, setFile] = useState([])
+
+  const match500 = useMediaQuery('(max-width: 500px)')
 
   useEffect(() => {
     axios
@@ -49,38 +52,66 @@ const Hero = () => {
       })
   }, [])
 
-  const useStyles = createStyles(() => ({
-    listingText: {
-      fontSize: 30,
-      fontWeight: 600,
-      marginBottom: 10,
-    },
-  }))
-
-  const { classes } = useStyles()
-
   return (
     <>
       <SearchSection />
       <Container size={'xl'} mt={'xl'}>
         <Box style={{ padding: 20 }}>
-          <Text className={classes.listingText}>Premiere House Listings</Text>
+          <Text
+            weight={600}
+            mb={'xl'}
+            style={{
+              fontSize: match500 ? '1.3rem' : '1.7rem',
+            }}
+          >
+            Premiere House Listings
+          </Text>
           <ListingCarousel listings={house} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ padding: 20 }}>
-          <Text className={classes.listingText}>Hot Flat Listings</Text>
+          <Text
+            weight={600}
+            mb={'xl'}
+            style={{
+              fontSize: match500 ? '1.3rem' : '1.7rem',
+            }}
+          >
+            Hot Flat Listings
+          </Text>
           <ListingCarousel listings={flat} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ padding: 20 }}>
-          <Text className={classes.listingText}>Latest Plot Listings</Text>
+          <Text
+            weight={600}
+            mb={'xl'}
+            style={{
+              fontSize: match500 ? '1.3rem' : '1.7rem',
+            }}
+          >
+            Latest Plot Listings
+          </Text>
           <ListingCarousel listings={plot} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ padding: 20 }}>
-          <Text className={classes.listingText}>Featured Files</Text>
+          <Text
+            weight={600}
+            mb={'xl'}
+            style={{
+              fontSize: match500 ? '1.3rem' : '1.7rem',
+            }}
+          >
+            Featured Files
+          </Text>
           <ListingCarousel listings={file} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ paddingRight: 20, paddingLeft: 20 }}>
-          <Text className={classes.listingText}>
+          <Text
+            weight={600}
+            mb={'xl'}
+            style={{
+              fontSize: match500 ? '1.3rem' : '1.7rem',
+            }}
+          >
             Featured Agencies Listings
           </Text>
           <AgenciesCarousel />

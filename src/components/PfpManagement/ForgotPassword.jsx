@@ -63,6 +63,9 @@ export default function ForgotPassword() {
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/forgotPassword',
         values,
       )
+      console.log('====================================')
+      console.log('response:', response)
+      console.log('====================================')
       if (response?.status === 200) {
         showNotification({
           title: 'Success',
