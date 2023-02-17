@@ -126,7 +126,7 @@ const ProfileSettings = (props) => {
           city: response?.city,
           CNIC: response?.CNIC,
         })
-
+        setProfileImage(response?.profileImage)
         setUser(response)
       })
       .catch((err) => {
