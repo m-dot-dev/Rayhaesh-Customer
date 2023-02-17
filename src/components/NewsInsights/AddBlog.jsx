@@ -17,41 +17,43 @@ import DropZone from '../Generic/DropZone'
 import axios from 'axios'
 import { uploadImage } from '../services/fileUpload'
 import { showNotification } from '@mantine/notifications'
+import { useForm } from '@mantine/form'
 
-const AddBlog = (props) => {
-  const [name, setName] = React.useState('')
-  const [title, setTitle] = React.useState('')
-  const [content, setContent] = React.useState('')
-  const [createdAt, setCreatedAt] = React.useState()
+const AddBlog = () => {
+  // const [name, setName] = React.useState('')
+  // const [title, setTitle] = React.useState('')
+  // const [content, setContent] = React.useState('')
+  // const [createdAt, setCreatedAt] = React.useState()
+  // const [email, setEmail] = React.useState('')
   const [coverImage, setCoverImage] = React.useState(null)
-  const [email, setEmail] = React.useState('')
 
   const [loading, setLoading] = React.useState(false)
 
-  const match350 = useMediaQuery('(max-width: 350px)')
-
-  React.useEffect(() => {
-    const date = new Date()
-    setCreatedAt(date)
-  }, [])
+  // React.useEffect(() => {
+  //   const date = new Date()
+  //   setCreatedAt(date)
+  // }, [])
 
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (values) => {
+    setLoading(true)
+    // e.preventDefault()
 
     const imageURL = await uploadImage(coverImage, 'blog-covers')
-
+    values.coverImage = imageURL
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/addBlog',
-        {
-          name,
-          title,
-          blog: content,
-          createdAt,
-          coverImage: imageURL,
-        },
+        // {
+        //   name,
+        //   title,
+        //   blog: content,
+        //   createdAt,
+        //   coverImage: imageURL,
+        // },
+
+        values,
         {
           headers: {
             token: localStorage.getItem('token'),
@@ -62,8 +64,7 @@ const AddBlog = (props) => {
         console.log('====================================')
         console.log('res', res)
         console.log('====================================')
-        setLoading(false)
-        navigate('/blogs')
+        // navigate('/blogs')
 
         if (res?.data?.success === true) {
           showNotification({
@@ -82,6 +83,7 @@ const AddBlog = (props) => {
             autoClose: true,
           })
         }
+        setLoading(false)
       })
       .catch((err) => {
         setLoading(false)
@@ -91,11 +93,34 @@ const AddBlog = (props) => {
       })
   }
 
+  const form = useForm({
+    initialValues: {
+      name: '',
+      title: '',
+      blog: '',
+      createdAt: new Date(),
+      email: '',
+    },
+
+    validate: {
+      name: (value) =>
+        value.length < 2 ? 'Name must have at least 2 letters' : null,
+      title: (value) =>
+        value.length < 5 ? 'Title must have at least 5 letters' : null,
+      blog: (value) =>
+        value.length < 50 ? 'Message must have at least 50 letters' : null,
+      email: (value) =>
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+          ? 'Invalid email address'
+          : null,
+    },
+  })
+
   return (
     <>
       <Container size={'xl'}>
         <Paper p={'xl'}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <Text
               weight={700}
               align="center"
@@ -109,10 +134,10 @@ const AddBlog = (props) => {
             </Text>
 
             <TextInput
-              required
               label="Username"
-              value={name}
-              onChange={(e) => setName(e.currentTarget.value)}
+              // required
+              // value={name}
+              // onChange={(e) => setName(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -126,13 +151,14 @@ const AddBlog = (props) => {
               }}
               size="md"
               variant="filled"
+              {...form.getInputProps('name')}
             />
 
             <TextInput
-              required
               label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
+              // required
+              // value={email}
+              // onChange={(e) => setEmail(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -146,13 +172,14 @@ const AddBlog = (props) => {
               }}
               size="md"
               variant="filled"
+              {...form.getInputProps('email')}
             />
 
             <TextInput
-              required
               label="Blog Title"
-              value={title}
-              onChange={(e) => setTitle(e.currentTarget.value)}
+              // required
+              // value={title}
+              // onChange={(e) => setTitle(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -166,16 +193,17 @@ const AddBlog = (props) => {
               }}
               size="md"
               variant="filled"
+              {...form.getInputProps('title')}
             />
             <Textarea
               label="Blog Content"
               placeholder="Place the blog content here"
-              value={content}
-              onChange={(e) => setContent(e.currentTarget.value)}
-              style={{
-                width: '100%',
-              }}
-              required
+              // value={content}
+              // onChange={(e) => setContent(e.currentTarget.value)}
+              // style={{
+              //   width: '100%',
+              // }}
+              // required
               mb={'md'}
               styles={{
                 input: { border: '1px solid #a7a7a8' },
@@ -186,6 +214,7 @@ const AddBlog = (props) => {
               }}
               size="md"
               variant="filled"
+              {...form.getInputProps('blog')}
             />
 
             <Group position="center">
@@ -196,12 +225,7 @@ const AddBlog = (props) => {
               <Button color={'red'} onClick={() => navigate('/blogs')}>
                 Cancel
               </Button>
-              <Button
-                color={'green'}
-                type="submit"
-                loading={loading}
-                onClick={() => setLoading(true)}
-              >
+              <Button color={'green'} type="submit" loading={loading}>
                 Add Blog
               </Button>
             </Group>
