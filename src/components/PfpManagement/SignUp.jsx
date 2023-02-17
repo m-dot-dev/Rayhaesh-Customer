@@ -175,7 +175,6 @@ export default function SignUp() {
             Sign Up
           </Button>
         </form>
-        <Divider my="sm" label="OR SIGN UP WITH" labelPosition="center" />
       </Paper>
     </Container>
   )

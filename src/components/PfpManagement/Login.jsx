@@ -24,18 +24,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import axios from 'axios'
 import { showNotification } from '@mantine/notifications'
+import { useForm } from '@mantine/form'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
-  const [validEmail, setValidEmail] = useState(false)
-
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email))
-  }, [email])
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -51,15 +43,28 @@ export default function Login() {
 
   const { setAuth } = useAuth()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const form = useForm({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    validate: {
+      email: (value) =>
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+          ? 'Invalid email address'
+          : null,
+      password: (value) =>
+        value?.length < 4 ? 'Password must have at least 4 characters' : null,
+    },
+  })
+
+  const handleSubmit = (values) => {
+    setLoading(true)
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/login',
-        {
-          email,
-          password,
-        },
+        values,
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
@@ -74,8 +79,6 @@ export default function Login() {
         console.log(localStorage.getItem('token'))
         console.log(localStorage)
         console.log('====================================LoginChecking')
-        setEmail('')
-        setPassword('')
         setLoading(false)
 
         if (response?.data?.success === true) {
@@ -86,12 +89,9 @@ export default function Login() {
             icon: <IconCheck size={14} />,
             autoClose: true,
           })
-          console.log('====================================')
-          console.log('NAMEEE', response.data.body.name)
-          console.log('====================================')
           setAuth({
             name: response.data.body?.name,
-            email,
+            email: response.data.body?.email,
             // password,
             accessToken,
           })
@@ -105,9 +105,13 @@ export default function Login() {
             autoClose: true,
           })
         }
+        setLoading(false)
       })
       .catch((err) => {
         setLoading(false)
+        console.log('====================================')
+        console.log(err)
+        console.log('====================================')
         if (!err.response) {
           console.log('No response from the server')
           showNotification({
@@ -180,23 +184,18 @@ export default function Login() {
         radius="md"
         style={{ borderColor: 'lightgrey' }}
       >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Stack spacing={'xl'}>
             <TextInput
               icon={<IconAt size={14} />}
-              required
               label="Email"
               placeholder="hello@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              aria-invalid={validEmail ? 'false' : 'true'}
+              {...form.getInputProps('email')}
             />
             <PasswordInput
-              required
               label="Password"
               placeholder="Your password"
-              value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
+              {...form.getInputProps('password')}
             />
           </Stack>
 
@@ -210,36 +209,10 @@ export default function Login() {
               Forgot password?
             </Anchor>
           </Group>
-          <Button
-            fullWidth
-            mt="xl"
-            color="red"
-            type="submit"
-            disabled={
-              !validEmail || !password || password.length < 4 ? true : false
-            }
-            loading={loading}
-            onClick={() => setLoading(true)}
-          >
+          <Button fullWidth mt="xl" color="red" type="submit" loading={loading}>
             Sign in
           </Button>
         </form>
-        <Divider my="sm" label="OR LOGIN WITH" labelPosition="center" />
-
-        <Group
-          style={{
-            marginTop: '20px',
-          }}
-          position="center"
-          spacing={'xl'}
-        >
-          <Button variant="light" radius="xl">
-            <IconBrandGoogle style={{ color: 'green' }} />
-          </Button>
-          <Button variant="light" radius="xl">
-            <IconBrandFacebook style={{ color: 'blue' }} />
-          </Button>
-        </Group>
       </Paper>
     </Container>
   )
