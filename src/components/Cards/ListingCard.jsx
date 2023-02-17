@@ -19,7 +19,7 @@ export default function ListingCard({ property }) {
         <Image src={property?.images[0]} height={180} alt="image" />
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="md">
+      <Group position="apart" mt="md" noWrap>
         <Text weight={700} size="lg">
           {property?.propertyCity}
         </Text>
@@ -28,91 +28,51 @@ export default function ListingCard({ property }) {
         </Badge>
       </Group>
 
-      <Group
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-        mb="md"
-      >
-        {property?.propertySubCategory === 'plot' ||
-        property?.propertySubCategory === 'shop' ||
-        property?.propertySubCategory === 'file' ? (
-          <Group
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Text
-              style={{
-                color: '#D92228',
-                fontSize: 16,
-                textTransform: 'uppercase',
-              }}
-              size="md"
-              weight={500}
-            >
-              {property?.propertySubCategory}
-            </Text>
+      <Group mt={'xs'} position="apart">
+        <Text
+          size="lg"
+          style={{
+            color: '#D92228',
+            textTransform: 'uppercase',
+            fontSize: 16,
+          }}
+        >
+          {property?.propertySubCategory}
+        </Text>
+      </Group>
+
+      {property?.propertySubCategory !== 'plot' &&
+      property?.propertySubCategory !== 'file' &&
+      property?.propertySubCategory !== 'shop' ? (
+        <Group mt={'xs'} position="apart" noWrap>
+          <Group spacing={'xs'}>
+            <IconBed opacity={0.6} />
+            <Text>{property?.noOfBedRooms}</Text>
+          </Group>
+          <Group spacing={'xs'}>
+            <IconBath opacity={0.6} />
+            <Text>{property?.noOfBathrooms}</Text>
+          </Group>
+          <Group spacing={'xs'}>
+            <IconAspectRatio opacity={0.6} />
             <Text>
               {property?.areaSize} {property?.areaSizeUnit}
             </Text>
           </Group>
-        ) : (
-          <>
-            <Text
-              style={{
-                color: '#D92228',
-                fontSize: 16,
-                textTransform: 'uppercase',
-              }}
-              size="md"
-              weight={500}
-            >
-              {property?.propertySubCategory}
-            </Text>
-            <Text
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
-                textDecoration: 'none',
-              }}
-            >
-              {property?.areaSize} {property?.areaSizeUnit}
-              <IconAspectRatio opacity={0.6} />
-            </Text>
-            <Text
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
-              }}
-            >
-              {property?.noOfBedRooms}
-              <IconBed opacity={0.6} />
-            </Text>
-            <Text
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 5,
-              }}
-            >
-              {property?.noOfBathrooms}
-              <IconBath opacity={0.6} />
-            </Text>
-          </>
-        )}
-      </Group>
+        </Group>
+      ) : (
+        <Group spacing={'xs'}>
+          <IconAspectRatio opacity={0.6} />
+          <Text>
+            {property?.areaSize} {property?.areaSizeUnit}
+          </Text>
+        </Group>
+      )}
 
       <Text
         size="md"
         style={{
           color: '#D92228',
-          marginTop: 5,
           fontSize: 20,
         }}
         weight={500}

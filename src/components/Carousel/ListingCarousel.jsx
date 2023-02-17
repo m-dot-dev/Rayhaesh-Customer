@@ -21,7 +21,7 @@ export default function ListingCarousel({ listings, loading, error }) {
           <CardSkeleton />
           <CardSkeleton />
           <CardSkeleton />
-          <CardSkeleton />
+          {/* <CardSkeleton /> */}
         </Group>
       )}
       {listings.length !== 0 && (
@@ -29,8 +29,10 @@ export default function ListingCarousel({ listings, loading, error }) {
           slideSize="25%"
           slideGap="md"
           breakpoints={[
-            { maxWidth: 'md', slideSize: '50%' },
-            { maxWidth: 'sm', slideSize: '100%', slideGap: 10 },
+            { maxWidth: 'lg', slideSize: '35%' },
+            { maxWidth: 'md', slideSize: '40%' },
+            { maxWidth: 'sm', slideSize: '50%' },
+            { maxWidth: 'xs', slideSize: '80%', slideGap: 'sm' },
           ]}
           loop
           align="center"
@@ -62,6 +64,7 @@ export default function ListingCarousel({ listings, loading, error }) {
                   cursor: 'pointer',
                 },
               }}
+              key={property?._id}
             >
               <Link
                 to={`/property/${property?._id}`}
