@@ -397,39 +397,41 @@ export default function Navbar() {
         }}
       >
         <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
-          <Group
-            style={{
-              justifyContent: 'left',
-              cursor: 'pointer',
-            }}
-            pl={35}
-            noWrap
-            p={'xs'}
-            bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-            onClick={() => {
-              navigate('/dashboard')
-              closeDrawer()
-            }}
-          >
-            <Avatar
-              src={profileImage}
-              alt=""
-              size={50}
-              color="red"
-              radius={50}
-            />
+          {auth && (
+            <Group
+              style={{
+                justifyContent: 'left',
+                cursor: 'pointer',
+              }}
+              pl={35}
+              noWrap
+              p={'xs'}
+              bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
+              onClick={() => {
+                navigate('/dashboard')
+                closeDrawer()
+              }}
+            >
+              <Avatar
+                src={profileImage}
+                alt="User Info here"
+                size={50}
+                color="red"
+                radius={50}
+              />
 
-            <Stack spacing={0}>
-              <Text
-                style={{
-                  fontSize: '16px',
-                  fontWeight: 500,
-                }}
-              >
-                {auth.email}
-              </Text>
-            </Stack>
-          </Group>
+              <Stack spacing={0}>
+                <Text
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 500,
+                  }}
+                >
+                  {auth?.email}
+                </Text>
+              </Stack>
+            </Group>
+          )}
 
           <Divider
             my="sm"

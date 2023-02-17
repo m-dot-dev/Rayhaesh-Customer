@@ -4,6 +4,10 @@ import { Image, Text, createStyles } from '@mantine/core'
 import { useState } from 'react'
 
 export default function PropertyCarousel({ property, type }) {
+  console.log('====================================')
+  console.log('propertyDocs', property?.documents)
+  console.log('====================================')
+
   const [embla, setEmbla] = useState(null)
 
   const useStyles = createStyles((theme) => ({

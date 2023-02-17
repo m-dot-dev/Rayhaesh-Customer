@@ -37,7 +37,7 @@ export default function ListingCarousel({ listings, loading, error }) {
           loop
           align="center"
           controlsOffset={0}
-          slidesToScroll={match768 ? 1 : 3}
+          slidesToScroll={match768 ? 1 : 4}
           nextControlIcon={
             <IconArrowRight size={18} style={{ color: '#fff' }} />
           }

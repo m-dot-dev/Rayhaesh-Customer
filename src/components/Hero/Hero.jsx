@@ -22,7 +22,9 @@ const Hero = () => {
         setIsLoaded(false)
         setHouse(
           data.data.body.filter(
-            (property) => property.propertySubCategory === 'farmhouse',
+            (property) =>
+              property.propertySubCategory === 'farmhouse' ||
+              property.propertySubCategory === 'house',
           ),
         )
         setFlat(

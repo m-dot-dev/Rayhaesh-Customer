@@ -1,7 +1,6 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Anchor,
   Paper,
   Title,
@@ -11,9 +10,7 @@ import {
   Button,
   Divider,
   Stack,
-  Tooltip,
   Radio,
-  Notification,
 } from '@mantine/core'
 import {
   IconAt,
@@ -23,77 +20,47 @@ import {
   IconX,
 } from '@tabler/icons'
 import axios from 'axios'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { showNotification } from '@mantine/notifications'
-
-const USER_REGEX = /^[A-z]{5,20}$/
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
+import { useForm } from '@mantine/form'
 
 export default function SignUp() {
-  const [username, setUsername] = useState('')
-  const [validName, setValidName] = useState(false)
-
-  const [email, setEmail] = useState('')
-  const [validEmail, setValidEmail] = useState(false)
-
-  const [password, setPassword] = useState('')
-  const [validPassword, setValidPassword] = useState(false)
-
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [validMatch, setValidMatch] = useState(false)
-
-  const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
-
-  const [gender, setGender] = useState('male')
-
   const [loading, setLoading] = useState(false)
-
-  const [error, setError] = useState('')
-
-  const userType = 'buyer'
-
-  useEffect(() => {
-    setValidName(USER_REGEX.test(username))
-  }, [username])
-
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email))
-  }, [email])
-
-  useEffect(() => {
-    setValidPassword(PWD_REGEX.test(password))
-    setValidMatch(password === confirmPassword)
-  }, [password, confirmPassword])
-
-  useEffect(() => {
-    setErrMsg('')
-  }, [username, password, confirmPassword])
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const v1 = USER_REGEX.test(username)
-    const v2 = PWD_REGEX.test(password)
-    const v3 = EMAIL_REGEX.test(email)
-    if (!v1 || !v2 || !v3) {
-      setErrMsg('Invalid Entry')
-      return
-    }
+  const form = useForm({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      gender: '',
+      name: '',
+    },
 
+    validate: {
+      email: (value) =>
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+          ? 'Invalid email address'
+          : null,
+      password: (value) =>
+        value?.length < 4 ? 'Password must have at least 4 characters' : null,
+      confirmPassword: (value) =>
+        value !== form.values?.password ? 'Passwords must match' : null,
+      name: (value) =>
+        value?.length < 2 ? 'Name must have at least 5 letters' : null,
+      gender: (value) => (value === '' ? 'Select a Gender!' : null),
+    },
+  })
+
+  const handleSubmit = (values) => {
+    setLoading(true)
+    values.userType = 'buyer'
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/signup',
-        {
-          name: username,
-          email,
-          password,
-          gender,
-          userType,
-        },
+        values,
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
@@ -103,11 +70,6 @@ export default function SignUp() {
         console.log(res?.data)
         console.log(res?.accessToken)
         console.log(JSON.stringify(res))
-        setSuccess(true)
-        setUsername('')
-        setEmail('')
-        setPassword('')
-        setConfirmPassword('')
         setLoading(false)
 
         if (res?.data?.success === true) {
@@ -128,10 +90,11 @@ export default function SignUp() {
             autoClose: true,
           })
         }
+        setLoading(false)
       })
       .catch((err) => {
-        setError(err)
         console.log(err)
+        setLoading(false)
         showNotification({
           title: 'Registration Failed',
           message: 'No Response from the server!',
@@ -174,49 +137,33 @@ export default function SignUp() {
         radius="md"
         style={{ borderColor: 'lightgrey' }}
       >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Stack spacing={'xl'}>
             <TextInput
-              required
               label="Username"
-              description="Must be between 5-20 characters and only letters allowed"
               placeholder="Tehseen Riaz"
-              value={username}
-              onChange={(e) => setUsername(e.currentTarget.value)}
-              aria-invalid={validName ? 'false' : 'true'}
+              {...form.getInputProps('name')}
             />
             <TextInput
               icon={<IconAt size={14} />}
-              required
               label="Email"
               placeholder="hello@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
-              aria-invalid={validEmail ? 'false' : 'true'}
+              {...form.getInputProps('email')}
             />
             <PasswordInput
-              required
               label="Password"
               placeholder="Your password"
-              description="Must be between 4-24 characters. Must begin with uppercase letter and should contain one special letter."
-              value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
-              aria-invalid={validPassword ? 'false' : 'true'}
+              {...form.getInputProps('password')}
             />
             <PasswordInput
-              required
               label="Confirm Password"
               placeholder="Your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-              aria-invalid={validMatch ? 'false' : 'true'}
+              {...form.getInputProps('confirmPassword')}
             />
             <Group>
               <Radio.Group
                 label="Choose your Gender"
-                required
-                value={gender}
-                onChange={setGender}
+                {...form.getInputProps('gender')}
               >
                 <Radio value="male" label="Male" color="red" />
                 <Radio value="female" label="Female" color="red" />
@@ -224,40 +171,11 @@ export default function SignUp() {
             </Group>
           </Stack>
 
-          <Button
-            fullWidth
-            mt="xl"
-            color="red"
-            disabled={
-              !validName || !validEmail || !validPassword || !validMatch
-                ? true
-                : false
-            }
-            type="submit"
-            loading={loading}
-            onClick={() => {
-              setLoading(true)
-            }}
-          >
+          <Button fullWidth mt="xl" color="red" type="submit" loading={loading}>
             Sign Up
           </Button>
         </form>
         <Divider my="sm" label="OR SIGN UP WITH" labelPosition="center" />
-
-        <Group
-          style={{
-            marginTop: '20px',
-          }}
-          position="center"
-          spacing={'xl'}
-        >
-          <Button variant="light" radius="xl">
-            <IconBrandGoogle style={{ color: 'green' }} />
-          </Button>
-          <Button variant="light" radius="xl">
-            <IconBrandFacebook style={{ color: 'blue' }} />
-          </Button>
-        </Group>
       </Paper>
     </Container>
   )
