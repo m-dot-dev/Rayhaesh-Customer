@@ -13,11 +13,13 @@ import {
   Modal,
   Notification,
   Dialog,
+  Container,
 } from '@mantine/core'
 import {
   IconAdjustmentsHorizontal,
   IconArrowRight,
   IconCheck,
+  IconFiles,
   IconMap2,
   IconPhoto,
   IconShoppingBag,
@@ -54,14 +56,6 @@ const PropertyPage = () => {
       color: '#D92228',
       textTransform: 'uppercase',
     },
-    mainGroup: {
-      marginTop: 40,
-      marginLeft: 120,
-      [theme.fn.smallerThan('xs')]: {
-        marginTop: 20,
-        marginLeft: 60,
-      },
-    },
     bookingText: {
       fontSize: 20,
       fontWeight: 700,
@@ -85,13 +79,6 @@ const PropertyPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-
-  // const handleBookingSubmit = (e) => {
-  //   e.preventDefault()
-  //   navigate(`/booking/${property?._id}`, {
-  //     state: { data: property, name: name, email: email, phone: phone },
-  //   })
-  // }
 
   const handleBookingSubmit = (e) => {
     e.preventDefault()
@@ -124,15 +111,17 @@ const PropertyPage = () => {
   }
 
   return (
-    <>
+    <Container size={'xl'} pt={'md'}>
       <Grid columns={12}>
         <Grid.Col
-          style={{ display: 'flex', flexDirection: 'column' }}
+          // style={{ display: 'flex', flexDirection: 'column' }}
+          style={match1200 ? { padding: 50 } : null}
           span={match1200 ? 12 : 8}
+          className={classes.container}
         >
           <Group className={classes.mainGroup}>
             {/* Title and Locations */}
-            <Stack>
+            <Stack spacing={'xs'}>
               <Text className={classes.titleText}>
                 {property?.propertyTitle || 'Property Title Here'}
               </Text>
@@ -144,7 +133,7 @@ const PropertyPage = () => {
           </Group>
           {/* Tabs */}
           <Group className={classes.mainGroup}>
-            <Tabs color="red" variant="pills" defaultValue="photos">
+            <Tabs color="red" variant="pills" defaultValue="photos" mt={'xl'}>
               <Tabs.List>
                 {property?.images?.length !== 0 && (
                   <Tabs.Tab value="photos" icon={<IconPhoto size={14} />}>
@@ -154,6 +143,11 @@ const PropertyPage = () => {
                 {property?.videos?.length !== 0 && (
                   <Tabs.Tab value="videos" icon={<IconVideo size={14} />}>
                     Videos
+                  </Tabs.Tab>
+                )}
+                {property?.documents?.length !== 0 && (
+                  <Tabs.Tab value="documents" icon={<IconFiles size={14} />}>
+                    Documents
                   </Tabs.Tab>
                 )}
                 {match1200 && (
@@ -174,6 +168,12 @@ const PropertyPage = () => {
               <Tabs.Panel value="videos" pt="xs">
                 <PropertyCarousel property={property} type="video" />
               </Tabs.Panel>
+
+              {property?.documents && (
+                <Tabs.Panel value="documents" pt="xs">
+                  <PropertyCarousel property={property} type="document" />
+                </Tabs.Panel>
+              )}
 
               <Tabs.Panel value="booking" pt="xs">
                 <Modal opened={opened} onClose={() => setOpened(false)}>
@@ -238,7 +238,7 @@ const PropertyPage = () => {
 
           {/* Details Section */}
           <Group className={classes.mainGroup}>
-            <Tabs color="red" variant="default" defaultValue="about">
+            <Tabs color="red" variant="default" defaultValue="about" mt={'xl'}>
               <Tabs.List>
                 <Tabs.Tab value="about" icon={<IconPhoto size={14} />}>
                   About
@@ -252,12 +252,21 @@ const PropertyPage = () => {
                 <Tabs.Tab value="location" icon={<IconMap2 size={14} />}>
                   Location
                 </Tabs.Tab>
-                <Tabs.Tab value="seller" icon={<IconUser size={14} />}>
-                  About Seller
-                </Tabs.Tab>
               </Tabs.List>
 
               <Tabs.Panel value="about" pt="xs">
+                <Group noWrap mt={'xs'} spacing={'xs'}>
+                  <Text className={classes.aboutText}>
+                    Property Availability Status:
+                  </Text>
+                  <Text>{property?.propertyAvailabilityStatus}</Text>
+                </Group>
+                <Group noWrap mt={'xs'} spacing={'xs'}>
+                  <Text className={classes.aboutText}>
+                    Property Occupation Status:
+                  </Text>
+                  <Text>{property?.occupied}</Text>
+                </Group>
                 <Text>{property?.propertyDescription}</Text>
                 <Group noWrap mt={'xs'}>
                   <Text className={classes.aboutText}>Property Category:</Text>
@@ -307,10 +316,16 @@ const PropertyPage = () => {
                             <Text className={classes.aboutText}>
                               In Installments:{' '}
                             </Text>
-                            <Text className={classes.aboutText}>
-                              Total Number of Installments:{' '}
-                            </Text>
-                            <Text>{property?.totalNumberOfInstallments}</Text>
+                            <Group spacing={'xs'}>
+                              <Text>Down Payment:</Text>
+                              <Text>{property?.downPayment}</Text>
+                            </Group>
+                            <Group spacing={'xs'}>
+                              <Text className={classes.aboutText}>
+                                Total Number of Installments:{' '}
+                              </Text>
+                              <Text>{property?.totalNumberOfInstallments}</Text>
+                            </Group>
                             <Text className={classes.aboutText}>
                               Installment Duration:{' '}
                             </Text>
@@ -321,6 +336,38 @@ const PropertyPage = () => {
                             <Text>{property?.monthlyInstallment}</Text>
                           </Stack>
                         )}
+                      </Group>
+                    </Stack>
+                  ) : (
+                    <Text></Text>
+                  )}
+                </Group>
+                <Group mt={'xs'}>
+                  {property?.propertyIs === 'For Rent' ? (
+                    <Stack spacing={2}>
+                      <Group noWrap>
+                        <Text className={classes.aboutText}>
+                          Minimum Contract Period:{' '}
+                        </Text>
+                        <Text>{property?.minimumContractPeriod}</Text>
+                      </Group>
+                      <Group noWrap mt={'xs'}>
+                        <Text className={classes.aboutText}>
+                          Monthly Rent:{' '}
+                        </Text>
+                        <Text>{property?.monthlyRent}</Text>
+                      </Group>
+                      <Group noWrap mt={'xs'}>
+                        <Text className={classes.aboutText}>
+                          Security Deposit:{' '}
+                        </Text>
+                        <Text>{property?.securityDeposit}</Text>
+                      </Group>
+                      <Group noWrap mt={'xs'}>
+                        <Text className={classes.aboutText}>
+                          Advance Rent:{' '}
+                        </Text>
+                        <Text>{property?.advanceRent}</Text>
                       </Group>
                     </Stack>
                   ) : (
@@ -548,9 +595,6 @@ const PropertyPage = () => {
                   )}
                 </Stack>
               </Tabs.Panel>
-              <Tabs.Panel value="seller" pt="xs">
-                <Text>Information about the seller</Text>
-              </Tabs.Panel>
             </Tabs>
           </Group>
         </Grid.Col>
@@ -622,7 +666,7 @@ const PropertyPage = () => {
           </Paper>
         </Grid.Col>
       </Grid>
-    </>
+    </Container>
   )
 }
 
