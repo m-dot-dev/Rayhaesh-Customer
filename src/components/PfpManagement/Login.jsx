@@ -201,7 +201,9 @@ export default function Login() {
 
           <Group position="apart" mt="lg">
             <Anchor
-              onClick={(event) => event.preventDefault()}
+              onClick={() => {
+                navigate('/forgotPassword')
+              }}
               href="#"
               size="sm"
               style={{ color: '#D92228', textDecoration: 'none' }}

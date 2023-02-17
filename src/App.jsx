@@ -22,6 +22,7 @@ import useAuth from './components/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import Contact from './components/Generic/Contact'
 import Dashboard from './components/PfpManagement/Dashboard'
+import ForgotPassword from './components/PfpManagement/ForgotPassword'
 
 function App() {
   const { setAuth } = useAuth()
@@ -56,6 +57,7 @@ function App() {
                 <Route path="/property/:id" element={<PropertyPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<SignUp />} />
+                <Route path="/forgotPassword" element={<ForgotPassword />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/blogs" element={<Blogs />} />
                 <Route path="/properties" element={<BuyListings />} />
