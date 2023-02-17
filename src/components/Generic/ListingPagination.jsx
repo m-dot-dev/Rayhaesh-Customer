@@ -1,26 +1,35 @@
 import { Pagination } from '@mantine/core'
 import React from 'react'
 
-const ListingPagination = ({ postsPerPage, totalPosts, paginate }) => {
+const ListingPagination = ({
+  postsPerPage,
+  totalPosts,
+  paginate,
+  currentPosts,
+}) => {
   const pageNumbers = []
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i)
   }
 
+  console.log('current posts for pagination check: ', currentPosts)
+
   return (
-    <Pagination
-      total={pageNumbers.length}
-      onChange={(page) => paginate(page)}
-      withEdges
-      styles={() => ({
-        item: {
-          '&[data-active]': {
-            backgroundColor: '#D92228',
+    currentPosts?.length > 0 && (
+      <Pagination
+        total={pageNumbers?.length}
+        onChange={(page) => paginate(page)}
+        withEdges
+        styles={() => ({
+          item: {
+            '&[data-active]': {
+              backgroundColor: '#D92228',
+            },
           },
-        },
-      })}
-    />
+        })}
+      />
+    )
   )
 }
 

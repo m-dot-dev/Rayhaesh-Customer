@@ -209,8 +209,8 @@ const BuyListings = () => {
               <SimpleGrid
                 cols={3}
                 breakpoints={[
-                  { maxWidth: 1040, cols: 2, spacing: 'md' },
-                  { maxWidth: 680, cols: 1, spacing: 'sm' },
+                  { maxWidth: 950, cols: 2, spacing: 'md' },
+                  { maxWidth: 600, cols: 1 },
                 ]}
               >
                 {currentPosts
@@ -243,6 +243,7 @@ const BuyListings = () => {
                 postsPerPage={postsPerPage}
                 totalPosts={allproperties.length}
                 paginate={paginate}
+                currentPosts={currentPosts}
               />
             </Group>
           </Grid.Col>

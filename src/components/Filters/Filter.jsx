@@ -105,8 +105,9 @@ const Filter = ({
           subCategoryValue={subCategoryValue}
           setSubCategoryValue={setSubCategoryValue}
         />
-        <AreaCB areaValue={areaValue} setAreaValue={setAreaValue} />
-        <PriceCB priceValue={priceValue} setPriceValue={setPriceValue} />
+        {/* Coming from backened */}
+        {/* <AreaCB areaValue={areaValue} setAreaValue={setAreaValue} />
+        <PriceCB priceValue={priceValue} setPriceValue={setPriceValue} /> */}
       </Stack>
 
       {match1200 && (
