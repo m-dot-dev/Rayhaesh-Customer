@@ -34,6 +34,8 @@ import { useMediaQuery } from '@mantine/hooks'
 import { useNavigate } from 'react-router-dom'
 import { showNotification } from '@mantine/notifications'
 import LocationMap from '../Generic/LocationMap'
+import VideosCarousel from '../Carousel/VideosCarousel'
+import ImagesCarousel from '../Carousel/ImagesCarousel'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -133,7 +135,13 @@ const PropertyPage = () => {
           </Group>
           {/* Tabs */}
           <Group className={classes.mainGroup}>
-            <Tabs color="red" variant="pills" defaultValue="photos" mt={'xl'}>
+            <Tabs
+              color="red"
+              variant="pills"
+              defaultValue="photos"
+              mt={'xl'}
+              keepMounted={false}
+            >
               <Tabs.List>
                 {property?.images?.length !== 0 && (
                   <Tabs.Tab value="photos" icon={<IconPhoto size={14} />}>
@@ -162,11 +170,11 @@ const PropertyPage = () => {
               </Tabs.List>
 
               <Tabs.Panel value="photos" pt="xs">
-                <PropertyCarousel property={property} type="image" />
+                <ImagesCarousel property={property} />
               </Tabs.Panel>
 
               <Tabs.Panel value="videos" pt="xs">
-                <PropertyCarousel property={property} type="video" />
+                <VideosCarousel property={property} />
               </Tabs.Panel>
 
               {property?.documents && (
@@ -256,6 +264,9 @@ const PropertyPage = () => {
 
               <Tabs.Panel value="about" pt="xs">
                 <Group noWrap mt={'xs'} spacing={'xs'}>
+                  <Text>{property?.propertyDescription}</Text>
+                </Group>
+                <Group noWrap mt={'xs'} spacing={'xs'}>
                   <Text className={classes.aboutText}>
                     Property Availability Status:
                   </Text>
@@ -267,7 +278,6 @@ const PropertyPage = () => {
                   </Text>
                   <Text>{property?.occupied}</Text>
                 </Group>
-                <Text>{property?.propertyDescription}</Text>
                 <Group noWrap mt={'xs'}>
                   <Text className={classes.aboutText}>Property Category:</Text>
                   <Text>{property?.propertyCategory}</Text>

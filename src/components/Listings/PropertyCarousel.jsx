@@ -1,11 +1,10 @@
-import { Carousel } from '@mantine/carousel'
+import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel'
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons'
 import { Image, Text, createStyles } from '@mantine/core'
+import { useState } from 'react'
 
 export default function PropertyCarousel({ property, type }) {
-  console.log('====================================')
-  console.log('propertyDocs', property?.documents)
-  console.log('====================================')
+  const [embla, setEmbla] = useState(null)
 
   const useStyles = createStyles((theme) => ({
     imageContainer: {
@@ -16,7 +15,7 @@ export default function PropertyCarousel({ property, type }) {
   const classes = useStyles()
   const imagesSlides = property?.images?.map(
     (image) =>
-      property.length !== 0 && (
+      property?.length !== 0 && (
         <Carousel.Slide>
           <Image src={image} alt="image" mah={500} />
         </Carousel.Slide>
@@ -25,12 +24,11 @@ export default function PropertyCarousel({ property, type }) {
 
   const videoSlides = property?.videos?.map(
     (video) =>
-      property.length !== 0 && (
+      property?.length !== 0 && (
         <Carousel.Slide>
           <video
             src={video}
             alt="image"
-            autoPlay={'off'}
             controls
             style={{
               maxWidth: '100%',
@@ -54,6 +52,7 @@ export default function PropertyCarousel({ property, type }) {
       previousControlIcon={
         <IconArrowLeft size={18} style={{ color: '#fff' }} />
       }
+      getEmblaApi={setEmbla}
       styles={{
         control: {
           border: '1px solid red',
@@ -66,6 +65,8 @@ export default function PropertyCarousel({ property, type }) {
       withIndicators
       mx="auto"
       className={classes.imageContainer}
+      slideSize="100%"
+      slideGap="md"
     >
       {type === 'image'
         ? imagesSlides
