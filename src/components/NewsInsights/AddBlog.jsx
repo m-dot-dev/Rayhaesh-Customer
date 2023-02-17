@@ -20,38 +20,20 @@ import { showNotification } from '@mantine/notifications'
 import { useForm } from '@mantine/form'
 
 const AddBlog = () => {
-  // const [name, setName] = React.useState('')
-  // const [title, setTitle] = React.useState('')
-  // const [content, setContent] = React.useState('')
-  // const [createdAt, setCreatedAt] = React.useState()
-  // const [email, setEmail] = React.useState('')
   const [coverImage, setCoverImage] = React.useState(null)
 
   const [loading, setLoading] = React.useState(false)
-
-  // React.useEffect(() => {
-  //   const date = new Date()
-  //   setCreatedAt(date)
-  // }, [])
 
   const navigate = useNavigate()
 
   const handleSubmit = async (values) => {
     setLoading(true)
-    // e.preventDefault()
 
     const imageURL = await uploadImage(coverImage, 'blog-covers')
     values.coverImage = imageURL
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/blog/addBlog',
-        // {
-        //   name,
-        //   title,
-        //   blog: content,
-        //   createdAt,
-        //   coverImage: imageURL,
-        // },
 
         values,
         {
@@ -64,7 +46,6 @@ const AddBlog = () => {
         console.log('====================================')
         console.log('res', res)
         console.log('====================================')
-        // navigate('/blogs')
 
         if (res?.data?.success === true) {
           showNotification({
@@ -83,6 +64,7 @@ const AddBlog = () => {
             autoClose: true,
           })
         }
+        navigate('/blogs')
         setLoading(false)
       })
       .catch((err) => {
@@ -135,9 +117,6 @@ const AddBlog = () => {
 
             <TextInput
               label="Username"
-              // required
-              // value={name}
-              // onChange={(e) => setName(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -156,9 +135,6 @@ const AddBlog = () => {
 
             <TextInput
               label="Email"
-              // required
-              // value={email}
-              // onChange={(e) => setEmail(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -177,9 +153,6 @@ const AddBlog = () => {
 
             <TextInput
               label="Blog Title"
-              // required
-              // value={title}
-              // onChange={(e) => setTitle(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -198,12 +171,9 @@ const AddBlog = () => {
             <Textarea
               label="Blog Content"
               placeholder="Place the blog content here"
-              // value={content}
-              // onChange={(e) => setContent(e.currentTarget.value)}
-              // style={{
-              //   width: '100%',
-              // }}
-              // required
+              style={{
+                width: '100%',
+              }}
               mb={'md'}
               styles={{
                 input: { border: '1px solid #a7a7a8' },

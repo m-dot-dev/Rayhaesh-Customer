@@ -22,103 +22,85 @@ import DropZone from '../Generic/DropZone'
 import { uploadImage } from '../services/fileUpload'
 import { PakistanCities } from '../Filters/cities'
 import { showNotification } from '@mantine/notifications'
+import { useForm } from '@mantine/form'
 
 const ProfileSettings = (props) => {
   const match786 = useMediaQuery('(max-width: 786px)')
   const match310 = useMediaQuery('(max-width: 310px)')
 
   const [profileImage, setProfileImage] = React.useState(null)
-  const [name, setName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [confirmPassword, setConfirmPassword] = React.useState('')
-  const [phone, setPhone] = React.useState('+92')
-  const [whatsapp, setWhatsapp] = React.useState('+92')
-  const [tempAddress, setTempAddress] = React.useState('')
-  const [permAddress, setPermAddress] = React.useState('')
-  const [about, setAbout] = React.useState('')
-  const [zip, setZip] = React.useState()
-  const [city, setCity] = React.useState('')
-  const [agency, setAgency] = React.useState('')
-  const [cnic, setCnic] = React.useState('')
-  const [facebook, setFacebook] = React.useState('')
-  const [instagram, setInstagram] = React.useState('')
-  const [value, setValue] = React.useState(null)
 
   const cityData = PakistanCities.map((city) => ({
     label: city.label,
     value: city.value,
   }))
 
-  const NUM_REGEX = /^(03[0-9]{2})\d{7}$/
-  const CNIC_REGEX = /^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$/
-  const USER_REGEX = /^[A-z]{5,20}$/
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-  const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/
-
-  const [validName, setValidName] = React.useState(false)
-  const [validEmail, setValidEmail] = React.useState(false)
-  const [validPassword, setValidPassword] = React.useState(false)
-  const [validMatch, setValidMatch] = React.useState(false)
-  const [validNumber, setValidNumber] = React.useState(false)
-  const [validWhatsapp, setValidWhatsapp] = React.useState(false)
-  const [validCnic, setValidCnic] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [user, setUser] = React.useState()
 
-  const data = [{ label: 'PK', value: '+92' }]
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      cellPhoneNumber: '',
+      whatsappNumber: '',
+      temporaryAddress: '',
+      permanentAddress: '',
+      aboutUser: '',
+      ZIPCode: '',
+      city: '',
+      CNIC: '',
+    },
 
-  const countrySelect = (
-    <NativeSelect
-      data={data}
-      styles={{
-        input: {
-          fontWeight: 500,
-          borderTopLeftRadius: 0,
-          borderBottomLeftRadius: 0,
-        },
-      }}
-    />
-  )
-
-  const { auth } = useAuth()
-
-  useEffect(() => {
-    setValidName(USER_REGEX.test(name))
-  }, [name])
-
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email))
-  }, [email])
-
-  useEffect(() => {
-    setValidPassword(PWD_REGEX.test(password))
-    setValidMatch(password === confirmPassword)
-  }, [password, confirmPassword])
-
-  useEffect(() => {
-    if (NUM_REGEX.test(phone)) {
-      setValidNumber(true)
-    } else {
-      setValidNumber(false)
-    }
-  }, [phone])
-
-  useEffect(() => {
-    if (CNIC_REGEX.test(cnic)) {
-      setValidCnic(true)
-    } else {
-      setValidCnic(false)
-    }
-  }, [cnic])
-
-  useEffect(() => {
-    if (NUM_REGEX.test(whatsapp)) {
-      setValidWhatsapp(true)
-    } else {
-      setValidWhatsapp(false)
-    }
-  }, [whatsapp])
+    validate: {
+      name: (value) =>
+        value?.length < 2 ? 'Name must have at least 5 letters' : null,
+      email: (value) =>
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+          ? 'Invalid email address'
+          : null,
+      password: (value) =>
+        value?.length > 0 && value?.length < 4
+          ? 'Password must have at least 4 characters'
+          : null,
+      confirmPassword: (value) =>
+        value?.length > 0 && value !== form.values?.password
+          ? 'Passwords must match'
+          : null,
+      cellPhoneNumber: (value) =>
+        value?.length > 0 && !/^\+92[1-9]\d{9}$/.test(value)
+          ? 'Invalid phone number, must begin with +92'
+          : null,
+      whatsappNumber: (value) =>
+        value?.length > 0 && !/^\+92[1-9]\d{9}$/.test(value)
+          ? 'Invalid whatsapp number, must begin with +92'
+          : null,
+      temporaryAddress: (value) =>
+        value?.length > 0 && value?.length < 10
+          ? 'Address must have at least 10 letters'
+          : null,
+      permanentAddress: (value) =>
+        value?.length > 0 && value?.length < 10
+          ? 'Address must have at least 10 letters'
+          : null,
+      aboutUser: (value) =>
+        value?.length > 0 && value?.length < 10
+          ? 'About must have at least 10 letters'
+          : null,
+      ZIPCode: (value) =>
+        value?.length > 0 && !/^\d{5}$/.test(value) ? 'Invalid zip code' : null,
+      city: (value) =>
+        value?.length > 0 && value?.length < 2
+          ? 'City must have at least 2 letters'
+          : null,
+      CNIC: (value) =>
+        value?.length > 0 && !/^[0-9]{5}[0-9]{7}[0-9]$/.test(value)
+          ? 'Invalid CNIC, dont put dashes'
+          : null,
+    },
+  })
 
   useEffect(() => {
     axios
@@ -131,54 +113,37 @@ const ProfileSettings = (props) => {
         },
       )
       .then((res) => {
-        setEmail(res.data?.body?.email)
-        setName(res.data?.body?.name)
-        setPhone(res.data?.body?.cellPhoneNumber)
-        setWhatsapp(res.data?.body?.whatsappNumber)
-        setTempAddress(res.data?.body?.temporaryAddress)
-        setPermAddress(res.data?.body?.permanentAddress)
-        setAbout(res.data?.body?.aboutUser)
-        setZip(res.data?.body?.ZIPCode)
-        setCity(res.data?.body?.city)
-        setAgency(res.data?.body?.agency)
-        setCnic(res.data?.body?.CNIC)
-        setFacebook(res.data?.body?.facebook)
-        setInstagram(res.data?.body?.instagram)
-        setProfileImage(res.data?.body?.profileImage)
-        setUser(res.data?.body)
+        let response = res?.data?.body
+        form.setValues({
+          name: response?.name,
+          email: response?.email,
+          cellPhoneNumber: response?.cellPhoneNumber,
+          whatsappNumber: response?.whatsappNumber,
+          temporaryAddress: response?.temporaryAddress,
+          permanentAddress: response?.permanentAddress,
+          aboutUser: response?.aboutUser,
+          ZIPCode: response?.ZIPCode,
+          city: response?.city,
+          CNIC: response?.CNIC,
+        })
+
+        setUser(response)
       })
       .catch((err) => {
         console.log(err)
       })
   }, [])
 
-  console.log('====================================')
-  console.log('user ', user)
-  console.log('====================================')
-
-  const handleSave = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (values) => {
+    setLoading(true)
 
     const imageURL = await uploadImage(profileImage, 'user-profile-images')
+    values.profileImage = imageURL
 
     axios
       .patch(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/updateProfile',
-        {
-          name,
-          email,
-          password,
-          cellPhoneNumber: phone,
-          whatsappNumber: whatsapp,
-          temporaryAddress: tempAddress,
-          permanentAddress: permAddress,
-          aboutUser: about,
-          ZIPCode: zip,
-          city,
-          agency,
-          CNIC: cnic,
-          profileImage: imageURL,
-        },
+        values,
         {
           headers: {
             token: localStorage.getItem('token'),
@@ -187,7 +152,6 @@ const ProfileSettings = (props) => {
       )
       .then((res) => {
         console.log('update response: ', res)
-        setLoading(false)
         if (res?.data?.success === true) {
           showNotification({
             title: 'Profile Updated',
@@ -205,6 +169,7 @@ const ProfileSettings = (props) => {
             autoClose: true,
           })
         }
+        setLoading(false)
       })
       .catch((err) => {
         console.log('update error: ', err)
@@ -218,7 +183,7 @@ const ProfileSettings = (props) => {
         <Text weight={600} style={{ fontSize: 30 }} align="center" mb={'lg'}>
           Profile Settings
         </Text>
-        <form onSubmit={handleSave}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Group
             style={{
               width: '100%',
@@ -237,31 +202,26 @@ const ProfileSettings = (props) => {
               }}
             >
               <TextInput
-                required
                 label="Username"
                 placeholder="Tehseen Riaz"
-                value={name}
-                onChange={(e) => setName(e.currentTarget.value)}
                 style={{
                   width: '100%',
                 }}
-                aria-invalid={validName ? 'false' : 'true'}
                 autoComplete="off"
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('name')}
               />
               <TextInput
                 disabled={true}
                 label="Email"
                 placeholder="hello@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.currentTarget.value)}
                 style={{
                   width: '100%',
                 }}
-                aria-invalid={validEmail ? 'false' : 'true'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('email')}
               />
             </SimpleGrid>
 
@@ -279,12 +239,10 @@ const ProfileSettings = (props) => {
                 style={{
                   width: '100%',
                 }}
-                value={password}
-                onChange={(e) => setPassword(e.currentTarget.value)}
-                aria-invalid={validPassword ? 'false' : 'true'}
                 autoComplete={'off'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('password')}
               />
               <PasswordInput
                 label="Confirm Password"
@@ -292,11 +250,9 @@ const ProfileSettings = (props) => {
                 style={{
                   width: '100%',
                 }}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-                aria-invalid={validMatch ? 'false' : 'true'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('confirmPassword')}
               />
             </SimpleGrid>
 
@@ -311,30 +267,22 @@ const ProfileSettings = (props) => {
               <TextInput
                 label="Cell Number"
                 placeholder=""
-                value={phone}
-                onChange={(e) => {
-                  setPhone(e.target.value)
-                }}
                 style={{
                   width: '100%',
                 }}
-                aria-invalid={validNumber ? 'false' : 'true'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('cellPhoneNumber')}
               />
               <TextInput
                 label="WhatsApp Number"
                 placeholder=""
-                value={whatsapp}
-                onChange={(e) => {
-                  setWhatsapp(e.target.value)
-                }}
                 style={{
                   width: '100%',
                 }}
-                aria-invalid={validWhatsapp ? 'false' : 'true'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('whatsappNumber')}
               />
             </SimpleGrid>
 
@@ -348,13 +296,12 @@ const ProfileSettings = (props) => {
               <Textarea
                 label="About Yourself"
                 placeholder="Tell us about yourself"
-                value={about}
-                onChange={(e) => setAbout(e.currentTarget.value)}
                 style={{
                   width: '100%',
                 }}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('aboutUser')}
               />
             </Group>
 
@@ -369,24 +316,22 @@ const ProfileSettings = (props) => {
               <Textarea
                 label="Temporary Address"
                 placeholder="Temporary Address"
-                value={tempAddress}
-                onChange={(e) => setTempAddress(e.currentTarget.value)}
                 style={{
                   width: '100%',
                 }}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('temporaryAddress')}
               />
               <Textarea
                 label="Permanent Address"
                 placeholder="Permanent Address"
-                value={permAddress}
-                onChange={(e) => setPermAddress(e.currentTarget.value)}
                 style={{
                   width: '100%',
                 }}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('permanentAddress')}
               />
             </SimpleGrid>
 
@@ -401,39 +346,30 @@ const ProfileSettings = (props) => {
               <TextInput
                 label="Zip Code"
                 placeholder="Zip Code"
-                value={zip}
-                onChange={(e) => {
-                  setZip(e.target.value)
-                }}
                 hideControls
                 style={{
                   width: '100%',
                 }}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('ZIPCode')}
               />
               <TextInput
                 hideControls
                 label="CNIC"
                 placeholder="CNIC"
-                value={cnic}
-                onChange={(e) => {
-                  setCnic(e.target.value)
-                }}
                 style={{
                   width: '100%',
                 }}
-                aria-invalid={validCnic ? 'false' : 'true'}
                 size="md"
                 styles={{ input: { border: '1px solid #a7a7a8' } }}
+                {...form.getInputProps('CNIC')}
               />
             </SimpleGrid>
 
             <Select
               label="City"
               placeholder="Select City"
-              value={city}
-              onChange={(e) => setCity(e.currentTarget.value)}
               style={{
                 width: '100%',
               }}
@@ -441,6 +377,7 @@ const ProfileSettings = (props) => {
               size="md"
               mt={'xl'}
               styles={{ input: { border: '1px solid #a7a7a8' } }}
+              {...form.getInputProps('city')}
             />
           </Grid>
 
@@ -459,7 +396,6 @@ const ProfileSettings = (props) => {
               leftIcon={!match310 ? <IconCheck /> : null}
               type="submit"
               loading={loading}
-              onClick={() => setLoading(true)}
             >
               Save
             </Button>
