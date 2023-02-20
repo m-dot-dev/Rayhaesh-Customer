@@ -6,6 +6,7 @@ import {
   Group,
   Input,
   Modal,
+  SimpleGrid,
   Text,
 } from '@mantine/core'
 import BuyCards from '../Buy/BuyCards'

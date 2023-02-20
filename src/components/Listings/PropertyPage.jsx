@@ -107,7 +107,7 @@ const PropertyPage = () => {
       })
     } else {
       navigate(`/booking/${property?._id}`, {
-        state: { data: property, name: name, email: email, phone: phone },
+        state: { data: property },
       })
     }
   }

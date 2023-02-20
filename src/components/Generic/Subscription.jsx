@@ -11,7 +11,8 @@ import {
   createStyles,
 } from '@mantine/core'
 import { IconCircleCheck } from '@tabler/icons'
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
 
 const Subscription = () => {
   const useStyles = createStyles((theme) => ({
@@ -34,6 +35,27 @@ const Subscription = () => {
     },
   }))
   const { classes } = useStyles()
+
+  const [subscriptions, setSubscriptions] = React.useState([])
+
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getSubscriptions',
+      )
+      .then((data) => {
+        setSubscriptions(data)
+      })
+      .catch((error) => {
+        console.log('====================================')
+        console.log('error: ', error)
+        console.log('====================================')
+      })
+  }, [])
+
+  console.log('====================================')
+  console.log('subscriptions: ', subscriptions)
+  console.log('====================================')
 
   return (
     <Container size={420} my={40}>

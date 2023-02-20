@@ -1,7 +1,18 @@
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core'
-import { IconAspectRatio, IconBath, IconBed } from '@tabler/icons'
+import {
+  Card,
+  Image,
+  Text,
+  Badge,
+  Button,
+  Group,
+  ActionIcon,
+} from '@mantine/core'
+import { IconAspectRatio, IconBath, IconBed, IconHeart } from '@tabler/icons'
+import { useNavigate } from 'react-router-dom'
 
 export default function ListingCard({ property }) {
+  const navigate = useNavigate()
+
   return (
     <Card
       shadow="sm"
@@ -69,17 +80,21 @@ export default function ListingCard({ property }) {
         </Group>
       )}
 
-      <Text
-        size="md"
-        style={{
-          color: '#D92228',
-          fontSize: 20,
-        }}
-        weight={500}
-        mt={'md'}
-      >
-        Rs. {property?.totalPrice}
-      </Text>
+      <Group position="apart" mt={'md'} noWrap>
+        <Text
+          size="md"
+          style={{
+            color: '#D92228',
+            fontSize: 20,
+          }}
+          weight={500}
+        >
+          Rs. {property?.totalPrice}
+        </Text>
+        <Badge color="red" variant="dot">
+          {property?.propertyAvailabilityStatus}
+        </Badge>
+      </Group>
     </Card>
   )
 }
