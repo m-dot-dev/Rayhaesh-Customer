@@ -12,6 +12,10 @@ const AgencyDetails = ({ property }) => {
   }))
   const { classes } = useStyles()
 
+  console.log('====================================')
+  console.log('Agency Category Details', property?.agency)
+  console.log('====================================')
+
   return (
     <Stack spacing={0}>
       <Group>
