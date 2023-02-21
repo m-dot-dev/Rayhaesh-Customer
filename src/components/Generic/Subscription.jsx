@@ -54,71 +54,96 @@ const Subscription = () => {
   }, [])
 
   console.log('====================================')
-  console.log('subscriptions: ', subscriptions)
+  console.log('subscription PRICE: ', subscriptions?.data?.body)
   console.log('====================================')
 
   return (
-    <Container size={420} my={40}>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        mt={30}
-        radius="lg"
-        style={{
-          background: 'rgb(228, 152, 70)',
-          backgroundImage:
-            'linear-gradient(270deg, rgba(228,152,70,1) 0%, rgba(215,115,32,1) 35%, rgba(200,101,35,1) 45%, rgba(205,47,47,1) 85%)',
-        }}
-        sx={{
-          '&:hover': {
-            transform: 'scale(1.02)',
-            transition: 'all 0.5s ease-in-out',
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <Group position="right">
-          <Badge variant="filled" color="red" size="lg">
-            Most Popular
-          </Badge>
-        </Group>
-        <Group>
-          <Text className={classes.titleText}>PKR 3000/Month</Text>
-        </Group>
-
-        <Text className={classes.secondaryText}>TRA REMS</Text>
-
-        <Stack>
-          <List
-            spacing="xs"
-            size="sm"
-            center
-            icon={
-              <ThemeIcon color="green" size={24} radius="xl">
-                <IconCircleCheck size={16} />
-              </ThemeIcon>
-            }
-            mt={20}
+    <Container size={'xl'}>
+      {subscriptions?.data?.body?.map((subscription) => {
+        return (
+          <Paper
+            withBorder
+            shadow="md"
+            p={30}
+            mt={30}
+            radius="lg"
+            style={{
+              background: 'rgb(228, 152, 70)',
+              backgroundImage:
+                'linear-gradient(270deg, rgba(228,152,70,1) 0%, rgba(215,115,32,1) 35%, rgba(200,101,35,1) 45%, rgba(205,47,47,1) 85%)',
+              // maxHeight: 500,
+              maxWidth: 400,
+            }}
+            sx={{
+              '&:hover': {
+                transform: 'scale(1.02)',
+                transition: 'all 0.5s ease-in-out',
+                cursor: 'pointer',
+              },
+            }}
           >
-            <List.Item className={classes.listItemText}>HASHAAM</List.Item>
-            <List.Item className={classes.listItemText}>ABDULLAH</List.Item>
-            <List.Item className={classes.listItemText}>WAQAS</List.Item>
-            <List.Item className={classes.listItemText}>HARIS</List.Item>
-            <List.Item className={classes.listItemText}>TRA</List.Item>
-          </List>
-        </Stack>
-        <Group
-          style={{
-            marginTop: 20,
-          }}
-          position="center"
-        >
-          <Button variant="filled" color="red" radius="xl" size="sm" uppercase>
-            Choose Plan
-          </Button>
-        </Group>
-      </Paper>
+            <Group position="right">
+              <Badge variant="filled" color="red" size="lg">
+                Most Popular
+              </Badge>
+            </Group>
+            <Group>
+              <Text className={classes.titleText}>
+                PKR {subscription?.price || 'NA'}/Month
+              </Text>
+            </Group>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.title || 'Subscription Title'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.description || 'Subscription Description'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.durationInMonths || 'Duration in Months'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.allowedNumberOfPropertyListings ||
+                'Allowed Number of Property Listings'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.allowedNumerOfHotListings ||
+                'Allowed Number of Hot Listings'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.allowedNumberOfSuperHotListings ||
+                'Allowed Number of Super Hot Listings'}
+            </Text>
+
+            <Text className={classes.secondaryText}>
+              {subscription?.allowedNumberOfPremiumListings ||
+                'Allowed Number of Premium Listings'}
+            </Text>
+
+            <Group
+              style={{
+                marginTop: 20,
+              }}
+              position="center"
+            >
+              <Button
+                variant="filled"
+                color="red"
+                radius="xl"
+                size="sm"
+                uppercase
+              >
+                Choose Plan
+              </Button>
+            </Group>
+          </Paper>
+        )
+      })}
     </Container>
   )
 }

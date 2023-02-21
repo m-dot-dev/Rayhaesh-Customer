@@ -256,6 +256,17 @@ export default function Navbar() {
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
               onClick={() => {
+                navigate('/subscription')
+              }}
+            >
+              Subscription
+            </Button>
+
+            <Button
+              variant="outline"
+              sx={{ borderColor: '#D92228' }}
+              className={classes.link}
+              onClick={() => {
                 navigate('/contact')
               }}
             >
