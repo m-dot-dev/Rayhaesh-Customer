@@ -1,42 +1,27 @@
 import {
   Badge,
   Button,
+  Center,
   Container,
   Group,
   List,
   Paper,
+  SimpleGrid,
   Stack,
   Text,
   ThemeIcon,
   createStyles,
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { IconCircleCheck } from '@tabler/icons'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 
 const Subscription = () => {
-  const useStyles = createStyles((theme) => ({
-    titleText: {
-      color: theme.white,
-      fontSize: 28,
-      fontWeight: 700,
-      marginTop: 10,
-      marginBottom: 10,
-    },
-    secondaryText: {
-      color: theme.white,
-      fontSize: 22,
-      fontWeight: 600,
-    },
-    listItemText: {
-      color: theme.white,
-      fontSize: 18,
-      fontStyle: 'italic',
-    },
-  }))
-  const { classes } = useStyles()
-
   const [subscriptions, setSubscriptions] = React.useState([])
+  const match1100 = useMediaQuery('(max-width: 1100px)')
+  const match768 = useMediaQuery('(max-width: 768px)')
+  const match576 = useMediaQuery('(max-width: 576px)')
 
   useEffect(() => {
     axios
@@ -53,97 +38,116 @@ const Subscription = () => {
       })
   }, [])
 
-  console.log('====================================')
-  console.log('subscription PRICE: ', subscriptions?.data?.body)
-  console.log('====================================')
-
   return (
     <Container size={'xl'}>
-      {subscriptions?.data?.body?.map((subscription) => {
-        return (
-          <Paper
-            withBorder
-            shadow="md"
-            p={30}
-            mt={30}
-            radius="lg"
-            style={{
-              background: 'rgb(228, 152, 70)',
-              backgroundImage:
-                'linear-gradient(270deg, rgba(228,152,70,1) 0%, rgba(215,115,32,1) 35%, rgba(200,101,35,1) 45%, rgba(205,47,47,1) 85%)',
-              // maxHeight: 500,
-              maxWidth: 400,
-            }}
-            sx={{
-              '&:hover': {
-                transform: 'scale(1.02)',
-                transition: 'all 0.5s ease-in-out',
-                cursor: 'pointer',
-              },
-            }}
-          >
-            <Group position="right">
-              <Badge variant="filled" color="red" size="lg">
-                Most Popular
-              </Badge>
-            </Group>
-            <Group>
-              <Text className={classes.titleText}>
-                PKR {subscription?.price || 'NA'}/Month
-              </Text>
-            </Group>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.title || 'Subscription Title'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.description || 'Subscription Description'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.durationInMonths || 'Duration in Months'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.allowedNumberOfPropertyListings ||
-                'Allowed Number of Property Listings'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.allowedNumerOfHotListings ||
-                'Allowed Number of Hot Listings'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.allowedNumberOfSuperHotListings ||
-                'Allowed Number of Super Hot Listings'}
-            </Text>
-
-            <Text className={classes.secondaryText}>
-              {subscription?.allowedNumberOfPremiumListings ||
-                'Allowed Number of Premium Listings'}
-            </Text>
-
-            <Group
-              style={{
-                marginTop: 20,
-              }}
-              position="center"
-            >
-              <Button
-                variant="filled"
-                color="red"
-                radius="xl"
-                size="sm"
-                uppercase
+      <Center>
+        <Text size="xl" weight={600} mt={'xl'}>
+          Choose your subscription plan
+        </Text>
+      </Center>
+      <SimpleGrid cols={match576 ? 1 : match768 ? 1 : match1100 ? 2 : 3}>
+        {subscriptions?.data?.body?.map((subscription) => {
+          return (
+            <Center>
+              <Paper
+                withBorder
+                shadow="md"
+                style={{
+                  width: 420,
+                  height: 450,
+                  backgroundColor: '#e5e5f7',
+                  opacity: 0.8,
+                  backgroundImage:
+                    'radial-gradient(#D92228 0.5px, #e5e5f7 0.5px)',
+                  backgroundSize: '10px 10px',
+                  position: 'relative',
+                }}
+                radius={'lg'}
+                mt={'xl'}
+                mb={'xl'}
+                sx={{
+                  '&:hover': {
+                    transform: 'scale(1.01)',
+                    transition: 'all 0.6s ease-in-out',
+                    cursor: 'pointer',
+                  },
+                }}
+                p={'lg'}
               >
-                Choose Plan
-              </Button>
-            </Group>
-          </Paper>
-        )
-      })}
+                <Center mt={'xs'}>
+                  <Text weight={700} color="#D92228" size={'xl'}>
+                    PKR {subscription?.price || 'NA'}/Month
+                  </Text>
+                </Center>
+
+                <Badge
+                  color="grape"
+                  style={{
+                    position: 'absolute',
+                    top: -10,
+                    right: -10,
+                  }}
+                >
+                  {subscription?.title || 'Subscription Title'}
+                </Badge>
+
+                <Center mt={'md'}>
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.description || 'Subscription Description'}
+                  </Text>
+                </Center>
+
+                <Stack mt={'xl'} spacing={'xs'}>
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.durationInMonths || 'Duration in Months'}
+                  </Text>
+
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.allowedNumberOfPropertyListings ||
+                      'Allowed Number of Property Listings'}
+                  </Text>
+
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.allowedNumerOfHotListings ||
+                      'Allowed Number of Hot Listings'}
+                  </Text>
+
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.allowedNumberOfSuperHotListings ||
+                      'Allowed Number of Super Hot Listings'}
+                  </Text>
+
+                  <Text weight={500} size={'lg'}>
+                    {subscription?.allowedNumberOfPremiumListings ||
+                      'Allowed Number of Premium Listings'}
+                  </Text>
+                </Stack>
+
+                <Group
+                  style={{
+                    marginTop: 20,
+                  }}
+                  position="center"
+                >
+                  <Button
+                    variant="filled"
+                    color="red"
+                    radius="lg"
+                    size="sm"
+                    uppercase
+                    style={{
+                      position: 'absolute',
+                      bottom: -20,
+                    }}
+                  >
+                    Choose Plan
+                  </Button>
+                </Group>
+              </Paper>
+            </Center>
+          )
+        })}
+      </SimpleGrid>
     </Container>
   )
 }
