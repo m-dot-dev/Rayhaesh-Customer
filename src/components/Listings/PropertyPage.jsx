@@ -41,6 +41,7 @@ import AgencyDetails from '../ListingTabs/AgencyDetails'
 import ServicesDetails from '../ListingTabs/ServicesDetails'
 import AboutDetails from '../ListingTabs/AboutDetails'
 import LocationDetails from '../ListingTabs/LocationDetails'
+import DocumentViewer from '../ListingTabs/DocumentViewer'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -86,6 +87,18 @@ const PropertyPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+
+  console.log('====================================')
+  console.log('property doc link: ', property?.documents)
+  console.log('====================================')
+
+  {
+    property?.documents?.map((doc) => {
+      console.log('====================================')
+      console.log('actual doc: ', doc)
+      console.log('====================================')
+    })
+  }
 
   const handleBookingSubmit = (e) => {
     e.preventDefault()
@@ -183,7 +196,7 @@ const PropertyPage = () => {
 
               {property?.documents && (
                 <Tabs.Panel value="documents" pt="xs">
-                  <PropertyCarousel property={property} type="document" />
+                  <DocumentViewer property={property} />
                 </Tabs.Panel>
               )}
 

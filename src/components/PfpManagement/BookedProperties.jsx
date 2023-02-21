@@ -1,25 +1,15 @@
-import { useState } from 'react'
-import { createStyles, Table, ScrollArea, Container, Text } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import {
+  createStyles,
+  Table,
+  ScrollArea,
+  Container,
+  Text,
+  Group,
+  Loader,
+} from '@mantine/core'
 import ActionIcons from '../Generic/ActionIcons'
-
-const data = [
-  {
-    title: '10 Marla File in Burewala',
-    city: 'Burewala',
-    category: 'Residential',
-    subCategory: 'File',
-    type: 'Interested In',
-    action: <ActionIcons type="booking" />,
-  },
-  {
-    title: '10 Marla File in Burewala',
-    city: 'Burewala',
-    category: 'Residential',
-    subCategory: 'File',
-    type: 'Paid',
-    action: <ActionIcons type="booking" />,
-  },
-]
+import axios from 'axios'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -28,6 +18,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     transition: 'box-shadow 150ms ease',
+    zIndex: 1,
 
     '&::after': {
       content: '""',
@@ -49,19 +40,65 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export default function BookedProperties() {
+  const [myBookedProperties, setMyBookedProperties] = useState([])
+  const [loading, setLoading] = useState(true)
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
 
-  const rows = data.map((row) => (
-    <tr key={row.name}>
-      <td>{row.title}</td>
-      <td>{row.city}</td>
-      <td>{row.category}</td>
-      <td>{row.subCategory}</td>
-      <td>{row.type}</td>
-      <td>{row.action}</td>
-    </tr>
-  ))
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/customer/getMyBookings',
+        {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        },
+      )
+      .then((res) => {
+        setMyBookedProperties(res)
+        setLoading(false)
+        console.log('myProperties--->', myBookedProperties?.data?.body)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
+  const rows =
+    loading === true ? (
+      <tr>
+        <td colSpan={12}>
+          <Group position="center">
+            <Loader variant="dots" color="red" />
+          </Group>
+        </td>
+      </tr>
+    ) : myBookedProperties?.data?.body.length !== 0 ? (
+      myBookedProperties?.data?.body?.map((row) => (
+        <tr key={row?._id || 1}>
+          <td>{myBookedProperties?.data?.body?.indexOf(row) + 1}</td>
+          <td>{row?.propertyId?.propertyTitle}</td>
+          <td>{row?.propertyId?.propertyCity}</td>
+          <td>{row?.propertyId?.propertyCategory}</td>
+          <td>{row?.propertyId?.propertySubCategory}</td>
+          <td>{row?.bookingType}</td>
+          <td>
+            <ActionIcons data={row} id={row?._id || 1} />
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan={4}>
+          <Group position="center">
+            <Text size={20} weight={600}>
+              No Booked Properties
+            </Text>
+          </Group>
+        </td>
+      </tr>
+    )
 
   return (
     <Container size={'xl'} mt={'xl'}>
@@ -77,6 +114,7 @@ export default function BookedProperties() {
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
             <tr>
+              <th>ID</th>
               <th>Property Title</th>
               <th>Property City</th>
               <th>Category</th>
