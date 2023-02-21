@@ -19,6 +19,7 @@ import {
   IconAdjustmentsHorizontal,
   IconArrowRight,
   IconCheck,
+  IconFileInfo,
   IconFiles,
   IconMap2,
   IconPhoto,
@@ -36,6 +37,7 @@ import { showNotification } from '@mantine/notifications'
 import LocationMap from '../Generic/LocationMap'
 import VideosCarousel from '../Carousel/VideosCarousel'
 import ImagesCarousel from '../Carousel/ImagesCarousel'
+import AgencyDetails from '../ListingTabs/AgencyDetails'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -116,7 +118,6 @@ const PropertyPage = () => {
     <Container size={'xl'} pt={'md'}>
       <Grid columns={12}>
         <Grid.Col
-          // style={{ display: 'flex', flexDirection: 'column' }}
           style={match1200 ? { padding: 50 } : null}
           span={match1200 ? 12 : 8}
           className={classes.container}
@@ -257,6 +258,9 @@ const PropertyPage = () => {
                 >
                   Services
                 </Tabs.Tab>
+                <Tabs.Tab value="agency" icon={<IconFileInfo size={14} />}>
+                  Agency
+                </Tabs.Tab>
                 <Tabs.Tab value="location" icon={<IconMap2 size={14} />}>
                   Location
                 </Tabs.Tab>
@@ -319,7 +323,6 @@ const PropertyPage = () => {
                         </Text>
                         <Text>{property?.minimumExchangeValue}</Text>
                       </Group>
-                      {/* There is no installments in the last property but it has monthly rent etc. where to put that? */}
                       <Group>
                         {property?.inInstallments && (
                           <Stack>
@@ -602,6 +605,16 @@ const PropertyPage = () => {
                       lat={property?.propertyLocation?.coordinates[0] || 0}
                       lng={property?.propertyLocation?.coordinates[1] || 1}
                     />
+                  )}
+                </Stack>
+              </Tabs.Panel>
+
+              <Tabs.Panel value="agency" pt="xs">
+                <Stack spacing={0}>
+                  {property?.agency && (
+                    <Group>
+                      <AgencyDetails property={property} />
+                    </Group>
                   )}
                 </Stack>
               </Tabs.Panel>
