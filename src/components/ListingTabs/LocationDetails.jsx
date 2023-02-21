@@ -57,12 +57,13 @@ const LocationDetails = ({ property }) => {
             <Text>{property?.ZIPCode}</Text>
           </Group>
         )}
-        {property?.propertyLocation && (
-          <LocationMap
-            lat={property?.propertyLocation?.coordinates[0] || 0}
-            lng={property?.propertyLocation?.coordinates[1] || 1}
-          />
-        )}
+        {property?.propertyLocation &&
+          property?.propertyLocation?.coordinates?.length !== 0 && (
+            <LocationMap
+              lat={property?.propertyLocation?.coordinates[0] || 0}
+              lng={property?.propertyLocation?.coordinates[1] || 1}
+            />
+          )}
       </Stack>
     </>
   )

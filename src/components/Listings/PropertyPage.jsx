@@ -302,7 +302,7 @@ const PropertyPage = () => {
               marginTop: 100,
               marginRight: 50,
               top: '100px',
-              position: 'sticky',
+              // position: 'sticky',
               outline: '0px',
             }}
           >
