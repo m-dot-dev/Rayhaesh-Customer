@@ -40,6 +40,7 @@ import ImagesCarousel from '../Carousel/ImagesCarousel'
 import AgencyDetails from '../ListingTabs/AgencyDetails'
 import ServicesDetails from '../ListingTabs/ServicesDetails'
 import AboutDetails from '../ListingTabs/AboutDetails'
+import LocationDetails from '../ListingTabs/LocationDetails'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -277,38 +278,7 @@ const PropertyPage = () => {
               </Tabs.Panel>
 
               <Tabs.Panel value="location" pt="xs">
-                <Stack spacing={0}>
-                  {property?.propertyCity && (
-                    <Group>
-                      <Text className={classes.aboutText}>City:</Text>
-                      <Text>{property?.propertyCity}</Text>
-                    </Group>
-                  )}
-                  {property?.streetNumber && (
-                    <Group>
-                      <Text className={classes.aboutText}>Street Number: </Text>
-                      <Text>{property?.streetNumber}</Text>
-                    </Group>
-                  )}
-                  {property?.houseNumber && (
-                    <Group>
-                      <Text className={classes.aboutText}>House Number: </Text>
-                      <Text>{property?.houseNumber}</Text>
-                    </Group>
-                  )}
-                  {property?.ZIPCode && (
-                    <Group>
-                      <Text className={classes.aboutText}>Zip Code: </Text>
-                      <Text>{property?.ZIPCode}</Text>
-                    </Group>
-                  )}
-                  {property?.propertyLocation && (
-                    <LocationMap
-                      lat={property?.propertyLocation?.coordinates[0] || 0}
-                      lng={property?.propertyLocation?.coordinates[1] || 1}
-                    />
-                  )}
-                </Stack>
+                <LocationDetails property={property} />
               </Tabs.Panel>
 
               <Tabs.Panel value="agency" pt="xs">
