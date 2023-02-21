@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Modal, Button, Group, Stack, Text, Grid } from '@mantine/core'
 
-export default function ViewBooking({ opened, setOpened }) {
+export default function ViewBooking({ opened, setOpened, data }) {
   return (
     <>
       <Modal
@@ -40,11 +40,17 @@ export default function ViewBooking({ opened, setOpened }) {
           </Grid>
           <Grid pl={'sm'}>
             <Grid.Col>
-              <Text>10 Marla File in Burewala</Text>
-              <Text>Full Paid</Text>
-              <Text>Cash</Text>
-              <Text>Rs. 10000</Text>
-              <Text>27/11/11</Text>
+              <Text>{data?.propertyId?.propertyTitle}</Text>
+              <Text>{data?.bookingType}</Text>
+              <Text>{data?.paymentMethod}</Text>
+              <Text>{data?.paymentAmount}</Text>
+              <Text>
+                {new Date(data.createdAt).toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </Text>
             </Grid.Col>
           </Grid>
         </Group>

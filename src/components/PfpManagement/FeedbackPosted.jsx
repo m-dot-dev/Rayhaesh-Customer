@@ -82,6 +82,7 @@ export default function FeedbackPosted() {
     ) : myFeedback?.data?.data?.length !== 0 ? (
       myFeedback?.data?.data?.map((row) => (
         <tr key={row?._id || 1}>
+          <td>{myFeedback?.data?.data?.indexOf(row) + 1}</td>
           <td>{row?.feedbackType || 'feedback'}</td>
           <td
             style={{
@@ -129,6 +130,7 @@ export default function FeedbackPosted() {
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
             <tr>
+              <th>ID</th>
               <th>Feedback Type</th>
               <th>Feedback Message</th>
               <th>Status</th>

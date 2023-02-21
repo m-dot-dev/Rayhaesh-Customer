@@ -54,7 +54,7 @@ const ActionIcons = ({ type, data }) => {
           </Tooltip>
         </Group>
       )}
-      <ViewBooking opened={opened} setOpened={setOpened} />
+      <ViewBooking opened={opened} setOpened={setOpened} data={data} />
       <ViewBlogs blogOpened={blogOpened} setBlogOpened={setBlogOpened} />
       <ViewFeedback
         feedbackOpened={feedbackOpened}
