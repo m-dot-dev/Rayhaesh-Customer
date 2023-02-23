@@ -1,23 +1,23 @@
+import { Group, Text } from '@mantine/core'
 import React from 'react'
 
 const DocumentViewer = ({ property }) => {
-  console.log('====================================')
-  console.log('property', property?.documents)
-  console.log('====================================')
-  property?.documents?.push(property?.documents[0])
-  property?.documents?.push(property?.documents[0])
-  property?.documents?.push(property?.documents[0])
-  property?.documents?.push(property?.documents[0])
+  // console.log('====================================')
+  // console.log('property', property?.documents)
+  // console.log('====================================')
+
   return (
-    <>
-      {property?.documents?.map((document) => {
+    <Group key={document?.id}>
+      {property?.documents?.map((document, index) => {
         return (
-          <div key={document?.id}>
-            <iframe src={document} width="100%" height="200px" />
-          </div>
+          <Text>
+            <a href={document} target="_blank" rel="noreferrer">
+              View Pdf {index + 1}
+            </a>
+          </Text>
         )
       })}
-    </>
+    </Group>
   )
 }
 
