@@ -15,7 +15,7 @@ export default function PropertySubCategoryCB({
           <Checkbox
             value="house"
             label="House"
-            // mt={'md'}
+            mt={'md'}
             styles={{
               input: {
                 '&:checked': {

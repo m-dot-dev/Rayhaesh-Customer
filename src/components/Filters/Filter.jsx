@@ -35,14 +35,7 @@ const Filter = ({
     label: city.label,
     value: city.value,
   }))
-  console.log(
-    'dasdsaasdadasd: ',
-    city,
-    categoryValue,
-    subCategoryValue,
-    areaValue,
-    priceValue,
-  )
+
   return (
     <Box
       style={{
@@ -106,8 +99,8 @@ const Filter = ({
           setSubCategoryValue={setSubCategoryValue}
         />
         {/* Coming from backened */}
-        {/* <AreaCB areaValue={areaValue} setAreaValue={setAreaValue} />
-        <PriceCB priceValue={priceValue} setPriceValue={setPriceValue} /> */}
+        <AreaCB areaValue={areaValue} setAreaValue={setAreaValue} />
+        <PriceCB priceValue={priceValue} setPriceValue={setPriceValue} />
       </Stack>
 
       {match1200 && (
