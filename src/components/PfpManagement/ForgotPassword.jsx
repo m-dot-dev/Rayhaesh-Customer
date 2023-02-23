@@ -73,7 +73,7 @@ export default function ForgotPassword() {
           color: 'green',
           icon: <IconCheck />,
         })
-        navigate('/login')
+        // navigate('/login')
       }
     } catch (error) {
       console.log('====================================')

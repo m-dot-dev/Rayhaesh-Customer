@@ -196,7 +196,7 @@ export default function Navbar() {
             spacing={7}
             className={classes.hiddenMobile}
           >
-            <Button
+            {/* <Button
               variant="outline"
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
@@ -205,7 +205,7 @@ export default function Navbar() {
               }}
             >
               Home
-            </Button>
+            </Button> */}
 
             <Button
               variant="outline"
@@ -251,7 +251,7 @@ export default function Navbar() {
               News & Insights
             </Button>
 
-            <Button
+            {/* <Button
               variant="outline"
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
@@ -260,7 +260,7 @@ export default function Navbar() {
               }}
             >
               Subscription
-            </Button>
+            </Button> */}
 
             <Button
               variant="outline"
@@ -274,7 +274,7 @@ export default function Navbar() {
             </Button>
           </Group>
 
-          <Group className={classes.hiddenMobile}>
+          <Group className={classes.hiddenMobile} spacing={'xs'}>
             {!auth ? (
               <>
                 <Button

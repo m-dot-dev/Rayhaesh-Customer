@@ -88,17 +88,21 @@ const PropertyPage = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
-  console.log('====================================')
-  console.log('property doc link: ', property?.documents)
-  console.log('====================================')
+  // console.log('====================================')
+  // console.log('property doc link: ', property?.documents)
+  // console.log('====================================')
 
-  {
-    property?.documents?.map((doc) => {
-      console.log('====================================')
-      console.log('actual doc: ', doc)
-      console.log('====================================')
-    })
-  }
+  // {
+  //   property?.documents?.map((doc) => {
+  //     console.log('====================================')
+  //     console.log('actual doc: ', doc)
+  //     console.log('====================================')
+  //   })
+  // }
+
+  console.log('====================================')
+  console.log('property agency Category: ', property)
+  console.log('====================================')
 
   const handleBookingSubmit = (e) => {
     e.preventDefault()

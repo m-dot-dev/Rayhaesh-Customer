@@ -5,6 +5,8 @@ import ViewBooking from './ViewBooking'
 import ViewBlogs from './ViewBlogs'
 import ViewFeedback from './ViewFeedback'
 import DeleteConfirmation from './DeleteConfirmation'
+import { CSVDownload, CSVLink } from 'react-csv'
+import DownloadCSV from './DownloadCSV'
 
 const ActionIcons = ({ type, data }) => {
   const [opened, setOpened] = useState(false)
@@ -52,6 +54,7 @@ const ActionIcons = ({ type, data }) => {
               <IconEye size={20} color="purple" />
             </ActionIcon>
           </Tooltip>
+          <DownloadCSV data={data} />
         </Group>
       )}
       <ViewBooking opened={opened} setOpened={setOpened} data={data} />
