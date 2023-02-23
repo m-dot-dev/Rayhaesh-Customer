@@ -1,6 +1,5 @@
 import { ActionIcon, Tooltip } from '@mantine/core'
 import { IconDownload } from '@tabler/icons'
-import jsPDF from 'jspdf'
 import React from 'react'
 import { CSVLink } from 'react-csv'
 
