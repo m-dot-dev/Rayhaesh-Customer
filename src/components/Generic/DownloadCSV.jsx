@@ -1,14 +1,10 @@
 import { ActionIcon, Tooltip } from '@mantine/core'
 import { IconDownload } from '@tabler/icons'
+import jsPDF from 'jspdf'
 import React from 'react'
 import { CSVLink } from 'react-csv'
 
 const DownloadCSV = ({ data }) => {
-  const csvData = [
-    ['name1', 'city1', 'some other info'],
-    ['name2', 'city2', 'more info'],
-  ]
-
   console.log('====================================')
   console.log('data to dunlod', data)
   console.log('====================================')
@@ -17,7 +13,12 @@ const DownloadCSV = ({ data }) => {
     <>
       <Tooltip label="Download CSV">
         <ActionIcon>
-          <CSVLink data={csvData}>
+          <CSVLink
+            data={Object.entries(data)?.map(([key, value]) => {
+              return [key, JSON.stringify(value)]
+            })}
+            filename="myBooking.csv"
+          >
             <IconDownload size={20} color="blue" />
           </CSVLink>
         </ActionIcon>
