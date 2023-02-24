@@ -28,7 +28,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
           />
           <Checkbox
             value="2"
-            label="< 50 Lac"
+            label="> 15 Lac & < 50 Lac"
             styles={{
               input: {
                 '&:checked': {
@@ -44,7 +44,7 @@ export default function PriceCB({ priceValue, setPriceValue }) {
           />
           <Checkbox
             value="3"
-            label="< 1 Crore"
+            label=">50 Lac & < 1 Crore"
             styles={{
               input: {
                 '&:checked': {

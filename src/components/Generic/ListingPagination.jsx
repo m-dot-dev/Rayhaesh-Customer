@@ -6,8 +6,11 @@ const ListingPagination = ({
   totalPosts,
   paginate,
   currentPosts,
+  filteredData,
 }) => {
   const pageNumbers = []
+
+  filteredData?.length > 0 ? (totalPosts = filteredData.length) : totalPosts
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i)
@@ -18,7 +21,7 @@ const ListingPagination = ({
   return (
     currentPosts?.length > 0 && (
       <Pagination
-        total={pageNumbers?.length}
+        total={pageNumbers.length}
         onChange={(page) => paginate(page)}
         withEdges
         styles={() => ({

@@ -152,7 +152,7 @@ const BuyListings = () => {
                       fontWeight: 600,
                     }}
                   >
-                    {
+                    {/* {
                       currentPosts.filter((property) => {
                         if (query === '') {
                           return property
@@ -165,7 +165,9 @@ const BuyListings = () => {
                         }
                         return null
                       }).length
-                    }{' '}
+                    }{' '} */}
+                    {/* {allproperties?.length} */}
+                    {filteredData?.length}
                   </Text>
                   <Text>Results</Text>
                 </Group>
@@ -244,6 +246,7 @@ const BuyListings = () => {
                 totalPosts={allproperties.length}
                 paginate={paginate}
                 currentPosts={currentPosts}
+                filteredData={filteredData}
               />
             </Group>
           </Grid.Col>

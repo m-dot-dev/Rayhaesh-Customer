@@ -309,6 +309,26 @@ export function filtering(
   // }
   else {
     filteredListings = allproperties.filter((listing) => {
+      let calculatedPriceValue
+
+      calculatedPriceValue =
+        listing?.totalPrice < 1500000
+          ? '1'
+          : listing?.totalPrice < 5000000
+          ? '2'
+          : listing?.totalPrice < 10000000
+          ? '3'
+          : listing?.totalPrice < 10000000
+          ? '4'
+          : null
+
+      console.log(
+        'PRICE VALUE',
+        calculatedPriceValue,
+        listing.totalPrice,
+        listing.totalPrice < '1500000',
+      )
+
       let cityFilter = city.length === 0 || city.includes(listing.propertyCity)
       let categoryFilter =
         categoryValue.length === 0 ||
@@ -317,7 +337,7 @@ export function filtering(
         subCategoryValue.length === 0 ||
         subCategoryValue.includes(listing.propertySubCategory)
       let priceFilter =
-        priceValue.length === 0 || priceValue.includes(listing.totalPrice)
+        priceValue.length === 0 || priceValue.includes(calculatedPriceValue)
       let areaFilter =
         areaValue.length === 0 || areaValue.includes(listing.propertyArea)
       return (
