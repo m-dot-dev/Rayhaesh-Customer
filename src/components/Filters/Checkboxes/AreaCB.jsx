@@ -27,7 +27,7 @@ export default function AreaCB({ areaValue, setAreaValue }) {
           />
           <Checkbox
             value="2"
-            label="< 20 Marla"
+            label="> 5 Marla & < 20 Marla"
             styles={{
               input: {
                 '&:checked': {
@@ -42,7 +42,7 @@ export default function AreaCB({ areaValue, setAreaValue }) {
           />
           <Checkbox
             value="3"
-            label="< 2 Kanal"
+            label="> 20 Marla & < 5 Kanal"
             styles={{
               input: {
                 '&:checked': {

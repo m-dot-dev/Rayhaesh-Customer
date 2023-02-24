@@ -8,12 +8,6 @@ export function filtering(
 ) {
   let filteredListings = []
 
-  // mathematical formulas for converting values to square feet
-  const m = 'Marla'
-  const sqyd = 'Sq.Ft'
-  const sqmt = 'Sq.Yard'
-  const cnl = 'canal'
-
   if (
     city.length === 0 &&
     categoryValue.length === 0 &&
@@ -309,6 +303,19 @@ export function filtering(
   // }
   else {
     filteredListings = allproperties.filter((listing) => {
+      let calculatedAreaValue
+
+      calculatedAreaValue =
+        listing?.area < 1361.25
+          ? '1'
+          : listing?.area < 5445
+          ? '2'
+          : listing?.area < 27225
+          ? '3'
+          : listing?.area < 27225
+          ? '4'
+          : null
+
       let calculatedPriceValue
 
       calculatedPriceValue =
@@ -322,13 +329,6 @@ export function filtering(
           ? '4'
           : null
 
-      console.log(
-        'PRICE VALUE',
-        calculatedPriceValue,
-        listing.totalPrice,
-        listing.totalPrice < '1500000',
-      )
-
       let cityFilter = city.length === 0 || city.includes(listing.propertyCity)
       let categoryFilter =
         categoryValue.length === 0 ||
@@ -339,7 +339,7 @@ export function filtering(
       let priceFilter =
         priceValue.length === 0 || priceValue.includes(calculatedPriceValue)
       let areaFilter =
-        areaValue.length === 0 || areaValue.includes(listing.propertyArea)
+        areaValue.length === 0 || areaValue.includes(calculatedAreaValue)
       return (
         cityFilter &&
         categoryFilter &&
