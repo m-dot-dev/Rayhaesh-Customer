@@ -28,51 +28,8 @@ export function filtering(
     subCategoryValue.length === 0 &&
     priceValue.length === 0
   ) {
-    if (areaValue === 1) {
-      filteredListings = allproperties.filter((listing) =>
-        areaValue.includes(listing.areaSize),
-      )
-      if (filteredListings.includes(m)) {
-        const marlaToSquareFeet = 272.25 * m
-        const marlaToSquareFeetArray = areaValue.map((item) =>
-          item.replace(m, marlaToSquareFeet),
-        )
-        filteredListings = allproperties.filter((listing) =>
-          marlaToSquareFeetArray.includes(listing.areaSize),
-        )
-      } else if (areaValue.includes(sqyd)) {
-        const squareYardToSquareFeet = 9 * sqyd
-        const squareYardToSquareFeetArray = areaValue.map((item) =>
-          item.replace(sqyd, squareYardToSquareFeet),
-        )
-        filteredListings = allproperties.filter((listing) =>
-          squareYardToSquareFeetArray.includes(listing.areaSize),
-        )
-      } else if (areaValue.includes(sqmt)) {
-        const squareMeterToSquareFeet = 10.7639 * sqmt
-        const squareMeterToSquareFeetArray = areaValue.map((item) =>
-          item.replace(sqmt, squareMeterToSquareFeet),
-        )
-        filteredListings = allproperties.filter((listing) =>
-          squareMeterToSquareFeetArray.includes(listing.areaSize),
-        )
-      } else if (areaValue.includes(cnl)) {
-        const canalToSquareFeet = 6272 * cnl
-        const canalToSquareFeetArray = areaValue.map((item) =>
-          item.replace(cnl, canalToSquareFeet),
-        )
-        filteredListings = allproperties.filter((listing) =>
-          canalToSquareFeetArray.includes(listing.areaSize),
-        )
-      } else {
-        filteredListings = allproperties.filter((listing) =>
-          areaValue.includes(listing.areaSize),
-        )
-      }
-    }
-
     console.log('====================================')
-    console.log('area value i got in areaValue 1 condition: ', areaValue)
+    console.log('area filter code here')
     console.log('====================================')
   } else if (
     city.length === 0 &&
@@ -80,9 +37,28 @@ export function filtering(
     subCategoryValue.length === 0 &&
     areaValue.length === 0
   ) {
-    filteredListings = allproperties.filter((listing) =>
-      priceValue.includes(listing.propertyPrice),
-    )
+    if (priceValue.includes('1')) {
+      filteredListings = allproperties.filter(
+        (listing) => listing?.totalPrice < 1000000,
+      )
+    }
+    if (priceValue.includes('2')) {
+      filteredListings = allproperties.filter(
+        (listing) =>
+          listing?.totalPrice >= 1000000 && listing?.totalPrice < 5000000,
+      )
+    }
+    if (priceValue.includes('3')) {
+      filteredListings = allproperties.filter(
+        (listing) =>
+          listing?.totalPrice >= 5000000 && listing?.totalPrice < 10000000,
+      )
+    }
+    if (priceValue.includes('4')) {
+      filteredListings = allproperties.filter(
+        (listing) => listing?.totalPrice >= 10000000,
+      )
+    }
   } else if (
     city.length === 0 &&
     categoryValue.length === 0 &&
