@@ -150,7 +150,6 @@ const ExchangeListings = () => {
                     }{' '}
                   </Text>
                   <Text>Results</Text>
-                  {!match1200 && <Text>Results</Text>}
                 </Group>
 
                 {match1200 ? (

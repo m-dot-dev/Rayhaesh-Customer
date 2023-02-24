@@ -63,13 +63,17 @@ const BuyListings = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-  // const location = useLocation()
+  const location = useLocation()
 
-  // useEffect(() => {
-  //   setCity(location.state?.city)
-  //   setSubCategoryValue(location.state?.subCategory)
-  //   setPriceValue(location.state?.price)
-  // }, [location])
+  useEffect(() => {
+    setCity([location?.state?.city] || [])
+    setSubCategoryValue([location?.state?.SubCategory] || [])
+    setPriceValue([location?.state?.price] || [])
+
+    console.log('====================================')
+    console.log('city that is coming from Search button-->', location.state)
+    console.log('====================================')
+  }, [location])
 
   // console.log('====================================')
   // console.log('city that is coming from Search button-->', city)
@@ -91,7 +95,14 @@ const BuyListings = () => {
         allproperties,
       ),
     )
-  }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
+  }, [
+    city,
+    categoryValue,
+    areaValue,
+    priceValue,
+    subCategoryValue,
+    allproperties,
+  ])
 
   useEffect(() => {
     axios

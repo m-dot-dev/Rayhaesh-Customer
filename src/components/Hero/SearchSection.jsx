@@ -103,15 +103,13 @@ export default function SearchSection() {
     { value: 'building', label: 'Building' },
     { value: 'villa', label: 'Villa' },
     { value: 'penthouse', label: 'Penthouse' },
-    { value: 'shop', label: 'Shop' },
     { value: 'plaza', label: 'Plaza' },
-    { value: 'building', label: 'Building' },
   ]
   const priceData = [
-    { value: '15', label: '<15 Lac' },
-    { value: '50', label: '<50 Lac' },
-    { value: '1', label: '<1 Crore' },
-    { value: '1', label: '>1 Crore' },
+    { value: '1', label: '<15 Lac' },
+    { value: '2', label: '> 15 Lac & < 50 Lac' },
+    { value: '3', label: '> 50 Lac & < 1 Crore' },
+    { value: '4', label: '> 1 Crore' },
   ]
 
   const { classes } = useStyles()
@@ -192,9 +190,9 @@ export default function SearchSection() {
                 // navigate('/properties')
                 navigate(`/properties`, {
                   state: {
-                    city: city.value,
-                    SubCategory: SubCategory.value,
-                    price: price.value,
+                    city: city,
+                    SubCategory: SubCategory,
+                    price: price,
                   },
                 })
               }}

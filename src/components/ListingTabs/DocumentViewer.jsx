@@ -4,7 +4,7 @@ import React from 'react'
 const DocumentViewer = ({ property }) => {
   return (
     <>
-      {property?.documents?.[0] && (
+      {/* {property?.documents?.[0] && (
         <iframe
           src={property?.documents[0]}
           width="100%"
@@ -12,23 +12,12 @@ const DocumentViewer = ({ property }) => {
           height="500px"
           title="document"
         />
-      )}
+      )} */}
 
-      <Group
-        key={document?.id}
-        style={{
-          width: '100%',
-        }}
-      >
+      <Group key={document?.id} grow>
         {property?.documents?.map((document, index) => {
           return (
-            <Text
-              style={{
-                border: '1px solid #ccc',
-              }}
-              // dont take full width
-              // grow={false}
-            >
+            <Text key={index} mt={'xs'}>
               <a href={document} target="_blank" rel="noreferrer">
                 View Document {index + 1}
               </a>
