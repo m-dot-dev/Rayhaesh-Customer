@@ -7,9 +7,14 @@ import {
   Text,
   Group,
   Loader,
+  Checkbox,
+  Button,
+  Menu,
 } from '@mantine/core'
 import ActionIcons from '../Generic/ActionIcons'
 import axios from 'axios'
+import { IconDownload, IconSettings } from '@tabler/icons'
+import DownloadCSV from '../Generic/DownloadCSV'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -45,6 +50,26 @@ export default function BookedProperties() {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
 
+  const [selection, setSelection] = useState([])
+
+  // console.log('====================================')
+  // console.log('selectedData', selection)
+  // console.log('====================================')
+
+  const toggleRow = (_id) =>
+    setSelection((current) =>
+      current.includes(_id)
+        ? current.filter((item) => item !== _id)
+        : [...current, _id],
+    )
+
+  const toggleAll = () =>
+    setSelection((current) =>
+      current.length === myBookedProperties?.data?.body.length
+        ? []
+        : myBookedProperties?.data?.body?.map((item) => item._id),
+    )
+
   useEffect(() => {
     axios
       .get(
@@ -58,7 +83,6 @@ export default function BookedProperties() {
       .then((res) => {
         setMyBookedProperties(res)
         setLoading(false)
-        console.log('myProperties--->', myBookedProperties?.data?.body)
       })
       .catch((err) => {
         console.log(err)
@@ -75,19 +99,43 @@ export default function BookedProperties() {
         </td>
       </tr>
     ) : myBookedProperties?.data?.body.length !== 0 ? (
-      myBookedProperties?.data?.body?.map((row) => (
-        <tr key={row?._id || 1}>
-          <td>{myBookedProperties?.data?.body?.indexOf(row) + 1}</td>
-          <td>{row?.propertyId?.propertyTitle}</td>
-          <td>{row?.propertyId?.propertyCity}</td>
-          <td>{row?.propertyId?.propertyCategory}</td>
-          <td>{row?.propertyId?.propertySubCategory}</td>
-          <td>{row?.bookingType}</td>
-          <td>
-            <ActionIcons data={row} id={row?._id || 1} />
-          </td>
-        </tr>
-      ))
+      myBookedProperties?.data?.body?.map((row) => {
+        const selected = selection.includes(myBookedProperties?._id)
+        return (
+          <tr
+            key={row?._id || 1}
+            className={cx({ [classes.rowSelected]: selected })}
+          >
+            <td>
+              <Checkbox
+                styles={{
+                  input: {
+                    '&:checked': {
+                      backgroundColor: '#D92228',
+                      borderColor: '#D92228',
+                    },
+                    '&:hover': {
+                      cursor: 'pointer',
+                    },
+                  },
+                }}
+                checked={selection.includes(row?._id)}
+                onChange={() => toggleRow(row?._id)}
+                transitionDuration={0}
+              />
+            </td>
+            <td>{myBookedProperties?.data?.body?.indexOf(row) + 1}</td>
+            <td>{row?.propertyId?.propertyTitle}</td>
+            <td>{row?.propertyId?.propertyCity}</td>
+            <td>{row?.propertyId?.propertyCategory}</td>
+            <td>{row?.propertyId?.propertySubCategory}</td>
+            <td>{row?.bookingType}</td>
+            <td>
+              <ActionIcons data={row} id={row?._id || 1} />
+            </td>
+          </tr>
+        )
+      })
     ) : (
       <tr>
         <td colSpan={4}>
@@ -105,15 +153,66 @@ export default function BookedProperties() {
       <Text weight={600} align="center" size={26} mb={'xl'}>
         My Booked Properties
       </Text>
+      <Group position="right" mb={'xl'}>
+        <Menu shadow="md" width={200}>
+          <Menu.Target>
+            <Button
+              rightIcon={<IconDownload size={18} />}
+              color="red"
+              disabled={loading}
+            >
+              Export
+            </Button>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item disabled={selection.length === 0}>
+              <DownloadCSV
+                selectedData={myBookedProperties?.data?.body.filter((item) =>
+                  selection.includes(item._id),
+                )}
+                type="selected"
+              />
+            </Menu.Item>
+            <Menu.Item>
+              <DownloadCSV data={myBookedProperties?.data?.body} type="all" />
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </Group>
       <ScrollArea
         sx={{ height: 300 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
-        <Table sx={{ minWidth: 700 }} striped>
+        <Table sx={{ minWidth: 700 }} striped withBorder>
           <thead
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
             <tr>
+              <th style={{ width: 40 }}>
+                <Checkbox
+                  styles={{
+                    input: {
+                      '&:checked': {
+                        backgroundColor: '#D92228',
+                        borderColor: '#D92228',
+                      },
+                      '&:hover': {
+                        cursor: 'pointer',
+                      },
+                    },
+                  }}
+                  onChange={toggleAll}
+                  checked={
+                    selection.length === myBookedProperties?.data?.body.length
+                  }
+                  indeterminate={
+                    selection.length > 0 &&
+                    selection.length !== myBookedProperties?.data?.body.length
+                  }
+                  transitionDuration={0}
+                />
+              </th>
               <th>ID</th>
               <th>Property Title</th>
               <th>Property City</th>

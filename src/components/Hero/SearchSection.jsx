@@ -19,10 +19,12 @@ const useStyles = createStyles((theme) => ({
       'url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    width: '100%',
   },
 
   container: {
     height: 250,
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     paddingBottom: theme.spacing.xl * 6,
@@ -31,7 +33,7 @@ const useStyles = createStyles((theme) => ({
     // backgroundColor: 'red',
 
     [theme.fn.smallerThan('sm')]: {
-      height: 250,
+      height: 350,
       paddingBottom: theme.spacing.xl * 3,
     },
   },
@@ -78,7 +80,7 @@ const useStyles = createStyles((theme) => ({
       flexDirection: 'column',
       gap: 10,
       marginTop: 20,
-      width: '80%',
+      width: '70%',
     },
   },
 }))
@@ -92,6 +94,7 @@ export default function SearchSection() {
   const [city, setCity] = useState([])
   const [SubCategory, setSubCategory] = useState([])
   const [price, setPrice] = useState([])
+  const [lookingfor, setLookingfor] = useState('buy')
 
   const typeData = [
     { value: 'house', label: 'House' },
@@ -112,6 +115,12 @@ export default function SearchSection() {
     { value: '4', label: '> 1 Crore' },
   ]
 
+  const buyType = [
+    { value: 'buy', label: 'Buy' },
+    { value: 'rent', label: 'Rent' },
+    { value: 'exchange', label: 'Exchange' },
+  ]
+
   const { classes } = useStyles()
 
   const navigate = useNavigate()
@@ -124,15 +133,29 @@ export default function SearchSection() {
         zIndex={0}
         blur={3}
       />
-      <Container className={classes.container}>
+      <Box className={classes.container}>
         <Title className={classes.title}>Find Your Dream Home</Title>
         <Text className={classes.description}>
           This is where you can find a dream home of your choice without stress
         </Text>
         <Container className={classes.control}>
           <Select
+            data={buyType}
+            value={lookingfor}
+            label="Looking To"
+            placeholder="buy"
+            size="md"
+            styles={{
+              label: {
+                color: 'white',
+                fontSize: 16,
+              },
+            }}
+            onChange={(v) => setLookingfor(v)}
+          />
+          <Select
             data={cityData}
-            label="Choose City"
+            label="City"
             placeholder="Islamabad"
             size="md"
             styles={{
@@ -146,7 +169,7 @@ export default function SearchSection() {
           />
           <Select
             data={typeData}
-            label="Choose Type"
+            label="Type"
             placeholder="House"
             size="md"
             styles={{
@@ -160,7 +183,7 @@ export default function SearchSection() {
           />
           <Select
             data={priceData}
-            label="Choose Price Range"
+            label="Price Range"
             placeholder="<15 Lac"
             size="md"
             styles={{
@@ -181,27 +204,43 @@ export default function SearchSection() {
             <Button
               variant="filled"
               fullWidth
+              mt={'xs'}
               size="md"
               style={{
                 backgroundColor: '#D92228',
                 color: 'white',
               }}
               onClick={() => {
-                // navigate('/properties')
-                navigate(`/properties`, {
-                  state: {
-                    city: city,
-                    SubCategory: SubCategory,
-                    price: price,
-                  },
-                })
+                lookingfor === 'buy'
+                  ? navigate(`/properties`, {
+                      state: {
+                        city: city,
+                        SubCategory: SubCategory,
+                        price: price,
+                      },
+                    })
+                  : lookingfor === 'rent'
+                  ? navigate(`/rent`, {
+                      state: {
+                        city: city,
+                        SubCategory: SubCategory,
+                        price: price,
+                      },
+                    })
+                  : navigate(`/exchange`, {
+                      state: {
+                        city: city,
+                        SubCategory: SubCategory,
+                        price: price,
+                      },
+                    })
               }}
             >
               Search
             </Button>
           </Box>
         </Container>
-      </Container>
+      </Box>
     </div>
   )
 }
