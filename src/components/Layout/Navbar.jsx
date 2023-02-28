@@ -406,6 +406,7 @@ export default function Navbar() {
             borderRadius: 20,
           },
         }}
+        position="right"
       >
         <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
           {auth && (
