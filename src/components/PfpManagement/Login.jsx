@@ -10,6 +10,8 @@ import {
   Group,
   Button,
   Divider,
+  Modal,
+  Code,
   Stack,
 } from '@mantine/core'
 import {
@@ -28,6 +30,7 @@ import { useForm } from '@mantine/form'
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
+  const [opened, setOpened] = useState(false)
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -73,6 +76,11 @@ export default function Login() {
       .then((response) => {
         console.log(response?.data)
         console.log(JSON.stringify(response))
+        if (response?.data?.body?.userType === 'agencyOwner') {
+          setOpened(true)
+          setLoading(false)
+          return
+        }
         const accessToken = response?.data?.token
         localStorage.setItem('token', accessToken)
         console.log('====================================LoginCheckings')
@@ -154,6 +162,25 @@ export default function Login() {
 
   return (
     <Container size={420} my={40}>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Login Failed"
+      >
+        <Text>
+          You are trying to login as an agency owner. To Login as an agency
+          owner please visit the link below{' '}
+          <Anchor
+            href="https://tra-rems-admin-mui.vercel.app/"
+            target="_blank"
+            onClick={() => setOpened(false)}
+          >
+            <Text color="red" align="center">
+              Agency Owner Login
+            </Text>
+          </Anchor>
+        </Text>
+      </Modal>
       <Title
         align="center"
         sx={(theme) => ({
