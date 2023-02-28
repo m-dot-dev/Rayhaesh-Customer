@@ -329,6 +329,7 @@ const Booking = () => {
                     <TextInput
                       hideControls
                       placeholder="1234 1234 1234 1234"
+                      maxLength={16}
                       label="Card Number"
                       style={{
                         width: '40%',
@@ -344,6 +345,7 @@ const Booking = () => {
                         width: '30%',
                       }}
                       {...form.getInputProps('expiryDate')}
+                      maxLength={5}
                     />
                     <TextInput
                       hideControls
@@ -353,6 +355,7 @@ const Booking = () => {
                         width: '20%',
                       }}
                       {...form.getInputProps('cvv')}
+                      maxLength={3}
                     />
                   </Group>
                 </Stack>
@@ -378,6 +381,7 @@ const Booking = () => {
                       }}
                       icon={<IconCreditCard />}
                       {...form.getInputProps('easyPaisaNumber')}
+                      maxLength={11}
                     />
                   </Group>
                 </Stack>
@@ -403,6 +407,7 @@ const Booking = () => {
                       }}
                       icon={<IconCreditCard />}
                       {...form.getInputProps('phoneNumber')}
+                      maxLength={11}
                     />
                   </Group>
                   <Group>

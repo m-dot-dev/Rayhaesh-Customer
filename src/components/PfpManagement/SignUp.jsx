@@ -53,10 +53,6 @@ export default function SignUp() {
         value?.length < 2 ? 'Name must have at least 5 letters' : null,
       gender: (value) => (value === '' ? 'Select a Gender!' : null),
     },
-
-    transformValues: (values) => ({
-      userType: `${values.userType}`,
-    }),
   })
 
   const handleSubmit = (values) => {
@@ -108,6 +104,10 @@ export default function SignUp() {
         })
       })
   }
+
+  console.log('====================================')
+  console.log('buyerType', form.values?.userType)
+  console.log('====================================')
 
   return (
     <Container size={420} my={40}>
