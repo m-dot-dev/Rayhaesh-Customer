@@ -82,7 +82,7 @@ export default function Contact() {
         </Title>
 
         <Select
-          label="Your favorite framework/library"
+          label="Select feedback type"
           placeholder="Pick one"
           data={[
             { value: 'feedback', label: 'Feedback' },

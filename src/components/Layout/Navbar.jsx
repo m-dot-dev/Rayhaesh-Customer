@@ -419,10 +419,6 @@ export default function Navbar() {
               noWrap
               p={'xs'}
               bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-              onClick={() => {
-                navigate('/dashboard')
-                closeDrawer()
-              }}
             >
               <Avatar
                 src={profileImage}
@@ -455,6 +451,23 @@ export default function Navbar() {
               justifyContent: 'center',
             }}
           >
+            <Button
+              sx={{
+                color: 'white',
+                backgroundColor: '#D92228',
+                fontFamily: 'poppins',
+              }}
+              className={classes.mobileLink}
+              size="md"
+              leftIcon={<IconHome />}
+              onClick={() => {
+                navigate('/dashboard')
+                closeDrawer()
+              }}
+            >
+              Dashboard
+            </Button>
+
             <Button
               sx={{
                 color: 'white',
