@@ -37,6 +37,7 @@ export default function SignUp() {
       confirmPassword: '',
       gender: '',
       name: '',
+      userType: 'buyer',
     },
 
     validate: {
@@ -52,11 +53,14 @@ export default function SignUp() {
         value?.length < 2 ? 'Name must have at least 5 letters' : null,
       gender: (value) => (value === '' ? 'Select a Gender!' : null),
     },
+
+    transformValues: (values) => ({
+      userType: `${values.userType}`,
+    }),
   })
 
   const handleSubmit = (values) => {
     setLoading(true)
-    values.userType = 'buyer'
     axios
       .post(
         import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/signup',
@@ -139,6 +143,15 @@ export default function SignUp() {
       >
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Stack spacing={'xl'}>
+            <Group>
+              <Radio.Group
+                label="Sign Up as"
+                {...form.getInputProps('userType')}
+              >
+                <Radio value="buyer" label="Buyer" color="red" />
+                <Radio value="agencyOwner" label="Seller" color="red" />
+              </Radio.Group>
+            </Group>
             <TextInput
               label="Username"
               placeholder="Tehseen Riaz"

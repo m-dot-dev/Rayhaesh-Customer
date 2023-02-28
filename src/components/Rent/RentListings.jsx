@@ -13,7 +13,7 @@ import BuyCards from '../Buy/BuyCards'
 import axios from 'axios'
 import Filter from '../Filters/Filter'
 import SixCardSkeleton from '../Skeletons/SixCardSkeleton'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ListingPagination from '../Generic/ListingPagination'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconSearch } from '@tabler/icons'
@@ -55,6 +55,14 @@ const RentListings = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
+  const location = useLocation()
+
+  useEffect(() => {
+    setCity([location?.state?.city] || [])
+    setSubCategoryValue([location?.state?.SubCategory] || [])
+    setPriceValue([location?.state?.price] || [])
+  }, [location])
+
   useEffect(() => {
     setFilteredData(
       filtering(
@@ -66,7 +74,14 @@ const RentListings = () => {
         allproperties,
       ),
     )
-  }, [city, categoryValue, areaValue, priceValue, subCategoryValue])
+  }, [
+    city,
+    categoryValue,
+    areaValue,
+    priceValue,
+    subCategoryValue,
+    allproperties,
+  ])
 
   useEffect(() => {
     axios

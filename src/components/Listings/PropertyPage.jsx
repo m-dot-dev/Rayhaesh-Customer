@@ -42,6 +42,8 @@ import ServicesDetails from '../ListingTabs/ServicesDetails'
 import AboutDetails from '../ListingTabs/AboutDetails'
 import LocationDetails from '../ListingTabs/LocationDetails'
 import DocumentViewer from '../ListingTabs/DocumentViewer'
+import useAuth from '../hooks/useAuth'
+import axios from 'axios'
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -84,25 +86,31 @@ const PropertyPage = () => {
 
   const navigate = useNavigate()
 
+  const { auth, setAuth } = useAuth()
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
-  // console.log('====================================')
-  // console.log('property doc link: ', property?.documents)
-  // console.log('====================================')
-
-  // {
-  //   property?.documents?.map((doc) => {
-  //     console.log('====================================')
-  //     console.log('actual doc: ', doc)
-  //     console.log('====================================')
-  //   })
-  // }
-
-  console.log('====================================')
-  console.log('property agency Category: ', property)
-  console.log('====================================')
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getUserProfile',
+        {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        },
+      )
+      .then((res) => {
+        setName(res.data?.body?.name)
+        setEmail(res.data?.body?.email)
+        setPhone(res.data?.body?.cellPhoneNumber)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
   const handleBookingSubmit = (e) => {
     e.preventDefault()
@@ -238,6 +246,7 @@ const PropertyPage = () => {
                             // required
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
+                            maxLength={12}
                           />
                         </Input.Wrapper>
                         <Button
