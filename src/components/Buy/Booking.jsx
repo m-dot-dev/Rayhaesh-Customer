@@ -16,10 +16,12 @@ import {
 import { useForm } from '@mantine/form'
 import { showNotification } from '@mantine/notifications'
 import {
+  IconBookmarkOff,
   IconCheck,
   IconChevronDown,
   IconCreditCard,
   IconExchange,
+  IconQuestionMark,
   IconShoppingBag,
   IconX,
 } from '@tabler/icons'
@@ -121,7 +123,12 @@ const Booking = () => {
 
     values.paymentDetails = paymentDetails
     values.paymentMethod = payment
-    values.paymentAmount = property?.totalPrice
+
+    property?.propertyIs === 'For Rent'
+      ? (values.paymentAmount = property?.monthlyRent)
+      : (values.paymentAmount = property?.totalPrice)
+
+    // values.paymentAmount = property?.totalPrice
     values.bookingType = booking
     values.propertyId = property?._id
     values.propertyDescription = property?.propertyDescription
@@ -138,6 +145,19 @@ const Booking = () => {
       )
       .then((res) => {
         console.log('booking response: ', res)
+
+        if (property?.propertyAvailabilityStatus === 'RESERVED') {
+          showNotification({
+            title: 'Booking failed. Property already Reserved!',
+            message: 'Contact the Agency Owner for booking!',
+            color: 'blue',
+            icon: <IconBookmarkOff size={14} />,
+            autoClose: 6000,
+          })
+          setLoading(false)
+          return
+        }
+
         if (res?.data?.success === true) {
           showNotification({
             title: 'Property Booked!',
@@ -296,11 +316,29 @@ const Booking = () => {
                   <Text size="xs" align="center">
                     {booking === 'advance paid' ? (
                       <Text weight={600} size="lg">
-                        30% Advance Payment Rs. {property?.totalPrice * 0.3}
+                        {property?.propertyIs === 'For Rent' ? (
+                          <Text weight={600} size="lg">
+                            30% Advance Payment Rs.{' '}
+                            {property?.monthlyRent * 0.3}
+                          </Text>
+                        ) : (
+                          <Text weight={600} size="lg">
+                            30% Advance Payment Rs. {property?.totalPrice * 0.3}
+                          </Text>
+                        )}
+                        {/* 30% Advance Payment Rs. {property?.totalPrice * 0.3} */}
                       </Text>
                     ) : booking === 'full paid' ? (
                       <Text weight={600} size="lg">
-                        100% Full Payment Rs. {property?.totalPrice}
+                        {property?.propertyIs === 'For Rent' ? (
+                          <Text weight={600} size="lg">
+                            100% Full Payment Rs. {property?.monthlyRent}
+                          </Text>
+                        ) : (
+                          <Text weight={600} size="lg">
+                            100% Full Payment Rs. {property?.totalPrice}
+                          </Text>
+                        )}
                       </Text>
                     ) : booking === 'interested in' ? (
                       <Text weight={600} size="lg">

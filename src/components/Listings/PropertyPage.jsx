@@ -142,6 +142,10 @@ const PropertyPage = () => {
     }
   }
 
+  console.log('====================================')
+  console.log('property reserve check', property)
+  console.log('====================================')
+
   return (
     <Container size={'xl'} pt={'md'}>
       <Grid columns={12}>

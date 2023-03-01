@@ -56,7 +56,11 @@ const AboutDetails = ({ property }) => {
       </Group>
       <Group noWrap mt={'xs'}>
         <Text className={classes.aboutText}>Property price:</Text>
-        <Text>{property?.totalPrice}</Text>
+        {property?.propertyIs === 'For Rent' ? (
+          <Text>{property?.monthlyRent + 'Rs./Month'}</Text>
+        ) : (
+          <Text>{property?.totalPrice + 'Rs.'}</Text>
+        )}
       </Group>
       <Group noWrap mt={'xs'}>
         <Text className={classes.aboutText}>Property area:</Text>
