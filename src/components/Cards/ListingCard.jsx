@@ -85,11 +85,14 @@ export default function ListingCard({ property }) {
           size="md"
           style={{
             color: '#D92228',
-            fontSize: 20,
+            fontSize: 18,
+            wordWrap: 'normal',
           }}
           weight={500}
         >
-          Rs. {property?.totalPrice}
+          {property?.propertyIs === 'For Rent'
+            ? property?.monthlyRent + 'Rs./Month'
+            : 'Rs. ' + property?.totalPrice}
         </Text>
         <Badge color="red" variant="dot">
           {property?.propertyAvailabilityStatus}

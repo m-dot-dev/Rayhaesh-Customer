@@ -18,10 +18,10 @@ const AgencyDetails = ({ property }) => {
 
   return (
     <Stack spacing={0}>
-      <Group>
+      {/* <Group>
         <Text className={classes.aboutText}>Agency Category: </Text>
         <Text>{property?.agency?.agencyCategory}</Text>
-      </Group>
+      </Group> */}
       <Group>
         <Text className={classes.aboutText}>Agency Title: </Text>
         <Text>{property?.agency?.agencyTitle}</Text>
