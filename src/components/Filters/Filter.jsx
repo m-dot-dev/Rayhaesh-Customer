@@ -19,15 +19,15 @@ import { useMediaQuery } from '@mantine/hooks'
 import { PakistanCities } from './cities'
 
 const Filter = ({
-  city,
+  city = [],
   setCity,
-  categoryValue,
+  categoryValue = [],
   setCategoryValue,
-  subCategoryValue,
+  subCategoryValue = [],
   setSubCategoryValue,
-  areaValue,
+  areaValue = [],
   setAreaValue,
-  priceValue,
+  priceValue = [],
   setPriceValue,
 }) => {
   const match1200 = useMediaQuery('(max-width: 1200px)')

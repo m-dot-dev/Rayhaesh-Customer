@@ -58,9 +58,25 @@ const RentListings = () => {
   const location = useLocation()
 
   useEffect(() => {
-    setCity([location?.state?.city] || [])
-    setSubCategoryValue([location?.state?.SubCategory] || [])
-    setPriceValue([location?.state?.price] || [])
+    let city = location?.state?.city
+      ? Array.isArray(location?.state?.city)
+        ? location?.state?.city
+        : [location?.state?.city]
+      : []
+    let SubCategory = location?.state?.SubCategory
+      ? Array.isArray(location?.state?.SubCategory)
+        ? location?.state?.SubCategory
+        : [location?.state?.SubCategory]
+      : []
+    let Price = location?.state?.price
+      ? Array.isArray(location?.state?.price)
+        ? location?.state?.price
+        : [location?.state?.price]
+      : []
+
+    setCity(city)
+    setSubCategoryValue(SubCategory)
+    setPriceValue(Price)
   }, [location])
 
   useEffect(() => {

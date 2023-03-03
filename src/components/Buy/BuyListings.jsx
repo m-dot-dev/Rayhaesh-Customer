@@ -66,23 +66,26 @@ const BuyListings = () => {
   const location = useLocation()
 
   useEffect(() => {
-    setCity([location?.state?.city] || [])
-    setSubCategoryValue([location?.state?.SubCategory] || [])
-    setPriceValue([location?.state?.price] || [])
+    let city = location?.state?.city
+      ? Array.isArray(location?.state?.city)
+        ? location?.state?.city
+        : [location?.state?.city]
+      : []
+    let SubCategory = location?.state?.SubCategory
+      ? Array.isArray(location?.state?.SubCategory)
+        ? location?.state?.SubCategory
+        : [location?.state?.SubCategory]
+      : []
+    let Price = location?.state?.price
+      ? Array.isArray(location?.state?.price)
+        ? location?.state?.price
+        : [location?.state?.price]
+      : []
 
-    console.log('====================================')
-    console.log('city that is coming from Search button-->', location.state)
-    console.log('====================================')
+    setCity(city)
+    setSubCategoryValue(SubCategory)
+    setPriceValue(Price)
   }, [location])
-
-  // console.log('====================================')
-  // console.log('city that is coming from Search button-->', city)
-  // console.log(
-  //   'subCategoryValue that is coming from Search button-->',
-  //   subCategoryValue,
-  // )
-  // console.log('priceValue that is coming from Search button-->', priceValue)
-  // console.log('====================================')
 
   useEffect(() => {
     setFilteredData(
@@ -111,8 +114,8 @@ const BuyListings = () => {
       )
       .then((data) => {
         setIsLoaded(false)
-        setAllProperties(data.data.body)
-        setFilteredData(data.data.body)
+        setAllProperties(data?.data?.body)
+        setFilteredData(data?.data?.body)
       })
       .catch((error) => {
         setIsLoaded(false)
