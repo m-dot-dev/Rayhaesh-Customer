@@ -251,7 +251,7 @@ export default function Navbar() {
               News & Insights
             </Button>
 
-            {/* <Button
+            <Button
               variant="outline"
               sx={{ borderColor: '#D92228' }}
               className={classes.link}
@@ -260,7 +260,7 @@ export default function Navbar() {
               }}
             >
               Subscription
-            </Button> */}
+            </Button>
 
             <Button
               variant="outline"
@@ -459,7 +459,7 @@ export default function Navbar() {
               }}
               className={classes.mobileLink}
               size="md"
-              leftIcon={<IconHome />}
+              leftIcon={<IconCategory />}
               onClick={() => {
                 navigate('/dashboard')
                 closeDrawer()
