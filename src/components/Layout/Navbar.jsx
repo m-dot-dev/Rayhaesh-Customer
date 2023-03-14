@@ -251,16 +251,18 @@ export default function Navbar() {
               News & Insights
             </Button>
 
-            <Button
-              variant="outline"
-              sx={{ borderColor: '#D92228' }}
-              className={classes.link}
-              onClick={() => {
-                navigate('/subscription')
-              }}
-            >
-              Subscription
-            </Button>
+            {auth ? (
+              <Button
+                variant="outline"
+                sx={{ borderColor: '#D92228' }}
+                className={classes.link}
+                onClick={() => {
+                  navigate('/subscription')
+                }}
+              >
+                Subscription
+              </Button>
+            ) : null}
 
             <Button
               variant="outline"
