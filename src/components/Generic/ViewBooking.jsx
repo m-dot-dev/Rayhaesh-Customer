@@ -1,5 +1,13 @@
-import { useState } from 'react'
-import { Modal, Button, Group, Stack, Text, Grid } from '@mantine/core'
+import { useState } from "react";
+import {
+  Modal,
+  Button,
+  Group,
+  Stack,
+  Text,
+  Grid,
+  SimpleGrid,
+} from "@mantine/core";
 
 export default function ViewBooking({ opened, setOpened, data }) {
   return (
@@ -7,7 +15,7 @@ export default function ViewBooking({ opened, setOpened, data }) {
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
-        transition={'slide-down'}
+        transition={"slide-down"}
         transitionDuration={300}
         title="Booking Details"
         styles={{
@@ -16,45 +24,40 @@ export default function ViewBooking({ opened, setOpened, data }) {
             fontSize: 24,
           },
           close: {
-            backgroundColor: '#D92228',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: '#D92228',
-              color: 'white',
+            backgroundColor: "#D92228",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#D92228",
+              color: "white",
             },
           },
         }}
         centered
         overlayOpacity={0.55}
         overlayBlur={3}
+        size={"lg"}
       >
-        <Group mt={'lg'} spacing={'xl'}>
-          <Grid>
-            <Grid.Col>
-              <Text weight={500}>Property Title:</Text>
-              <Text weight={500}>Booking Type:</Text>
-              <Text weight={500}>Payment Method:</Text>
-              <Text weight={500}>Amount:</Text>
-              <Text weight={500}>Booking Date:</Text>
-            </Grid.Col>
-          </Grid>
-          <Grid pl={'sm'}>
-            <Grid.Col>
-              <Text>{data?.propertyId?.propertyTitle}</Text>
-              <Text>{data?.bookingType}</Text>
-              <Text>{data?.paymentMethod}</Text>
-              <Text>{data?.paymentAmount}</Text>
-              <Text>
-                {new Date(data.createdAt).toLocaleDateString('en-US', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </Text>
-            </Grid.Col>
-          </Grid>
+        <Group mt={"lg"} spacing={"xl"} position="apart" noWrap>
+          <SimpleGrid cols={2}>
+            <Text weight={500}>Property Title:</Text>
+            <Text>{data?.propertyId?.propertyTitle}</Text>
+            <Text weight={500}>Booking Type:</Text>
+            <Text>{data?.bookingType}</Text>
+            <Text weight={500}>Payment Method:</Text>
+            <Text>{data?.paymentMethod}</Text>
+            <Text weight={500}>Amount:</Text>
+            <Text>Rs. {data?.paymentAmount}</Text>
+            <Text weight={500}>Booking Date:</Text>
+            <Text>
+              {new Date(data.createdAt).toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </Text>
+          </SimpleGrid>
         </Group>
       </Modal>
     </>
-  )
+  );
 }

@@ -75,22 +75,62 @@ export default function Footer() {
     </Anchor>
   ));
 
+  const handleRedirect = (type) => {
+    let link;
+    switch (type) {
+      case "facebook":
+        link = "https://www.facebook.com";
+        break;
+      case "twitter":
+        link = "https://www.twitter.com";
+        break;
+      case "instagram":
+        link = "https://www.instagram.com";
+        break;
+      case "youtube":
+        link = "https://www.youtube.com";
+        break;
+    }
+    window.open(link, "_blank");
+  };
+
   return (
     <footer className={classes.footer}>
       <div className={classes.inner}>
-        <Group className={classes.links}>{items}</Group>
+        {/* <Group className={classes.links}>{items}</Group> */}
+        <Group className={classes.links}>{}</Group>
 
         <Group spacing="xs" position="right" noWrap>
-          <ActionIcon size="lg" variant="default" radius="xl">
+          <ActionIcon
+            size="lg"
+            variant="default"
+            radius="xl"
+            onClick={() => handleRedirect("twitter")}
+          >
             <IconBrandTwitter size={18} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon size="lg" variant="default" radius="xl">
+          <ActionIcon
+            size="lg"
+            variant="default"
+            radius="xl"
+            onClick={() => handleRedirect("facebook")}
+          >
             <IconBrandFacebook size={18} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon size="lg" variant="default" radius="xl">
+          <ActionIcon
+            size="lg"
+            variant="default"
+            radius="xl"
+            onClick={() => handleRedirect("instagram")}
+          >
             <IconBrandInstagram size={18} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon size="lg" variant="default" radius="xl">
+          <ActionIcon
+            size="lg"
+            variant="default"
+            radius="xl"
+            onClick={() => handleRedirect("youtube")}
+          >
             <IconBrandYoutube size={18} stroke={1.5} />
           </ActionIcon>
         </Group>
