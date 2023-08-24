@@ -11,13 +11,13 @@ import {
   ScrollArea,
   Box,
   Stack,
-} from '@mantine/core'
-import RemsLogo from '../../assets/images/Logo.png'
-import { useNavigate } from 'react-router-dom'
-import { Avatar } from '@mantine/core'
-import { Link } from 'react-router-dom'
+} from "@mantine/core";
+import RemsLogo from "../../assets/images/Logo.png";
+import { useNavigate } from "react-router-dom";
+import { Avatar } from "@mantine/core";
+import { Link } from "react-router-dom";
 
-import { useDisclosure } from '@mantine/hooks'
+import { useDisclosure } from "@mantine/hooks";
 import {
   IconLogout,
   IconSettings,
@@ -28,140 +28,138 @@ import {
   IconHome2,
   IconNews,
   IconCategory,
-} from '@tabler/icons'
-import { useEffect, useState } from 'react'
-import useAuth from '../hooks/useAuth'
-import axios from 'axios'
+} from "@tabler/icons";
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   link: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    textDecoration: 'none',
-    color: 'black',
+    textDecoration: "none",
+    color: "black",
     fontWeight: 400,
-    fontSize: '1.2rem',
-    fontFamily: 'Poppins',
+    fontSize: "1.2rem",
+    fontFamily: "Poppins",
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       height: 42,
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
     },
 
     ...theme.fn.hover({
       backgroundColor:
-        theme.colorScheme === 'dark'
+        theme.colorScheme === "dark"
           ? theme.colors.red[6]
           : theme.colors.red[0],
     }),
   },
 
   imageContainer: {
-    width: '250px',
-    height: '60px',
+    width: "95px",
+    height: "80px",
 
-    [theme.fn.smallerThan('xs')]: {
-      width: '160px',
-      height: '40px',
+    [theme.fn.smallerThan("xs")]: {
+      width: "160px",
+      height: "40px",
     },
   },
 
   mobileLink: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '80%',
-    textDecoration: 'none',
-    color: 'black',
+    display: "flex",
+    alignItems: "center",
+    width: "80%",
+    textDecoration: "none",
+    color: "black",
     fontWeight: 500,
-    fontSize: '1.2rem',
-    fontFamily: 'Poppins',
+    fontSize: "1.2rem",
+    fontFamily: "Poppins",
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       height: 42,
-      display: 'flex',
-      alignItems: 'center',
-      width: '85%',
+      display: "flex",
+      alignItems: "center",
+      width: "85%",
     },
 
     ...theme.fn.hover({
       backgroundColor:
-        theme.colorScheme === 'dark'
+        theme.colorScheme === "dark"
           ? theme.colors.red[6]
           : theme.colors.red[0],
     }),
   },
 
   hiddenMobile: {
-    [theme.fn.smallerThan('xl')]: {
-      display: 'none',
+    [theme.fn.smallerThan("xl")]: {
+      display: "none",
     },
   },
 
   hiddenDesktop: {
-    [theme.fn.largerThan('xl')]: {
-      display: 'none',
+    [theme.fn.largerThan("xl")]: {
+      display: "none",
     },
   },
-}))
+}));
 
 export default function Navbar() {
-  const [loggedIn, setLoggedIn] = useState(true)
-  const navigate = useNavigate()
+  const [loggedIn, setLoggedIn] = useState(true);
+  const navigate = useNavigate();
 
-  const { auth, setAuth } = useAuth()
+  const { auth, setAuth } = useAuth();
 
   // console.log('====================================')
   // console.log('auth checking in the navbar: ', auth)
   // console.log('====================================')
 
-  const [
-    drawerOpened,
-    { toggle: toggleDrawer, close: closeDrawer },
-  ] = useDisclosure(false)
-  const { classes, theme } = useStyles()
-  const [error, setError] = useState('')
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
+    useDisclosure(false);
+  const { classes, theme } = useStyles();
+  const [error, setError] = useState("");
 
-  const [allUsers, setAllUsers] = useState([])
-  const [loggedUser, setLoggedUser] = useState({})
+  const [allUsers, setAllUsers] = useState([]);
+  const [loggedUser, setLoggedUser] = useState({});
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [profileImage, setProfileImage] = useState(null)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + '/admin/getAllUsers')
+      .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + "/admin/getAllUsers")
       .then((data) => {
-        setAllUsers(data.data)
+        setAllUsers(data.data);
       })
       .catch((error) => {
-        setError(error)
-      })
-  }, [])
+        setError(error);
+      });
+  }, []);
 
   useEffect(() => {
     axios
       .get(
-        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getUserProfile',
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + "/user/getUserProfile",
         {
           headers: {
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem("token"),
           },
-        },
+        }
       )
       .then((res) => {
-        setName(res.data?.body?.name)
-        setEmail(res.data?.body?.email)
-        setProfileImage(res.data?.body?.profileImage)
+        setName(res.data?.body?.name);
+        setEmail(res.data?.body?.email);
+        setProfileImage(res.data?.body?.profileImage);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -169,20 +167,20 @@ export default function Navbar() {
         height={95}
         px="md"
         style={{
-          position: 'sticky',
+          position: "sticky",
           top: 0,
           zIndex: 20,
         }}
       >
-        <Group position="apart" sx={{ height: '100%' }}>
+        <Group position="apart" sx={{ height: "100%" }}>
           <Box
             sx={{
-              '&:hover': {
-                cursor: 'pointer',
+              "&:hover": {
+                cursor: "pointer",
               },
             }}
             onClick={() => {
-              navigate('/')
+              navigate("/");
             }}
           >
             <img
@@ -192,7 +190,7 @@ export default function Navbar() {
             />
           </Box>
           <Group
-            sx={{ height: '100%' }}
+            sx={{ height: "100%" }}
             spacing={7}
             className={classes.hiddenMobile}
           >
@@ -209,10 +207,10 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={{ borderColor: "#D92228" }}
               className={classes.link}
               onClick={() => {
-                navigate('/properties')
+                navigate("/properties");
               }}
             >
               Buy
@@ -220,10 +218,10 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={{ borderColor: "#D92228" }}
               className={classes.link}
               onClick={() => {
-                navigate('/exchange')
+                navigate("/exchange");
               }}
             >
               Exchange
@@ -231,10 +229,10 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={{ borderColor: "#D92228" }}
               className={classes.link}
               onClick={() => {
-                navigate('/rent')
+                navigate("/rent");
               }}
             >
               Rent
@@ -242,10 +240,10 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={{ borderColor: "#D92228" }}
               className={classes.link}
               onClick={() => {
-                navigate('/blogs')
+                navigate("/blogs");
               }}
             >
               News & Insights
@@ -254,10 +252,10 @@ export default function Navbar() {
             {auth ? (
               <Button
                 variant="outline"
-                sx={{ borderColor: '#D92228' }}
+                sx={{ borderColor: "#D92228" }}
                 className={classes.link}
                 onClick={() => {
-                  navigate('/subscription')
+                  navigate("/subscription");
                 }}
               >
                 Subscription
@@ -266,29 +264,29 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={{ borderColor: "#D92228" }}
               className={classes.link}
               onClick={() => {
-                navigate('/contact')
+                navigate("/contact");
               }}
             >
               Contact
             </Button>
           </Group>
 
-          <Group className={classes.hiddenMobile} spacing={'xs'}>
+          <Group className={classes.hiddenMobile} spacing={"xs"}>
             {!auth ? (
               <>
                 <Button
                   variant="outline"
                   sx={{
-                    color: '#D92228',
-                    borderColor: '#D92228',
-                    fontFamily: 'poppins',
+                    color: "#D92228",
+                    borderColor: "#D92228",
+                    fontFamily: "poppins",
                   }}
                   size="md"
                   onClick={() => {
-                    navigate('/login')
+                    navigate("/login");
                   }}
                 >
                   Log in
@@ -296,26 +294,26 @@ export default function Navbar() {
                 <Button
                   variant="outline"
                   sx={{
-                    color: '#D92228',
-                    borderColor: '#D92228',
-                    fontFamily: 'poppins',
+                    color: "#D92228",
+                    borderColor: "#D92228",
+                    fontFamily: "poppins",
                   }}
                   size="md"
                   onClick={() => {
-                    navigate('/register')
+                    navigate("/register");
                   }}
                 >
                   Sign up
                 </Button>
                 <Button
                   style={{
-                    color: 'white',
-                    backgroundColor: '#D92228',
-                    fontFamily: 'poppins',
+                    color: "white",
+                    backgroundColor: "#D92228",
+                    fontFamily: "poppins",
                   }}
                   size="md"
                   onClick={() => {
-                    navigate('/subscription')
+                    navigate("/subscription");
                   }}
                 >
                   Subscription
@@ -328,8 +326,8 @@ export default function Navbar() {
                 width={200}
                 withinPortal
                 sx={{
-                  '&:hover': {
-                    cursor: 'pointer',
+                  "&:hover": {
+                    cursor: "pointer",
                   },
                 }}
               >
@@ -339,42 +337,42 @@ export default function Navbar() {
                     alt=""
                     size={40}
                     color="red"
-                    mr={'xl'}
+                    mr={"xl"}
                   />
                 </Menu.Target>
 
-                <Menu.Dropdown style={{ borderColor: '#D92228' }}>
+                <Menu.Dropdown style={{ borderColor: "#D92228" }}>
                   <Menu.Item
                     icon={
-                      <IconCategory size={20} style={{ color: 'blueviolet' }} />
+                      <IconCategory size={20} style={{ color: "blueviolet" }} />
                     }
                     onClick={() => {
-                      navigate('/dashboard')
+                      navigate("/dashboard");
                     }}
                   >
-                    <Text style={{ fontFamily: 'poppins' }}>Dashboard</Text>
+                    <Text style={{ fontFamily: "poppins" }}>Dashboard</Text>
                   </Menu.Item>
                   <Menu.Item
                     icon={
-                      <IconSettings size={20} style={{ color: 'blueviolet' }} />
+                      <IconSettings size={20} style={{ color: "blueviolet" }} />
                     }
                     onClick={() => {
-                      navigate('/dashboard')
+                      navigate("/dashboard");
                     }}
                   >
-                    <Text style={{ fontFamily: 'poppins' }}>Settings</Text>
+                    <Text style={{ fontFamily: "poppins" }}>Settings</Text>
                   </Menu.Item>
                   <Menu.Item
-                    icon={<IconLogout size={20} style={{ color: '#D92228' }} />}
+                    icon={<IconLogout size={20} style={{ color: "#D92228" }} />}
                     onClick={() => {
-                      navigate('/')
-                      setAuth(null)
-                      localStorage.clear('token')
+                      navigate("/");
+                      setAuth(null);
+                      localStorage.clear("token");
                     }}
                   >
                     <Text
                       style={{
-                        fontFamily: 'poppins',
+                        fontFamily: "poppins",
                       }}
                     >
                       Logout
@@ -403,24 +401,24 @@ export default function Navbar() {
         zIndex={1000000}
         styles={{
           closeButton: {
-            color: 'white',
-            backgroundColor: '#D92228',
+            color: "white",
+            backgroundColor: "#D92228",
             borderRadius: 20,
           },
         }}
         position="right"
       >
-        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
+        <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
           {auth && (
             <Group
               style={{
-                justifyContent: 'left',
-                cursor: 'pointer',
+                justifyContent: "left",
+                cursor: "pointer",
               }}
               pl={35}
               noWrap
-              p={'xs'}
-              bg={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
+              p={"xs"}
+              bg={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
             >
               <Avatar
                 src={profileImage}
@@ -433,7 +431,7 @@ export default function Navbar() {
               <Stack spacing={0}>
                 <Text
                   style={{
-                    fontSize: '16px',
+                    fontSize: "16px",
                     fontWeight: 500,
                   }}
                 >
@@ -445,26 +443,26 @@ export default function Navbar() {
 
           <Divider
             my="sm"
-            color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
           />
           <Group
             spacing="lg"
             style={{
-              justifyContent: 'center',
+              justifyContent: "center",
             }}
           >
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconCategory />}
               onClick={() => {
-                navigate('/dashboard')
-                closeDrawer()
+                navigate("/dashboard");
+                closeDrawer();
               }}
             >
               Dashboard
@@ -472,16 +470,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconHome />}
               onClick={() => {
-                navigate('/')
-                closeDrawer()
+                navigate("/");
+                closeDrawer();
               }}
             >
               Home
@@ -489,16 +487,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconShoppingBag />}
               onClick={() => {
-                navigate('/properties')
-                closeDrawer()
+                navigate("/properties");
+                closeDrawer();
               }}
             >
               Buy
@@ -506,16 +504,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconExchange />}
               onClick={() => {
-                navigate('/exchange')
-                closeDrawer()
+                navigate("/exchange");
+                closeDrawer();
               }}
             >
               Exchange
@@ -523,16 +521,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconHome2 />}
               onClick={() => {
-                navigate('/rent')
-                closeDrawer()
+                navigate("/rent");
+                closeDrawer();
               }}
             >
               Rent
@@ -540,16 +538,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconNews />}
               onClick={() => {
-                navigate('/blogs')
-                closeDrawer()
+                navigate("/blogs");
+                closeDrawer();
               }}
             >
               News & Insights
@@ -557,16 +555,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconNews />}
               onClick={() => {
-                navigate('/subscription')
-                closeDrawer()
+                navigate("/subscription");
+                closeDrawer();
               }}
             >
               Subscription
@@ -574,16 +572,16 @@ export default function Navbar() {
 
             <Button
               sx={{
-                color: 'white',
-                backgroundColor: '#D92228',
-                fontFamily: 'poppins',
+                color: "white",
+                backgroundColor: "#D92228",
+                fontFamily: "poppins",
               }}
               className={classes.mobileLink}
               size="md"
               leftIcon={<IconCash />}
               onClick={() => {
-                navigate('/contact')
-                closeDrawer()
+                navigate("/contact");
+                closeDrawer();
               }}
             >
               Contact
@@ -592,17 +590,17 @@ export default function Navbar() {
 
           <Divider
             my="sm"
-            color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
           />
 
           {!auth ? (
-            <Group position="center" grow px={'2rem'}>
+            <Group position="center" grow px={"2rem"}>
               <Button
                 variant="outline"
-                style={{ color: '#D92228', borderColor: '#D92228' }}
+                style={{ color: "#D92228", borderColor: "#D92228" }}
                 onClick={() => {
-                  navigate('/login')
-                  closeDrawer()
+                  navigate("/login");
+                  closeDrawer();
                 }}
               >
                 Log in
@@ -610,12 +608,12 @@ export default function Navbar() {
               <Button
                 variant="filled"
                 style={{
-                  backgroundColor: '#D92228',
-                  color: 'white',
+                  backgroundColor: "#D92228",
+                  color: "white",
                 }}
                 onClick={() => {
-                  navigate('/register')
-                  closeDrawer()
+                  navigate("/register");
+                  closeDrawer();
                 }}
               >
                 Sign up
@@ -626,10 +624,10 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setAuth(null)
-                  closeDrawer()
+                  setAuth(null);
+                  closeDrawer();
                 }}
-                style={{ color: '#D92228', borderColor: '#D92228' }}
+                style={{ color: "#D92228", borderColor: "#D92228" }}
               >
                 Sign Out
               </Button>
@@ -638,5 +636,5 @@ export default function Navbar() {
         </ScrollArea>
       </Drawer>
     </>
-  )
+  );
 }
