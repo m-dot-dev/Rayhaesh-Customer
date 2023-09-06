@@ -1,79 +1,79 @@
-import React, { useEffect, useState } from 'react'
-import SearchSection from './SearchSection'
-import ListingCarousel from '../Carousel/ListingCarousel'
-import { Box, Container, Text, createStyles } from '@mantine/core'
-import AgenciesCarousel from '../Carousel/AgenciesCarousel'
-import axios from 'axios'
-import { useMediaQuery } from '@mantine/hooks'
+import React, { useEffect, useState } from "react";
+import SearchSection from "./SearchSection";
+import ListingCarousel from "../Carousel/ListingCarousel";
+import { Box, Container, Text, createStyles } from "@mantine/core";
+import AgenciesCarousel from "../Carousel/AgenciesCarousel";
+import axios from "axios";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Hero = () => {
-  const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(true)
-  const [house, setHouse] = useState([])
-  const [flat, setFlat] = useState([])
-  const [plot, setPlot] = useState([])
-  const [file, setFile] = useState([])
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(true);
+  const [house, setHouse] = useState([]);
+  const [flat, setFlat] = useState([]);
+  const [plot, setPlot] = useState([]);
+  const [file, setFile] = useState([]);
 
-  const match500 = useMediaQuery('(max-width: 500px)')
+  const match500 = useMediaQuery("(max-width: 500px)");
 
   useEffect(() => {
     axios
       .get(
-        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getAllProperties',
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + "/user/getAllProperties"
       )
       .then((data) => {
-        setIsLoaded(false)
+        setIsLoaded(false);
         setHouse(
           data.data.body.filter(
             (property) =>
-              property.propertySubCategory === 'farmhouse' ||
-              property.propertySubCategory === 'house',
-          ),
-        )
+              property.propertySubCategory === "farmhouse" ||
+              property.propertySubCategory === "house"
+          )
+        );
         setFlat(
           data.data.body.filter(
-            (property) => property.propertySubCategory === 'flat',
-          ),
-        )
+            (property) => property.propertySubCategory === "flat"
+          )
+        );
         setPlot(
           data.data.body.filter(
-            (property) => property.propertySubCategory === 'plot',
-          ),
-        )
+            (property) => property.propertySubCategory === "plot"
+          )
+        );
         setFile(
           data.data.body.filter(
-            (property) => property.propertySubCategory === 'file',
-          ),
-        )
+            (property) => property.propertySubCategory === "file"
+          )
+        );
       })
       .catch((error) => {
-        setIsLoaded(false)
-        setError(error)
-      })
-  }, [])
+        setIsLoaded(false);
+        setError(error);
+      });
+  }, []);
 
   return (
     <>
       <SearchSection />
-      <Container size={'xl'} mt={'xl'}>
+      <Container size={"xl"} mt={"xl"}>
         <Box style={{ padding: 20 }}>
           <Text
             weight={600}
-            mb={'xl'}
+            mb={"xl"}
             style={{
-              fontSize: match500 ? '1.3rem' : '1.7rem',
+              fontSize: match500 ? "1.3rem" : "1.7rem",
             }}
           >
             Premiere House Listings
           </Text>
-          <ListingCarousel listings={house} loading={isLoaded} error={error} />
+          <ListingCarousel listings={flat} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ padding: 20 }}>
           <Text
             weight={600}
-            mb={'xl'}
+            mb={"xl"}
             style={{
-              fontSize: match500 ? '1.3rem' : '1.7rem',
+              fontSize: match500 ? "1.3rem" : "1.7rem",
             }}
           >
             Hot Flat Listings
@@ -83,9 +83,9 @@ const Hero = () => {
         <Box style={{ padding: 20 }}>
           <Text
             weight={600}
-            mb={'xl'}
+            mb={"xl"}
             style={{
-              fontSize: match500 ? '1.3rem' : '1.7rem',
+              fontSize: match500 ? "1.3rem" : "1.7rem",
             }}
           >
             Latest Plot Listings
@@ -95,9 +95,9 @@ const Hero = () => {
         <Box style={{ padding: 20 }}>
           <Text
             weight={600}
-            mb={'xl'}
+            mb={"xl"}
             style={{
-              fontSize: match500 ? '1.3rem' : '1.7rem',
+              fontSize: match500 ? "1.3rem" : "1.7rem",
             }}
           >
             Featured Files
@@ -107,9 +107,9 @@ const Hero = () => {
         <Box style={{ paddingRight: 20, paddingLeft: 20 }}>
           <Text
             weight={600}
-            mb={'xl'}
+            mb={"xl"}
             style={{
-              fontSize: match500 ? '1.3rem' : '1.7rem',
+              fontSize: match500 ? "1.3rem" : "1.7rem",
             }}
           >
             Featured Agencies Listings
@@ -118,7 +118,7 @@ const Hero = () => {
         </Box>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
