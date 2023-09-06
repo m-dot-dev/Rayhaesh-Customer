@@ -7,32 +7,32 @@ import {
   Box,
   Text,
   Select,
-} from '@mantine/core'
-import { PakistanCities } from '../Filters/cities'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+} from "@mantine/core";
+import { PakistanCities } from "../Filters/cities";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   hero: {
-    position: 'relative',
+    position: "relative",
     backgroundImage:
-      'url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    width: '100%',
+      "url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    width: "100%",
   },
 
   container: {
     height: 250,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
     paddingBottom: theme.spacing.xl * 6,
     zIndex: 1,
-    position: 'relative',
+    position: "relative",
     // backgroundColor: 'red',
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       height: 350,
       paddingBottom: theme.spacing.xl * 3,
     },
@@ -43,87 +43,87 @@ const useStyles = createStyles((theme) => ({
     fontSize: 60,
     fontWeight: 600,
     letterSpacing: 2,
-    fontFamily: 'poppins',
+    fontFamily: "poppins",
     lineHeight: 1.1,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: theme.spacing.xl * 1.5,
 
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
     },
 
-    [theme.fn.smallerThan('xs')]: {
+    [theme.fn.smallerThan("xs")]: {
       fontSize: 28,
       lineHeight: 1.3,
-      fontFamily: 'poppins',
+      fontFamily: "poppins",
     },
   },
 
   description: {
     color: theme.white,
     marginTop: theme.spacing.md,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
 
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
     },
   },
 
   control: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     gap: 20,
     marginTop: 50,
 
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
       gap: 10,
       marginTop: 20,
-      width: '70%',
+      width: "70%",
     },
   },
-}))
+}));
 
 export default function SearchSection() {
   const cityData = PakistanCities.map((city) => ({
     label: city.label,
     value: city.value,
-  }))
+  }));
 
-  const [city, setCity] = useState([])
-  const [SubCategory, setSubCategory] = useState([])
-  const [price, setPrice] = useState([])
-  const [lookingfor, setLookingfor] = useState('buy')
+  const [city, setCity] = useState([]);
+  const [SubCategory, setSubCategory] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [lookingfor, setLookingfor] = useState("buy");
 
   const typeData = [
-    { value: 'house', label: 'House' },
-    { value: 'plot', label: 'Plot' },
-    { value: 'flat', label: 'Flat' },
-    { value: 'shop', label: 'Shop' },
-    { value: 'file', label: 'File' },
-    { value: 'farmhouse', label: 'Farmhouse' },
-    { value: 'building', label: 'Building' },
-    { value: 'villa', label: 'Villa' },
-    { value: 'penthouse', label: 'Penthouse' },
-    { value: 'plaza', label: 'Plaza' },
-  ]
+    { value: "house", label: "House" },
+    { value: "plot", label: "Plot" },
+    { value: "flat", label: "Flat" },
+    { value: "shop", label: "Shop" },
+    { value: "file", label: "File" },
+    { value: "farmhouse", label: "Farmhouse" },
+    { value: "building", label: "Building" },
+    { value: "villa", label: "Villa" },
+    { value: "penthouse", label: "Penthouse" },
+    { value: "plaza", label: "Plaza" },
+  ];
   const priceData = [
-    { value: '1', label: '<15 Lac' },
-    { value: '2', label: '> 15 Lac & < 50 Lac' },
-    { value: '3', label: '> 50 Lac & < 1 Crore' },
-    { value: '4', label: '> 1 Crore' },
-  ]
+    { value: "1", label: "<15 Lac" },
+    { value: "2", label: "> 15 Lac & < 50 Lac" },
+    { value: "3", label: "> 50 Lac & < 1 Crore" },
+    { value: "4", label: "> 1 Crore" },
+  ];
 
   const buyType = [
-    { value: 'buy', label: 'Buy' },
-    { value: 'rent', label: 'Rent' },
-    { value: 'exchange', label: 'Exchange' },
-  ]
+    { value: "buy", label: "Buy" },
+    { value: "rent", label: "Rent" },
+    { value: "exchange", label: "Exchange" },
+  ];
 
-  const { classes } = useStyles()
+  const { classes } = useStyles();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className={classes.hero}>
@@ -147,7 +147,7 @@ export default function SearchSection() {
             size="md"
             styles={{
               label: {
-                color: 'white',
+                color: "white",
                 fontSize: 16,
               },
             }}
@@ -160,7 +160,7 @@ export default function SearchSection() {
             size="md"
             styles={{
               label: {
-                color: 'white',
+                color: "white",
                 fontSize: 16,
               },
             }}
@@ -174,7 +174,7 @@ export default function SearchSection() {
             size="md"
             styles={{
               label: {
-                color: 'white',
+                color: "white",
                 fontSize: 16,
               },
             }}
@@ -188,7 +188,7 @@ export default function SearchSection() {
             size="md"
             styles={{
               label: {
-                color: 'white',
+                color: "white",
                 fontSize: 16,
               },
             }}
@@ -197,21 +197,21 @@ export default function SearchSection() {
           />
           <Box
             style={{
-              display: 'flex',
-              alignItems: 'flex-end',
+              display: "flex",
+              alignItems: "flex-end",
             }}
           >
             <Button
               variant="filled"
               fullWidth
-              mt={'xs'}
+              mt={"xs"}
               size="md"
               style={{
-                backgroundColor: '#D92228',
-                color: 'white',
+                backgroundColor: "#D92228",
+                color: "white",
               }}
               onClick={() => {
-                lookingfor === 'buy'
+                lookingfor === "buy"
                   ? navigate(`/properties`, {
                       state: {
                         city: city,
@@ -219,7 +219,7 @@ export default function SearchSection() {
                         price: price,
                       },
                     })
-                  : lookingfor === 'rent'
+                  : lookingfor === "rent"
                   ? navigate(`/rent`, {
                       state: {
                         city: city,
@@ -233,7 +233,7 @@ export default function SearchSection() {
                         SubCategory: SubCategory,
                         price: price,
                       },
-                    })
+                    });
               }}
             >
               Search
@@ -242,5 +242,5 @@ export default function SearchSection() {
         </Container>
       </Box>
     </div>
-  )
+  );
 }

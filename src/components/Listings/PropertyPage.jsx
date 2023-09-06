@@ -14,7 +14,7 @@ import {
   Notification,
   Dialog,
   Container,
-} from '@mantine/core'
+} from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
   IconArrowRight,
@@ -27,23 +27,23 @@ import {
   IconUser,
   IconVideo,
   IconX,
-} from '@tabler/icons'
-import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import PropertyCarousel from './PropertyCarousel'
-import { useMediaQuery } from '@mantine/hooks'
-import { useNavigate } from 'react-router-dom'
-import { showNotification } from '@mantine/notifications'
-import LocationMap from '../Generic/LocationMap'
-import VideosCarousel from '../Carousel/VideosCarousel'
-import ImagesCarousel from '../Carousel/ImagesCarousel'
-import AgencyDetails from '../ListingTabs/AgencyDetails'
-import ServicesDetails from '../ListingTabs/ServicesDetails'
-import AboutDetails from '../ListingTabs/AboutDetails'
-import LocationDetails from '../ListingTabs/LocationDetails'
-import DocumentViewer from '../ListingTabs/DocumentViewer'
-import useAuth from '../hooks/useAuth'
-import axios from 'axios'
+} from "@tabler/icons";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import PropertyCarousel from "./PropertyCarousel";
+import { useMediaQuery } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
+import { showNotification } from "@mantine/notifications";
+import LocationMap from "../Generic/LocationMap";
+import VideosCarousel from "../Carousel/VideosCarousel";
+import ImagesCarousel from "../Carousel/ImagesCarousel";
+import AgencyDetails from "../ListingTabs/AgencyDetails";
+import ServicesDetails from "../ListingTabs/ServicesDetails";
+import AboutDetails from "../ListingTabs/AboutDetails";
+import LocationDetails from "../ListingTabs/LocationDetails";
+import DocumentViewer from "../ListingTabs/DocumentViewer";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const PropertyPage = () => {
   const useStyles = createStyles((theme) => ({
@@ -55,75 +55,75 @@ const PropertyPage = () => {
       fontSize: 18,
       fontWeight: 400,
       opacity: 0.7,
-      display: 'flex',
-      flexDirection: 'row',
+      display: "flex",
+      flexDirection: "row",
       marginRight: 25,
       gap: 5,
     },
     aboutText: {
       fontSize: 16,
       fontWeight: 500,
-      color: '#D92228',
-      textTransform: 'uppercase',
+      color: "#D92228",
+      textTransform: "uppercase",
     },
     bookingText: {
       fontSize: 20,
       fontWeight: 700,
-      textAlign: 'center',
+      textAlign: "center",
     },
-  }))
-  const { classes } = useStyles()
+  }));
+  const { classes } = useStyles();
 
-  const location = useLocation()
-  const [property, setProperty] = React.useState({})
-  const match1200 = useMediaQuery('(max-width: 1200px)')
+  const location = useLocation();
+  const [property, setProperty] = React.useState({});
+  const match1200 = useMediaQuery("(max-width: 1200px)");
 
   useEffect(() => {
-    setProperty(location.state?.data)
-  }, [location])
+    setProperty(location.state?.data);
+  }, [location]);
 
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { auth, setAuth } = useAuth()
+  const { auth, setAuth } = useAuth();
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     axios
       .get(
-        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/user/getUserProfile',
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + "/user/getUserProfile",
         {
           headers: {
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem("token"),
           },
-        },
+        }
       )
       .then((res) => {
-        setName(res.data?.body?.name)
-        setEmail(res.data?.body?.email)
-        setPhone(res.data?.body?.cellPhoneNumber)
+        setName(res.data?.body?.name);
+        setEmail(res.data?.body?.email);
+        setPhone(res.data?.body?.cellPhoneNumber);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
 
   const handleBookingSubmit = (e) => {
-    e.preventDefault()
-    if (name === '' || email === '' || phone === '') {
+    e.preventDefault();
+    if (name === "" || email === "" || phone === "") {
       showNotification({
-        title: 'Error',
-        message: 'Please fill in all the fields',
+        title: "Error",
+        message: "Please fill in all the fields",
         styles: (theme) => ({
           root: {
             backgroundColor: theme.colors.red[8],
             borderColor: theme.colors.red[8],
 
-            '&::before': { backgroundColor: theme.white },
+            "&::before": { backgroundColor: theme.white },
           },
 
           title: { color: theme.white },
@@ -131,23 +131,23 @@ const PropertyPage = () => {
           closeButton: {
             color: theme.white,
             backgroundColor: theme.colors.red[6],
-            '&:hover': { backgroundColor: theme.colors.red[7] },
+            "&:hover": { backgroundColor: theme.colors.red[7] },
           },
         }),
-      })
+      });
     } else {
       navigate(`/booking/${property?._id}`, {
         state: { data: property },
-      })
+      });
     }
-  }
+  };
 
-  console.log('====================================')
-  console.log('property reserve check', property)
-  console.log('====================================')
+  console.log("====================================");
+  console.log("property reserve check", property);
+  console.log("====================================");
 
   return (
-    <Container size={'xl'} pt={'md'}>
+    <Container size={"xl"} pt={"md"}>
       <Grid columns={12}>
         <Grid.Col
           style={match1200 ? { padding: 50 } : null}
@@ -156,13 +156,13 @@ const PropertyPage = () => {
         >
           <Group className={classes.mainGroup}>
             {/* Title and Locations */}
-            <Stack spacing={'xs'}>
+            <Stack spacing={"xs"}>
               <Text className={classes.titleText}>
-                {property?.propertyTitle || 'Property Title Here'}
+                {property?.propertyTitle || "Property Title Here"}
               </Text>
               <Text className={classes.cityText}>
                 <IconMap2 />
-                {property?.propertyCity || 'Property City Here'}
+                {property?.propertyCity || "Property City Here"}
               </Text>
             </Stack>
           </Group>
@@ -172,7 +172,7 @@ const PropertyPage = () => {
               color="red"
               variant="pills"
               defaultValue="photos"
-              mt={'xl'}
+              mt={"xl"}
               keepMounted={false}
             >
               <Tabs.List>
@@ -219,13 +219,13 @@ const PropertyPage = () => {
               <Tabs.Panel value="booking" pt="xs">
                 <Modal opened={opened} onClose={() => setOpened(false)}>
                   <Paper shadow="sm" p="xl" withBorder>
-                    <Stack spacing={'md'}>
+                    <Stack spacing={"md"}>
                       <Text
                         style={{
                           fontSize: 22,
                           fontWeight: 700,
-                          color: '#D92228',
-                          textAlign: 'center',
+                          color: "#D92228",
+                          textAlign: "center",
                         }}
                       >
                         Booking
@@ -255,14 +255,14 @@ const PropertyPage = () => {
                         </Input.Wrapper>
                         <Button
                           style={{
-                            color: 'white',
-                            backgroundColor: '#D92228',
-                            fontFamily: 'poppins',
-                            ':hover': {
-                              backgroundColor: '#D92228',
+                            color: "white",
+                            backgroundColor: "#D92228",
+                            fontFamily: "poppins",
+                            ":hover": {
+                              backgroundColor: "#D92228",
                             },
                           }}
-                          mt={'md'}
+                          mt={"md"}
                           fullWidth
                           size="md"
                           rightIcon={<IconArrowRight />}
@@ -280,7 +280,7 @@ const PropertyPage = () => {
 
           {/* Details Section */}
           <Group className={classes.mainGroup}>
-            <Tabs color="red" variant="default" defaultValue="about" mt={'xl'}>
+            <Tabs color="red" variant="default" defaultValue="about" mt={"xl"}>
               <Tabs.List>
                 <Tabs.Tab value="about" icon={<IconPhoto size={14} />}>
                   About
@@ -331,18 +331,18 @@ const PropertyPage = () => {
             style={{
               marginTop: 100,
               marginRight: 50,
-              top: '100px',
+              top: "100px",
               // position: 'sticky',
-              outline: '0px',
+              outline: "0px",
             }}
           >
-            <Stack spacing={'md'}>
+            <Stack spacing={"md"}>
               <Text
                 style={{
                   fontSize: 22,
                   fontWeight: 700,
-                  color: '#D92228',
-                  textAlign: 'center',
+                  color: "#D92228",
+                  textAlign: "center",
                 }}
               >
                 Booking
@@ -371,14 +371,14 @@ const PropertyPage = () => {
                 </Input.Wrapper>
                 <Button
                   sx={{
-                    color: 'white',
-                    backgroundColor: '#D92228',
-                    fontFamily: 'poppins',
-                    ':hover': {
-                      backgroundColor: '#D92228',
+                    color: "white",
+                    backgroundColor: "#D92228",
+                    fontFamily: "poppins",
+                    ":hover": {
+                      backgroundColor: "#D92228",
                     },
                   }}
-                  mt={'md'}
+                  mt={"md"}
                   fullWidth
                   size="md"
                   rightIcon={<IconArrowRight />}
@@ -392,7 +392,7 @@ const PropertyPage = () => {
         </Grid.Col>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default PropertyPage
+export default PropertyPage;
