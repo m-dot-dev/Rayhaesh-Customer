@@ -276,7 +276,7 @@ export default function Navbar() {
             >
               News & Insights
             </Button>
-{/* 
+            {/* 
             {auth ? (
               <Button
                 variant="outline"
@@ -599,7 +599,7 @@ export default function Navbar() {
             >
               News & Insights
             </Button>
-
+            {/* 
             <Button
               sx={{
                 color: "white",
@@ -615,7 +615,7 @@ export default function Navbar() {
               }}
             >
               Subscription
-            </Button>
+            </Button> */}
 
             <Button
               sx={{
