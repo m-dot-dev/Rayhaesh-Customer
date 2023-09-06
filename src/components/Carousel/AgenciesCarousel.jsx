@@ -1,15 +1,15 @@
-import React from 'react'
-import { Carousel } from '@mantine/carousel'
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons'
-import zameenImage from '../../assets/images/zameen.com-logo.png'
-import graanaImage from '../../assets/images/graana-logo.png'
-import agency21Image from '../../assets/images/agency-21-logo.png'
-import shahbazImage from '../../assets/images/shahbaz-logo.png'
-import bahriaTownImage from '../../assets/images/bahria-town-logo.png'
-import { useMediaQuery } from '@mantine/hooks'
+import React from "react";
+import { Carousel } from "@mantine/carousel";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import zameenImage from "../../assets/images/zameen.com-logo.png";
+import graanaImage from "../../assets/images/graana-logo.png";
+import agency21Image from "../../assets/images/agency-21-logo.png";
+import shahbazImage from "../../assets/images/shahbaz-logo.png";
+import bahriaTownImage from "../../assets/images/bahria-town-logo.png";
+import { useMediaQuery } from "@mantine/hooks";
 
 const AgenciesCarousel = () => {
-  const match768 = useMediaQuery('(max-width: 768px)')
+  const match768 = useMediaQuery("(max-width: 768px)");
 
   const images = [
     {
@@ -32,31 +32,47 @@ const AgenciesCarousel = () => {
       id: 5,
       uri: bahriaTownImage,
     },
-  ]
+  ];
 
   return (
     <Carousel
       slideSize="32%"
       slideGap="md"
       breakpoints={[
-        { maxWidth: 'md', slideSize: '50%' },
-        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
+        { maxWidth: "md", slideSize: "50%" },
+        { maxWidth: "sm", slideSize: "100%", slideGap: 0 },
       ]}
       loop
       align="center"
       controlsOffset={0}
       slidesToScroll={match768 ? 1 : 3}
-      nextControlIcon={<IconArrowRight size={18} style={{ color: '#fff' }} />}
+      nextControlIcon={<IconArrowRight size={18} style={{ color: "#fff" }} />}
       previousControlIcon={
-        <IconArrowLeft size={18} style={{ color: '#fff' }} />
+        <IconArrowLeft size={18} style={{ color: "#fff" }} />
       }
       styles={{
         control: {
-          border: '1px solid red',
-          width: '40px',
-          height: '40px',
-          backgroundColor: '#D92228',
+          border: "1px solid red",
+          width: "40px",
+          height: "40px",
+          backgroundColor: "#D92228",
           opacity: 100,
+
+          "&:first-of-type": {
+            marginLeft: -50,
+
+            "@media (max-width: 768px)": {
+              marginLeft: 0,
+            },
+          },
+
+          "&:last-of-type": {
+            marginRight: -50,
+
+            "@media (max-width: 768px)": {
+              marginRight: 0,
+            },
+          },
         },
       }}
     >
@@ -71,7 +87,7 @@ const AgenciesCarousel = () => {
         </Carousel.Slide>
       ))}
     </Carousel>
-  )
-}
+  );
+};
 
-export default AgenciesCarousel
+export default AgenciesCarousel;
