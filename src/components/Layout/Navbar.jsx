@@ -347,7 +347,11 @@ export default function Navbar() {
                       <IconCategory size={20} style={{ color: "blueviolet" }} />
                     }
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/dashboard", {
+                        state: {
+                          activeTab: "properties",
+                        },
+                      });
                     }}
                   >
                     <Text style={{ fontFamily: "poppins" }}>Dashboard</Text>
@@ -357,7 +361,11 @@ export default function Navbar() {
                       <IconSettings size={20} style={{ color: "blueviolet" }} />
                     }
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/dashboard", {
+                        state: {
+                          activeTab: "settings",
+                        },
+                      });
                     }}
                   >
                     <Text style={{ fontFamily: "poppins" }}>Settings</Text>

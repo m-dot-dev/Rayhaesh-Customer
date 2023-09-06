@@ -6,13 +6,22 @@ import {
   IconMessage,
 } from "@tabler/icons";
 import ProfileSettings from "./ProfileSettings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookedProperties from "./BookedProperties";
 import BlogsPosted from "./BlogsPosted";
 import FeedbackPosted from "./FeedbackPosted";
+import { useLocation } from "react-router-dom";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("properties");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location]);
 
   return (
     <Container size={"xl"} mt={"xl"}>
