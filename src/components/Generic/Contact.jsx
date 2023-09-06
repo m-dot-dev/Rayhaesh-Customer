@@ -7,14 +7,38 @@ import {
   Button,
   Container,
   Select,
+  Stack,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + "/user/getUserProfile",
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        setName(res.data?.body?.name);
+        setEmail(res.data?.body?.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleSubmit = (values) => {
     setLoading(true);
     console.log(values);
@@ -81,40 +105,64 @@ export default function Contact() {
           Get in touch
         </Title>
 
-        <Select
-          label="Select feedback type"
-          placeholder="Pick one"
-          data={[
-            { value: "feedback", label: "Feedback" },
-            { value: "complaint", label: "Complaint" },
-            { value: "suggestion", label: "Suggestion" },
-          ]}
-          styles={{
-            input: { border: "1px solid #a7a7a8" },
-          }}
-          size="md"
-          variant="filled"
-          // value={feedbackType}
-          // onChange={setType}
-          // required
-          {...form.getInputProps("feedbackType")}
-        />
-        <Textarea
-          mt="md"
-          label="Message"
-          placeholder="Your feedback"
-          maxRows={10}
-          minRows={5}
-          autosize
-          name="feedback"
-          variant="filled"
-          styles={{ input: { border: "1px solid #a7a7a8" } }}
-          // value={feedback}
-          // onChange={(e) => setMessage(e.target.value)}
-          size="md"
-          // required
-          {...form.getInputProps("feedback")}
-        />
+        <Stack spacing={"md"}>
+          <TextInput
+            label="Name"
+            placeholder="Your name"
+            name="name"
+            variant="filled"
+            styles={{ input: { border: "1px solid #a7a7a8" } }}
+            size="md"
+            readOnly
+            value={name}
+            // required
+          />
+          <TextInput
+            label="Email"
+            placeholder="Your email"
+            name="email"
+            variant="filled"
+            styles={{ input: { border: "1px solid #a7a7a8" } }}
+            size="md"
+            readOnly
+            value={email}
+            // required
+          />
+
+          <Select
+            label="Select feedback type"
+            placeholder="Pick one"
+            data={[
+              { value: "feedback", label: "Feedback" },
+              { value: "complaint", label: "Complaint" },
+              { value: "suggestion", label: "Suggestion" },
+            ]}
+            styles={{
+              input: { border: "1px solid #a7a7a8" },
+            }}
+            size="md"
+            variant="filled"
+            // value={feedbackType}
+            // onChange={setType}
+            // required
+            {...form.getInputProps("feedbackType")}
+          />
+          <Textarea
+            label="Message"
+            placeholder="Your feedback"
+            maxRows={10}
+            minRows={5}
+            autosize
+            name="feedback"
+            variant="filled"
+            styles={{ input: { border: "1px solid #a7a7a8" } }}
+            // value={feedback}
+            // onChange={(e) => setMessage(e.target.value)}
+            size="md"
+            // required
+            {...form.getInputProps("feedback")}
+          />
+        </Stack>
 
         <Group position="center" mt="xl">
           <Button

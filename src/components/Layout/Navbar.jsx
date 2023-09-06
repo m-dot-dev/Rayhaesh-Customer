@@ -270,7 +270,7 @@ export default function Navbar() {
                 navigate("/contact");
               }}
             >
-              Contact
+              Feedback
             </Button>
           </Group>
 
