@@ -1,5 +1,5 @@
-import { Card, Image, Text, Badge, Group } from '@mantine/core'
-import { IconAspectRatio, IconBath, IconBed } from '@tabler/icons'
+import { Card, Image, Text, Badge, Group } from "@mantine/core";
+import { IconAspectRatio, IconBath, IconBed } from "@tabler/icons";
 
 export default function BuyCards({ property }) {
   return (
@@ -9,12 +9,12 @@ export default function BuyCards({ property }) {
       radius="md"
       withBorder
       style={{
-        borderColor: '#D92228',
+        borderColor: "#D92228",
       }}
       sx={{
-        maxHeight: '400px',
-        ':hover': {
-          boxShadow: '0 5px 12px #0003',
+        maxHeight: "400px",
+        ":hover": {
+          boxShadow: "0 5px 12px #0003",
         },
       }}
     >
@@ -30,7 +30,7 @@ export default function BuyCards({ property }) {
           color="pink"
           variant="light"
           sx={{
-            '@media (max-width: 1300px)': {
+            "@media (max-width: 1300px)": {
               fontSize: 10,
             },
           }}
@@ -41,20 +41,20 @@ export default function BuyCards({ property }) {
 
       <Group
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: "flex",
+          justifyContent: "space-between",
         }}
         mb="md"
       >
-        {property?.propertySubCategory === 'plot' ||
-        property?.propertySubCategory === 'shop' ||
-        property?.propertySubCategory === 'file' ? (
+        {property?.propertySubCategory === "plot" ||
+        property?.propertySubCategory === "shop" ||
+        property?.propertySubCategory === "file" ? (
           <Group noWrap>
             <Text
               style={{
-                color: '#D92228',
+                color: "#D92228",
                 fontSize: 16,
-                textTransform: 'uppercase',
+                textTransform: "uppercase",
               }}
               size="md"
               weight={500}
@@ -69,9 +69,9 @@ export default function BuyCards({ property }) {
           <Group position="apart" noWrap>
             <Text
               style={{
-                color: '#D92228',
+                color: "#D92228",
                 fontSize: 16,
-                textTransform: 'uppercase',
+                textTransform: "uppercase",
               }}
               size="md"
               weight={500}
@@ -80,7 +80,7 @@ export default function BuyCards({ property }) {
             </Text>
             <Group
               style={{
-                textDecoration: 'none',
+                textDecoration: "none",
               }}
               spacing={0}
               noWrap
@@ -106,15 +106,15 @@ export default function BuyCards({ property }) {
       <Text
         size="md"
         style={{
-          color: '#D92228',
+          color: "#D92228",
           marginTop: 5,
           fontSize: 20,
         }}
         weight={500}
-        mt={'md'}
+        mt={"md"}
       >
-        Rs. {property?.totalPrice}
+        Rs. {property?.totalPrice ?? property?.monthlyRent}
       </Text>
     </Card>
-  )
+  );
 }
