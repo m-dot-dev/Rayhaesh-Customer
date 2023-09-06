@@ -276,7 +276,7 @@ export default function Navbar() {
             >
               News & Insights
             </Button>
-
+{/* 
             {auth ? (
               <Button
                 variant="outline"
@@ -292,7 +292,7 @@ export default function Navbar() {
               >
                 Subscription
               </Button>
-            ) : null}
+            ) : null} */}
 
             <Button
               variant="outline"
