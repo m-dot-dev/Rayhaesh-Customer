@@ -13,7 +13,7 @@ import {
   Stack,
 } from "@mantine/core";
 import RemsLogo from "../../assets/images/Logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@mantine/core";
 import { Link } from "react-router-dom";
 
@@ -130,6 +130,8 @@ export default function Navbar() {
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState(null);
 
+  const location = useLocation();
+
   useEffect(() => {
     axios
       .get(import.meta.env.VITE_REACT_APP_BACKEND_URL + "/admin/getAllUsers")
@@ -160,6 +162,16 @@ export default function Navbar() {
         console.log(err);
       });
   }, []);
+
+  const activeLinkStyles = {
+    backgroundColor: "#D92228",
+    color: "white",
+  };
+
+  const normalLinkStyles = {
+    color: "black",
+    borderColor: "#D92228",
+  };
 
   return (
     <>
@@ -207,7 +219,11 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: "#D92228" }}
+              sx={
+                location.pathname === "/properties"
+                  ? activeLinkStyles
+                  : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
                 navigate("/properties");
@@ -218,7 +234,11 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: "#D92228" }}
+              sx={
+                location.pathname === "/exchange"
+                  ? activeLinkStyles
+                  : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
                 navigate("/exchange");
@@ -229,7 +249,11 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: "#D92228" }}
+              sx={
+                location.pathname === "/rent"
+                  ? activeLinkStyles
+                  : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
                 navigate("/rent");
@@ -240,7 +264,11 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: "#D92228" }}
+              sx={
+                location.pathname === "/blogs"
+                  ? activeLinkStyles
+                  : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
                 navigate("/blogs");
@@ -252,7 +280,11 @@ export default function Navbar() {
             {auth ? (
               <Button
                 variant="outline"
-                sx={{ borderColor: "#D92228" }}
+                sx={
+                  location.pathname === "/subscription"
+                    ? activeLinkStyles
+                    : normalLinkStyles
+                }
                 className={classes.link}
                 onClick={() => {
                   navigate("/subscription");
@@ -264,7 +296,11 @@ export default function Navbar() {
 
             <Button
               variant="outline"
-              sx={{ borderColor: "#D92228" }}
+              sx={
+                location.pathname === "/contact"
+                  ? activeLinkStyles
+                  : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
                 navigate("/contact");
