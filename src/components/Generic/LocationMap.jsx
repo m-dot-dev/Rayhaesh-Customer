@@ -10,8 +10,8 @@ const LocationMap = ({ lat, lng }) => {
     const resizeObserver = new ResizeObserver(() => {
       map.invalidateSize();
     });
-    // const container = document.getElementById("map-container");
-    // resizeObserver.observe(container);
+    const container = document.getElementById("map-container");
+    resizeObserver.observe(container);
 
     return null;
   };
@@ -21,6 +21,7 @@ const LocationMap = ({ lat, lng }) => {
         height: "100%",
         width: "100%",
       }}
+      id="map-container"
       center={[lat, lng]}
       zoom={5}
       scrollWheelZoom={true}
