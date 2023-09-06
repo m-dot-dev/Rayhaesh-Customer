@@ -1,14 +1,24 @@
 import { Container, Stack, Text } from "@mantine/core";
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useEffect } from "react";
 
 const LocationMap = ({ lat, lng }) => {
-  console.log(lat, lng);
+  const ResizeMap = () => {
+    const map = useMap();
+    const resizeObserver = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+    // const container = document.getElementById("map-container");
+    // resizeObserver.observe(container);
+
+    return null;
+  };
   return (
     <MapContainer
       style={{
-        height: "400px",
+        height: "100%",
         width: "100%",
       }}
       center={[lat, lng]}
@@ -31,6 +41,7 @@ const LocationMap = ({ lat, lng }) => {
           </Stack>
         </Popup>
       </Marker>
+      <ResizeMap />
     </MapContainer>
   );
 };

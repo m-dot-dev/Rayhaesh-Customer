@@ -279,8 +279,21 @@ const PropertyPage = () => {
           </Group>
 
           {/* Details Section */}
-          <Group className={classes.mainGroup}>
-            <Tabs color="red" variant="default" defaultValue="about" mt={"xl"}>
+          <Group
+            className={classes.mainGroup}
+            style={{
+              width: "100%",
+              flex: 1,
+            }}
+          >
+            <Tabs
+              color="red"
+              variant="default"
+              defaultValue="about"
+              mt={"xl"}
+              style={{ width: "100%" }}
+              keepMounted
+            >
               <Tabs.List>
                 <Tabs.Tab value="about" icon={<IconPhoto size={14} />}>
                   About

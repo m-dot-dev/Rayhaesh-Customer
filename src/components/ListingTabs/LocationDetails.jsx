@@ -31,7 +31,11 @@ const LocationDetails = ({ property }) => {
   }));
   const { classes } = useStyles();
   return (
-    <>
+    <Box
+      style={{
+        width: "100%",
+      }}
+    >
       <Stack spacing={0}>
         {property?.propertyCity && (
           <Group>
@@ -72,7 +76,7 @@ const LocationDetails = ({ property }) => {
             </Box>
           )}
       </Stack>
-    </>
+    </Box>
   );
 };
 
