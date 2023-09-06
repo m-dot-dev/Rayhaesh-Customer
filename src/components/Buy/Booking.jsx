@@ -12,9 +12,9 @@ import {
   Text,
   TextInput,
   Textarea,
-} from '@mantine/core'
-import { useForm } from '@mantine/form'
-import { showNotification } from '@mantine/notifications'
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import {
   IconBookmarkOff,
   IconCheck,
@@ -24,175 +24,175 @@ import {
   IconQuestionMark,
   IconShoppingBag,
   IconX,
-} from '@tabler/icons'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+} from "@tabler/icons";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Booking = () => {
-  const [property, setProperty] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [property, setProperty] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
-    setProperty(location.state?.data)
-  }, [location])
+    setProperty(location.state?.data);
+  }, [location]);
 
-  const [payment, setPayment] = useState('bank transfer')
-  const [booking, setBooking] = useState('advance paid')
+  const [payment, setPayment] = useState("bank transfer");
+  const [booking, setBooking] = useState("advance paid");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const bookingData = [
-    { value: 'advance paid', label: 'Advance' },
-    { value: 'full paid', label: 'Full' },
-    { value: 'interested in', label: 'Interested In' },
-    { value: 'on hold', label: 'On Hold' },
-  ]
+    { value: "advance paid", label: "Advance" },
+    { value: "full paid", label: "Full" },
+    { value: "interested in", label: "Interested In" },
+    { value: "on hold", label: "On Hold" },
+  ];
 
   const paymentMethods = [
-    { value: 'bank transfer', label: 'Bank Transfer' },
-    { value: 'cash', label: 'Cash' },
-    { value: 'easypaisa', label: 'Easy Paisa' },
-  ]
+    { value: "bank transfer", label: "Bank Transfer" },
+    { value: "cash", label: "Cash" },
+    { value: "easypaisa", label: "Easy Paisa" },
+  ];
 
-  const AdvancePaymentProgress = [{ value: 30, color: 'blue' }]
-  const FullPaymentProgress = [{ value: 100, color: 'green' }]
-  const InterestedPaymentProgress = [{ value: 0, color: 'yellow' }]
-  const OnHoldPaymentProgress = [{ value: 0, color: 'red' }]
+  const AdvancePaymentProgress = [{ value: 30, color: "blue" }];
+  const FullPaymentProgress = [{ value: 100, color: "green" }];
+  const InterestedPaymentProgress = [{ value: 0, color: "yellow" }];
+  const OnHoldPaymentProgress = [{ value: 0, color: "red" }];
 
-  const [paymentDetails, setPaymentDetails] = useState('')
+  const [paymentDetails, setPaymentDetails] = useState("");
 
   const form = useForm({
     initialValues: {
-      cardNumber: '',
-      expiryDate: '',
-      cvv: '',
-      phoneNumber: '',
-      address: '',
-      easyPaisaNumber: '',
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
+      phoneNumber: "",
+      address: "",
+      easyPaisaNumber: "",
     },
 
     validate: (values) => {
-      if (payment === 'bank transfer') {
+      if (payment === "bank transfer") {
         return {
           cardNumber:
             values.cardNumber.length < 16
-              ? 'Card number must include at least 16 characters'
+              ? "Card number must include at least 16 characters"
               : null,
           expiryDate:
             values.expiryDate.length < 4
-              ? 'Expiry date must include at least 4 characters'
+              ? "Expiry date must include at least 4 characters"
               : null,
           cvv:
             values.cvv.length < 3
-              ? 'CVV must include at least 3 characters'
+              ? "CVV must include at least 3 characters"
               : null,
-        }
+        };
       }
 
-      if (payment === 'cash') {
+      if (payment === "cash") {
         return {
           phoneNumber:
             values.phoneNumber.length < 11
-              ? 'Phone number must include at least 11 characters'
+              ? "Phone number must include at least 11 characters"
               : null,
           address:
             values.address.length < 5
-              ? 'Address must include at least 5 characters'
+              ? "Address must include at least 5 characters"
               : null,
-        }
+        };
       }
 
-      if (payment === 'easypaisa') {
+      if (payment === "easypaisa") {
         return {
           easyPaisaNumber:
             values?.easyPaisaNumber?.length < 11
-              ? 'Phone number must include at least 11 characters'
+              ? "Phone number must include at least 11 characters"
               : null,
-        }
+        };
       }
 
-      return {}
+      return {};
     },
-  })
+  });
 
   const handleSubmit = (values) => {
-    setLoading(true)
+    setLoading(true);
 
-    values.paymentDetails = paymentDetails
-    values.paymentMethod = payment
+    values.paymentDetails = paymentDetails;
+    values.paymentMethod = payment;
 
-    property?.propertyIs === 'For Rent'
+    property?.propertyIs === "For Rent"
       ? (values.paymentAmount = property?.monthlyRent)
-      : (values.paymentAmount = property?.totalPrice)
+      : (values.paymentAmount = property?.totalPrice);
 
     // values.paymentAmount = property?.totalPrice
-    values.bookingType = booking
-    values.propertyId = property?._id
-    values.propertyDescription = property?.propertyDescription
+    values.bookingType = booking;
+    values.propertyId = property?._id;
+    values.propertyDescription = property?.propertyDescription;
 
     axios
       .post(
-        import.meta.env.VITE_REACT_APP_BACKEND_URL + '/customer/bookProperty',
+        import.meta.env.VITE_REACT_APP_BACKEND_URL + "/customer/bookProperty",
         values,
         {
           headers: {
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem("token"),
           },
-        },
+        }
       )
       .then((res) => {
-        console.log('booking response: ', res)
+        console.log("booking response: ", res);
 
-        if (property?.propertyAvailabilityStatus === 'RESERVED') {
+        if (property?.propertyAvailabilityStatus === "RESERVED") {
           showNotification({
-            title: 'Booking failed. Property already Reserved!',
-            message: 'Contact the Agency Owner for booking!',
-            color: 'blue',
+            title: "Booking failed. Property already Reserved!",
+            message: "Contact the Agency Owner for booking!",
+            color: "blue",
             icon: <IconBookmarkOff size={14} />,
             autoClose: 6000,
-          })
-          setLoading(false)
-          return
+          });
+          setLoading(false);
+          return;
         }
 
         if (res?.data?.success === true) {
           showNotification({
-            title: 'Property Booked!',
-            message: 'Your property has been booked!',
-            color: 'green',
+            title: "Property Booked!",
+            message: "Your property has been booked!",
+            color: "green",
             icon: <IconCheck size={14} />,
             autoClose: true,
-          })
-          navigate('/')
+          });
+          navigate("/");
         } else {
           showNotification({
-            title: 'Property booking Failed',
-            message: 'Booking failed. Please try again.',
-            color: 'red',
+            title: "Property booking Failed",
+            message: "Booking failed. Please try again.",
+            color: "red",
             icon: <IconX size={14} />,
             autoClose: true,
-          })
+          });
         }
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
-        console.log('update error: ', err)
-        setLoading(false)
+        console.log("update error: ", err);
+        setLoading(false);
         showNotification({
-          title: 'Property booking Failed',
-          message: 'Network error. Please try again.',
-          color: 'red',
+          title: "Property booking Failed",
+          message: "Network error. Please try again.",
+          color: "red",
           icon: <IconX size={14} />,
           autoClose: true,
-        })
-      })
-  }
+        });
+      });
+  };
 
   return (
-    <Container size={'xl'}>
+    <Container size={"xl"}>
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Grid columns={12}>
           <Grid.Col md={6}>
@@ -200,24 +200,24 @@ const Booking = () => {
               shadow="sm"
               radius="md"
               withBorder
-              style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+              style={{ borderColor: "lightgrey", borderWidth: 1 }}
               p={30}
               mt={30}
             >
-              <Group spacing={'xs'} noWrap position="center" mb={'lg'}>
+              <Group spacing={"xs"} noWrap position="center" mb={"lg"}>
                 <Text
                   weight={700}
                   style={{
                     fontSize: 26,
-                    color: '#D92228',
-                    textAlign: 'center',
+                    color: "#D92228",
+                    textAlign: "center",
                   }}
                 >
                   Booking
                 </Text>
                 <IconShoppingBag
                   style={{
-                    color: '#D92228',
+                    color: "#D92228",
                   }}
                   size={30}
                 />
@@ -233,7 +233,7 @@ const Booking = () => {
                   value={booking}
                   size="md"
                   style={{
-                    width: '100%',
+                    width: "100%",
                   }}
                   required
                   onChange={(event) => setBooking(event.target.value)}
@@ -248,7 +248,7 @@ const Booking = () => {
                   defaultValue={paymentMethods[0]}
                   size="md"
                   style={{
-                    width: '100%',
+                    width: "100%",
                   }}
                   required
                   onChange={(event) => setPayment(event.target.value)}
@@ -261,17 +261,22 @@ const Booking = () => {
               shadow="sm"
               radius="md"
               withBorder
-              style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+              style={{ borderColor: "lightgrey", borderWidth: 1 }}
               p={30}
               mt={30}
+              display={
+                booking === "advance paid" || booking === "full paid"
+                  ? "block"
+                  : "none"
+              }
             >
-              <Group spacing={'xs'} noWrap position="center" mb={'lg'}>
+              <Group spacing={"xs"} noWrap position="center" mb={"lg"}>
                 <Text
                   weight={700}
                   style={{
                     fontSize: 26,
-                    color: '#D92228',
-                    textAlign: 'center',
+                    color: "#D92228",
+                    textAlign: "center",
                   }}
                 >
                   Payment Breakdown
@@ -282,25 +287,25 @@ const Booking = () => {
                   size={120}
                   thickness={11}
                   sections={
-                    booking === 'advance paid'
+                    booking === "advance paid"
                       ? AdvancePaymentProgress
-                      : booking === 'full paid'
+                      : booking === "full paid"
                       ? FullPaymentProgress
-                      : booking === 'interested in'
+                      : booking === "interested in"
                       ? InterestedPaymentProgress
                       : OnHoldPaymentProgress
                   }
                   label={
                     <Text size="xs" align="center">
-                      {booking === 'advance paid' ? (
+                      {booking === "advance paid" ? (
                         <Text weight={600} size="lg">
                           30%
                         </Text>
-                      ) : booking === 'full paid' ? (
+                      ) : booking === "full paid" ? (
                         <Text weight={600} size="lg">
                           100%
                         </Text>
-                      ) : booking === 'interested in' ? (
+                      ) : booking === "interested in" ? (
                         <Text weight={600} size="lg">
                           0%
                         </Text>
@@ -314,11 +319,11 @@ const Booking = () => {
                 />
                 <Stack>
                   <Text size="xs" align="center">
-                    {booking === 'advance paid' ? (
+                    {booking === "advance paid" ? (
                       <Text weight={600} size="lg">
-                        {property?.propertyIs === 'For Rent' ? (
+                        {property?.propertyIs === "For Rent" ? (
                           <Text weight={600} size="lg">
-                            30% Advance Payment Rs.{' '}
+                            30% Advance Payment Rs.{" "}
                             {property?.monthlyRent * 0.3}
                           </Text>
                         ) : (
@@ -328,9 +333,9 @@ const Booking = () => {
                         )}
                         {/* 30% Advance Payment Rs. {property?.totalPrice * 0.3} */}
                       </Text>
-                    ) : booking === 'full paid' ? (
+                    ) : booking === "full paid" ? (
                       <Text weight={600} size="lg">
-                        {property?.propertyIs === 'For Rent' ? (
+                        {property?.propertyIs === "For Rent" ? (
                           <Text weight={600} size="lg">
                             100% Full Payment Rs. {property?.monthlyRent}
                           </Text>
@@ -340,7 +345,7 @@ const Booking = () => {
                           </Text>
                         )}
                       </Text>
-                    ) : booking === 'interested in' ? (
+                    ) : booking === "interested in" ? (
                       <Text weight={600} size="lg">
                         Interested Payment Rs. 0
                       </Text>
@@ -353,14 +358,14 @@ const Booking = () => {
                 </Stack>
               </Group>
             </Paper>
-            {payment === 'bank transfer' && (
+            {payment === "bank transfer" && (
               <Paper
                 shadow="sm"
                 radius="md"
                 withBorder
-                style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+                style={{ borderColor: "lightgrey", borderWidth: 1 }}
                 p={30}
-                mt={15}
+                mt={30}
               >
                 <Stack>
                   <Group position="apart">
@@ -370,19 +375,19 @@ const Booking = () => {
                       maxLength={16}
                       label="Card Number"
                       style={{
-                        width: '40%',
+                        width: "40%",
                       }}
                       icon={<IconCreditCard />}
-                      {...form.getInputProps('cardNumber')}
+                      {...form.getInputProps("cardNumber")}
                     />
                     <TextInput
                       hideControls
                       placeholder="MM/YY"
                       label="Expiry Date"
                       style={{
-                        width: '30%',
+                        width: "30%",
                       }}
-                      {...form.getInputProps('expiryDate')}
+                      {...form.getInputProps("expiryDate")}
                       maxLength={5}
                     />
                     <TextInput
@@ -390,21 +395,21 @@ const Booking = () => {
                       placeholder="123"
                       label="CVV"
                       style={{
-                        width: '20%',
+                        width: "20%",
                       }}
-                      {...form.getInputProps('cvv')}
+                      {...form.getInputProps("cvv")}
                       maxLength={3}
                     />
                   </Group>
                 </Stack>
               </Paper>
             )}
-            {payment === 'easypaisa' && (
+            {payment === "easypaisa" && (
               <Paper
                 shadow="sm"
                 radius="md"
                 withBorder
-                style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+                style={{ borderColor: "lightgrey", borderWidth: 1 }}
                 p={30}
                 mt={15}
               >
@@ -415,22 +420,22 @@ const Booking = () => {
                       placeholder="03xxxxxxxxx"
                       label="Easy Paisa Number"
                       style={{
-                        width: '100%',
+                        width: "100%",
                       }}
                       icon={<IconCreditCard />}
-                      {...form.getInputProps('easyPaisaNumber')}
+                      {...form.getInputProps("easyPaisaNumber")}
                       maxLength={11}
                     />
                   </Group>
                 </Stack>
               </Paper>
             )}
-            {payment === 'cash' && (
+            {payment === "cash" && (
               <Paper
                 shadow="sm"
                 radius="md"
                 withBorder
-                style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+                style={{ borderColor: "lightgrey", borderWidth: 1 }}
                 p={30}
                 mt={15}
               >
@@ -441,10 +446,10 @@ const Booking = () => {
                       placeholder="03xxxxxxxxx"
                       label="Phone Number"
                       style={{
-                        width: '100%',
+                        width: "100%",
                       }}
                       icon={<IconCreditCard />}
-                      {...form.getInputProps('phoneNumber')}
+                      {...form.getInputProps("phoneNumber")}
                       maxLength={11}
                     />
                   </Group>
@@ -454,20 +459,20 @@ const Booking = () => {
                       placeholder="home address here"
                       label="Address"
                       style={{
-                        width: '100%',
+                        width: "100%",
                       }}
-                      {...form.getInputProps('address')}
+                      {...form.getInputProps("address")}
                     />
                   </Group>
                 </Stack>
               </Paper>
             )}
-            {property?.propertyIs === 'For Exchange' ? (
+            {property?.propertyIs === "For Exchange" ? (
               <Paper
                 shadow="sm"
                 radius="md"
                 withBorder
-                style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+                style={{ borderColor: "lightgrey", borderWidth: 1 }}
                 p={30}
                 mt={15}
               >
@@ -476,7 +481,7 @@ const Booking = () => {
                     placeholder="enter payment details for propert exchanging"
                     label="Exchange Details"
                     style={{
-                      width: '100%',
+                      width: "100%",
                     }}
                     size="md"
                     required
@@ -489,7 +494,7 @@ const Booking = () => {
                 shadow="sm"
                 radius="md"
                 withBorder
-                style={{ borderColor: 'lightgrey', borderWidth: 1 }}
+                style={{ borderColor: "lightgrey", borderWidth: 1 }}
                 p={30}
                 mt={15}
               >
@@ -498,7 +503,7 @@ const Booking = () => {
                     placeholder="enter property details"
                     label="Payment Details"
                     style={{
-                      width: '100%',
+                      width: "100%",
                     }}
                     size="md"
                     required
@@ -507,12 +512,12 @@ const Booking = () => {
                 </Group>
               </Paper>
             )}
-            <Group mt={'md'} position="apart" noWrap>
+            <Group mt={"md"} position="apart" noWrap>
               <Button
                 fullWidth
                 style={{
-                  backgroundColor: '#D92228',
-                  color: 'white',
+                  backgroundColor: "#D92228",
+                  color: "white",
                 }}
               >
                 Cancel
@@ -520,8 +525,8 @@ const Booking = () => {
               <Button
                 fullWidth
                 style={{
-                  backgroundColor: '#0b4096',
-                  color: 'white',
+                  backgroundColor: "#0b4096",
+                  color: "white",
                 }}
                 type="submit"
                 loading={loading}
@@ -533,7 +538,7 @@ const Booking = () => {
         </Grid>
       </form>
     </Container>
-  )
-}
+  );
+};
 
-export default Booking
+export default Booking;
