@@ -403,8 +403,7 @@ export default function Navbar() {
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
-        size="320px"
-        padding="md"
+        size={350}
         className={classes.hiddenDesktop}
         zIndex={1000000}
         styles={{
@@ -412,11 +411,13 @@ export default function Navbar() {
             color: "white",
             backgroundColor: "#D92228",
             borderRadius: 20,
+            top: 10,
+            right: 10,
           },
         }}
         position="right"
       >
-        <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
+        <ScrollArea sx={{ height: "calc(100vh - 60px)" }}>
           {auth && (
             <Group
               style={{
@@ -441,7 +442,9 @@ export default function Navbar() {
                   style={{
                     fontSize: "16px",
                     fontWeight: 500,
+                    wordBreak: "break-all",
                   }}
+                  lineClamp={1}
                 >
                   {auth?.email}
                 </Text>
