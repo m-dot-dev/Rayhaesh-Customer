@@ -206,16 +206,18 @@ export default function Navbar() {
             spacing={7}
             className={classes.hiddenMobile}
           >
-            {/* <Button
+            <Button
               variant="outline"
-              sx={{ borderColor: '#D92228' }}
+              sx={
+                location.pathname === "/" ? activeLinkStyles : normalLinkStyles
+              }
               className={classes.link}
               onClick={() => {
-                navigate('/')
+                navigate("/");
               }}
             >
               Home
-            </Button> */}
+            </Button>
 
             <Button
               variant="outline"
