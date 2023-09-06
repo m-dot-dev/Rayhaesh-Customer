@@ -1,6 +1,6 @@
-import { Group, Stack, Text, createStyles } from '@mantine/core'
-import React from 'react'
-import LocationMap from '../Generic/LocationMap'
+import { Box, Group, Stack, Text, createStyles } from "@mantine/core";
+import React from "react";
+import LocationMap from "../Generic/LocationMap";
 
 const LocationDetails = ({ property }) => {
   const useStyles = createStyles((theme) => ({
@@ -12,24 +12,24 @@ const LocationDetails = ({ property }) => {
       fontSize: 18,
       fontWeight: 400,
       opacity: 0.7,
-      display: 'flex',
-      flexDirection: 'row',
+      display: "flex",
+      flexDirection: "row",
       marginRight: 25,
       gap: 5,
     },
     aboutText: {
       fontSize: 16,
       fontWeight: 500,
-      color: '#D92228',
-      textTransform: 'uppercase',
+      color: "#D92228",
+      textTransform: "uppercase",
     },
     bookingText: {
       fontSize: 20,
       fontWeight: 700,
-      textAlign: 'center',
+      textAlign: "center",
     },
-  }))
-  const { classes } = useStyles()
+  }));
+  const { classes } = useStyles();
   return (
     <>
       <Stack spacing={0}>
@@ -59,14 +59,21 @@ const LocationDetails = ({ property }) => {
         )}
         {property?.propertyLocation &&
           property?.propertyLocation?.coordinates?.length !== 0 && (
-            <LocationMap
-              lat={property?.propertyLocation?.coordinates[0] || 0}
-              lng={property?.propertyLocation?.coordinates[1] || 1}
-            />
+            <Box
+              style={{
+                height: "400px",
+                width: "100%",
+              }}
+            >
+              <LocationMap
+                lat={property?.propertyLocation?.coordinates[0] || 0}
+                lng={property?.propertyLocation?.coordinates[1] || 1}
+              />
+            </Box>
           )}
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default LocationDetails
+export default LocationDetails;

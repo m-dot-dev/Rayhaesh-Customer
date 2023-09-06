@@ -54,14 +54,13 @@ const AboutDetails = ({ property }) => {
         <Text className={classes.aboutText}>Property is:</Text>
         <Text>{property?.propertyIs}</Text>
       </Group>
-      <Group noWrap mt={"xs"}>
-        <Text className={classes.aboutText}>Property price:</Text>
-        {property?.propertyIs === "For Rent" ? (
+      {property?.propertyIs !== "For Rent" && (
+        <Group noWrap mt={"xs"}>
+          <Text className={classes.aboutText}>Property price:</Text>
+
           <Text>{property?.monthlyRent + "Rs./Month"}</Text>
-        ) : (
-          <Text>{property?.totalPrice + "Rs."}</Text>
-        )}
-      </Group>
+        </Group>
+      )}
       <Group noWrap mt={"xs"}>
         <Text className={classes.aboutText}>Property area:</Text>
         <Group>
@@ -120,19 +119,19 @@ const AboutDetails = ({ property }) => {
               <Text className={classes.aboutText}>
                 Minimum Contract Period:{" "}
               </Text>
-              <Text>{property?.minimumContractPeriod}</Text>
+              <Text>{property?.minimumContractPeriod} month(s)</Text>
             </Group>
             <Group noWrap mt={"xs"}>
               <Text className={classes.aboutText}>Monthly Rent: </Text>
-              <Text>{property?.monthlyRent}</Text>
+              <Text>Rs. {property?.monthlyRent}</Text>
             </Group>
             <Group noWrap mt={"xs"}>
               <Text className={classes.aboutText}>Security Deposit: </Text>
-              <Text>{property?.securityDeposit}</Text>
+              <Text>Rs. {property?.securityDeposit}</Text>
             </Group>
             <Group noWrap mt={"xs"}>
               <Text className={classes.aboutText}>Advance Rent: </Text>
-              <Text>{property?.advanceRent}</Text>
+              <Text>{property?.advanceRent ? "Yes" : "No"}</Text>
             </Group>
           </Stack>
         ) : (

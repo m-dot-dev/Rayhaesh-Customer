@@ -1,20 +1,20 @@
-import { Group, Stack, Text, createStyles } from '@mantine/core'
-import React from 'react'
+import { Group, Stack, Text, createStyles } from "@mantine/core";
+import React from "react";
 
 const AgencyDetails = ({ property }) => {
   const useStyles = createStyles((theme) => ({
     aboutText: {
       fontSize: 16,
       fontWeight: 500,
-      color: '#D92228',
-      textTransform: 'uppercase',
+      color: "#D92228",
+      textTransform: "uppercase",
     },
-  }))
-  const { classes } = useStyles()
+  }));
+  const { classes } = useStyles();
 
-  // console.log('====================================')
-  // console.log('Agency Category Details', property?.agency)
-  // console.log('====================================')
+  // console.log("====================================");
+  // console.log("Agency Category Details", property?.agency);
+  // console.log("====================================");
 
   return (
     <Stack spacing={0}>
@@ -76,7 +76,7 @@ const AgencyDetails = ({ property }) => {
       )}
       <Group>
         <Text className={classes.aboutText}>Agency Point of Contact: </Text>
-        <Text>{property?.agency?.agencyPointOfContact}</Text>
+        <Text>{property?.agency?.agencyPointOfContact?.name}</Text>
       </Group>
       <Group>
         <Text className={classes.aboutText}>Agency Address: </Text>
@@ -94,7 +94,7 @@ const AgencyDetails = ({ property }) => {
         </Group>
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default AgencyDetails
+export default AgencyDetails;
