@@ -65,7 +65,7 @@ export default function BookedProperties() {
 
   const toggleAll = () =>
     setSelection((current) =>
-      current.length === myBookedProperties?.data?.body?.length
+      current?.length === myBookedProperties?.data?.body?.length
         ? []
         : myBookedProperties?.data?.body?.map((item) => item._id)
     );
@@ -98,7 +98,7 @@ export default function BookedProperties() {
           </Group>
         </td>
       </tr>
-    ) : myBookedProperties?.data?.body.length !== 0 ? (
+    ) : myBookedProperties?.data?.body?.length !== 0 ? (
       myBookedProperties?.data?.body?.map((row) => {
         const selected = selection.includes(myBookedProperties?._id);
         return (
@@ -166,9 +166,9 @@ export default function BookedProperties() {
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item disabled={selection.length === 0}>
+            <Menu.Item disabled={selection?.length === 0}>
               <DownloadCSV
-                selectedData={myBookedProperties?.data?.body.filter((item) =>
+                selectedData={myBookedProperties?.data?.body?.filter((item) =>
                   selection.includes(item._id)
                 )}
                 type="selected"
@@ -204,11 +204,11 @@ export default function BookedProperties() {
                   }}
                   onChange={toggleAll}
                   checked={
-                    selection.length === myBookedProperties?.data?.body.length
+                    selection?.length === myBookedProperties?.data?.body?.length
                   }
                   indeterminate={
-                    selection.length > 0 &&
-                    selection.length !== myBookedProperties?.data?.body.length
+                    selection?.length > 0 &&
+                    selection?.length !== myBookedProperties?.data?.body?.length
                   }
                   transitionDuration={0}
                 />

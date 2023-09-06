@@ -1,21 +1,21 @@
-import { Container, Tabs, Text } from '@mantine/core'
+import { Container, Tabs, Text } from "@mantine/core";
 import {
   IconSettings,
   IconCheckupList,
   IconNotes,
   IconMessage,
-} from '@tabler/icons'
-import ProfileSettings from './ProfileSettings'
-import { useState } from 'react'
-import BookedProperties from './BookedProperties'
-import BlogsPosted from './BlogsPosted'
-import FeedbackPosted from './FeedbackPosted'
+} from "@tabler/icons";
+import ProfileSettings from "./ProfileSettings";
+import { useState } from "react";
+import BookedProperties from "./BookedProperties";
+import BlogsPosted from "./BlogsPosted";
+import FeedbackPosted from "./FeedbackPosted";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState('properties')
+  const [activeTab, setActiveTab] = useState("properties");
 
   return (
-    <Container size={'xl'} mt={'xl'}>
+    <Container size={"xl"} mt={"xl"}>
       <Tabs
         orientation="horizontal"
         defaultValue="properties"
@@ -48,5 +48,5 @@ export default function Dashboard() {
         </Tabs.Panel>
       </Tabs>
     </Container>
-  )
+  );
 }
