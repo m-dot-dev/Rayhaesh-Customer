@@ -1,26 +1,44 @@
-import { ActionIcon, Anchor, createStyles, Group } from "@mantine/core";
+import { ActionIcon, Anchor, Box, createStyles, Group } from "@mantine/core";
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandTwitter,
   IconBrandYoutube,
 } from "@tabler/icons";
+import AppleDownloadButton from "../../assets/icons/Apple-Download-Button.png";
+import GoogleDownloadButton from "../../assets/icons/Google-Download-Button.png";
+import Background from "../../assets/images/Background.png";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   footer: {
-    marginTop: 50,
-    padding: 10,
-    borderTop: `2px solid ${
+    position: "relative",
+    padding: 50,
+    paddingBlock: 80,
+    borderTop: `1px solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[4]
     }`,
-    backgroundColor: "#e5e5e5",
+    // backgroundColor: "#fafafa",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 30,
+  },
+  background: {
+    backgroundImage: `url(${Background})`,
+    position: "absolute",
+    inset: 0,
+    backgroundPosition: "bottom",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    zIndex: -1,
   },
 
   inner: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
 
     [theme.fn.smallerThan("sm")]: {
       flexDirection: "column",
@@ -28,8 +46,15 @@ const useStyles = createStyles((theme) => ({
   },
 
   links: {
-    fontWeight: 600,
-    fontSize: 20,
+    fontWeight: 400,
+    fontSize: 24,
+    gap: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    [theme.fn.smallerThan("md")]: {
+      fontSize: 20,
+    },
+
     [theme.fn.smallerThan("sm")]: {
       marginTop: theme.spacing.lg,
       marginBottom: theme.spacing.sm,
@@ -40,36 +65,44 @@ const useStyles = createStyles((theme) => ({
 export default function Footer() {
   const links = [
     {
-      link: "#",
-      label: "Contact",
+      link: "/",
+      label: "Home",
     },
     {
-      link: "#",
-      label: "Privacy",
+      link: "/properties",
+      label: "Buy",
     },
     {
-      link: "#",
-      label: "Blog",
+      link: "/exchange",
+      label: "Exchange",
     },
     {
-      link: "#",
-      label: "Store",
+      link: "/rent",
+      label: "Rent",
     },
     {
-      link: "#",
-      label: "Careers",
+      link: "/blogs",
+      label: "News & Insights",
     },
   ];
 
+  const navigate = useNavigate();
+
   const { classes } = useStyles();
-  const items = links.map((link) => (
+  const items = links.map((link, index) => (
     <Anchor
       color="dimmed"
       key={link.label}
-      href={link.link}
-      sx={{ lineHeight: 1 }}
-      onClick={(event) => event.preventDefault()}
-      size="sm"
+      onClick={() => {
+        navigate(link.link);
+      }}
+      sx={{
+        lineHeight: 1,
+
+        borderRight:
+          index !== links.length - 1 ? "2px solid lightgray" : "none",
+        paddingRight: "15px",
+      }}
     >
       {link.label}
     </Anchor>
@@ -96,10 +129,39 @@ export default function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <div className={classes.inner}>
-        {/* <Group className={classes.links}>{items}</Group> */}
-        <Group className={classes.links}>{}</Group>
+      <Box className={classes.background}></Box>
+      <Group className={classes.links}>{items}</Group>
+      <Group
+        align="center"
+        style={{
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src={AppleDownloadButton}
+          alt="Apple Download Button"
+          width={160}
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() =>
+            window.open("https://www.apple.com/app-store/", "_blank")
+          }
+        />
 
+        <img
+          src={GoogleDownloadButton}
+          alt="Google Download Button"
+          width={160}
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() =>
+            window.open("https://play.google.com/store/games", "_blank")
+          }
+        />
+      </Group>
+      <div className={classes.inner}>
         <Group spacing="xs" position="right" noWrap>
           <ActionIcon
             size="lg"
