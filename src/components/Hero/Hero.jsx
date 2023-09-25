@@ -66,7 +66,7 @@ const Hero = () => {
           >
             Premiere House Listings
           </Text>
-          <ListingCarousel listings={flat} loading={isLoaded} error={error} />
+          <ListingCarousel listings={house} loading={isLoaded} error={error} />
         </Box>
         <Box style={{ padding: 20 }}>
           <Text
