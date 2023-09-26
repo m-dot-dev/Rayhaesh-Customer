@@ -5,6 +5,7 @@ import { Box, Container, Text, createStyles } from "@mantine/core";
 import AgenciesCarousel from "../Carousel/AgenciesCarousel";
 import axios from "axios";
 import { useMediaQuery } from "@mantine/hooks";
+import SearchSectionAccordingToOriginalDesign from "./SearchSectionAccordingToOriginalDesign";
 
 const Hero = () => {
   const [error, setError] = useState(null);
@@ -54,7 +55,8 @@ const Hero = () => {
 
   return (
     <>
-      <SearchSection />
+      <SearchSectionAccordingToOriginalDesign />
+      {/* <SearchSection /> */}
       <Container size={"xl"} mt={"xl"}>
         <Box style={{ padding: 20 }}>
           <Text

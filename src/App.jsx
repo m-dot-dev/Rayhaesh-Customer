@@ -1,55 +1,62 @@
-import { MantineProvider } from '@mantine/core'
-import { NotificationsProvider } from '@mantine/notifications'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import './App.css'
-import Booking from './components/Buy/Booking'
-import BuyListings from './components/Buy/BuyListings'
-import ExchangeListings from './components/Exchange/ExchangeListings'
-import ErrorPage from './components/Generic/ErrorPage'
-import Subscription from './components/Generic/Subscription'
-import Hero from './components/Hero/Hero'
-import Footer from './components/Layout/Footer'
-import Navbar from './components/Layout/Navbar'
-import PropertyPage from './components/Listings/PropertyPage'
-import Blogs from './components/NewsInsights/Blogs'
-import Login from './components/PfpManagement/Login'
-import ProfileSettings from './components/PfpManagement/ProfileSettings'
-import RequireAuth from './components/PfpManagement/RequireAuth'
-import SignUp from './components/PfpManagement/SignUp'
-import RentListings from './components/Rent/RentListings'
-import AddBlog from './components/NewsInsights/AddBlog'
-import useAuth from './components/hooks/useAuth'
-import { useEffect, useState } from 'react'
-import Contact from './components/Generic/Contact'
-import Dashboard from './components/PfpManagement/Dashboard'
-import ForgotPassword from './components/PfpManagement/ForgotPassword'
+import { MantineProvider, createEmotionCache } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Booking from "./components/Buy/Booking";
+import BuyListings from "./components/Buy/BuyListings";
+import ExchangeListings from "./components/Exchange/ExchangeListings";
+import ErrorPage from "./components/Generic/ErrorPage";
+import Subscription from "./components/Generic/Subscription";
+import Hero from "./components/Hero/Hero";
+import Footer from "./components/Layout/Footer";
+import Navbar from "./components/Layout/Navbar";
+import PropertyPage from "./components/Listings/PropertyPage";
+import Blogs from "./components/NewsInsights/Blogs";
+import Login from "./components/PfpManagement/Login";
+import ProfileSettings from "./components/PfpManagement/ProfileSettings";
+import RequireAuth from "./components/PfpManagement/RequireAuth";
+import SignUp from "./components/PfpManagement/SignUp";
+import RentListings from "./components/Rent/RentListings";
+import AddBlog from "./components/NewsInsights/AddBlog";
+import useAuth from "./components/hooks/useAuth";
+import { useEffect, useState } from "react";
+import Contact from "./components/Generic/Contact";
+import Dashboard from "./components/PfpManagement/Dashboard";
+import ForgotPassword from "./components/PfpManagement/ForgotPassword";
+import NavbarAccordingToOriginalDesign from "./components/Layout/NavbarAccordingToOriginalDesign";
 
 function App() {
-  const { setAuth } = useAuth()
-  const [loading, setLoading] = useState(true)
-  const [searchFilters, setSearchFilters] = useState({})
+  const { setAuth } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [searchFilters, setSearchFilters] = useState({});
   useEffect(() => {
-    let token = localStorage.getItem('token')
+    let token = localStorage.getItem("token");
     if (token) {
-      const decodedToken = JSON.parse(atob(token.split('.')[1]))
-      setAuth({ name: decodedToken.name, email: decodedToken.email, token })
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      setAuth({ name: decodedToken.name, email: decodedToken.email, token });
     }
-    setLoading(false)
-  }, [])
-  console.log('searchFilters', searchFilters)
+    setLoading(false);
+  }, []);
+
+  const appendCache = createEmotionCache({ key: "mantine", prepend: false });
+
   return loading ? null : (
-    <MantineProvider theme={{ fontFamily: 'Poppins' }}>
+    <MantineProvider
+      theme={{ fontFamily: "Poppins" }}
+      emotionCache={appendCache}
+    >
       <NotificationsProvider>
         <div
           className="App"
           style={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Router>
-            <Navbar />
+            <NavbarAccordingToOriginalDesign />
+            {/* <Navbar /> */}
             <main style={{ flex: 1 }}>
               <Routes>
                 {/* Public Routes */}
@@ -79,7 +86,7 @@ function App() {
         </div>
       </NotificationsProvider>
     </MantineProvider>
-  )
+  );
 }
 
-export default App
+export default App;
