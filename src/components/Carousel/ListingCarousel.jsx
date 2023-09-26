@@ -6,6 +6,7 @@ import { Group, Paper } from "@mantine/core";
 import { Link } from "react-router-dom";
 import CardSkeleton from "../Skeletons/CardSkeleton";
 import { useMediaQuery } from "@mantine/hooks";
+import ListingCardAccordingToOriginalDesign from "../Cards/ListingCardAccordingToOriginalDesign";
 
 export default function ListingCarousel({ listings, loading, error }) {
   const match768 = useMediaQuery("(max-width: 768px)");
@@ -26,18 +27,17 @@ export default function ListingCarousel({ listings, loading, error }) {
       )}
       {listings.length !== 0 && (
         <Carousel
-          slideSize="25%"
           slideGap="md"
+          slideSize={"33%"}
           breakpoints={[
-            { maxWidth: "lg", slideSize: "35%" },
-            { maxWidth: "md", slideSize: "40%" },
-            { maxWidth: "sm", slideSize: "50%" },
-            { maxWidth: "xs", slideSize: "80%", slideGap: "sm" },
+            { maxWidth: "xl", slideSize: "33%" },
+            { maxWidth: "lg", slideSize: "50%" },
+            { maxWidth: "xs", slideSize: "100%", slideGap: "sm" },
           ]}
           loop
           align="center"
-          controlsOffset={0}
-          slidesToScroll={match768 ? 1 : 4}
+          // controlsOffset={0}
+          // slidesToScroll={match768 ? 1 : 3}
           nextControlIcon={
             <IconArrowRight size={18} style={{ color: "#fff" }} />
           }
@@ -68,9 +68,9 @@ export default function ListingCarousel({ listings, loading, error }) {
               },
             },
           }}
-          sx={{
-            maxHeight: "400px",
-          }}
+          // sx={{
+          //   maxHeight: "400px",
+          // }}
         >
           {listings.map((property) => (
             <Carousel.Slide
@@ -86,7 +86,7 @@ export default function ListingCarousel({ listings, loading, error }) {
                 state={{ data: property }}
                 style={{ textDecoration: "none" }}
               >
-                <ListingCard property={property} />
+                <ListingCardAccordingToOriginalDesign property={property} />
               </Link>
             </Carousel.Slide>
           ))}
