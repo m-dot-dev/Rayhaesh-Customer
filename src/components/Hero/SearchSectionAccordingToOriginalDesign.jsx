@@ -37,7 +37,7 @@ const SearchSectionAccordingToOriginalDesign = () => {
     }));
   }, []);
   return (
-    <section class="flex w-full flex-col items-center bg-[url('src/assets/images/home-page-cover.png')] bg-right-bottom bg-no-repeat">
+    <section class="flex w-full flex-col items-center bg-[url('/src/assets/images/home-page-cover.png')] bg-right-bottom bg-no-repeat">
       <div class="content isolate mt-[40px] w-[90%] max-w-[1430px]">
         <div class="text relative after:absolute after:top-[-10px] after:bottom-[-10px] after:left-[-10px] after:right-[-10px] after:-z-10 after:block after:bg-headingBackground/50 after:bg-bottom after:bg-no-repeat after:blur-[30px] after:content-[''] after:md:hidden">
           <h1 class="relative overflow-visible text-[40px] font-bold     leading-[50px] sm:text-[47px] sm:leading-[60px] md:text-[55px] md:leading-[70px] lg:text-[70px] lg:leading-[80px] xl:text-[90px] xl:leading-[110px] 2xl:text-[135px] 2xl:leading-[130px]">
