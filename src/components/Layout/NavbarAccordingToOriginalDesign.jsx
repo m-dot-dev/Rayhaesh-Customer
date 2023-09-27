@@ -62,7 +62,7 @@ const NavbarAccordingToOriginalDesign = () => {
             to={link.link}
             className={`relative mr-[10px] bg-[center_bottom_-10px] bg-no-repeat text-[18px] font-semibold duration-300  hover:text-accentRed xl:mr-[30px] xl:text-[22px] 3xl:mr-[45px] 3xl:text-[26.5px] ${
               active === link.name
-                ? "after:absolute after:top-0 after:bottom-[-10px] after:max-w-[67px] after:w-full after:right-0 after:block after:bg-[url('src/assets/icons/active-link.png')] after:bg-contain after:bg-bottom after:bg-no-repeat after:content-[''] text-accentRed"
+                ? "after:absolute after:top-0 after:bottom-[-10px] after:max-w-[67px] after:w-full after:right-0 after:block after:bg-[url('/src/assets/icons/active-link.png')] after:bg-contain after:bg-bottom after:bg-no-repeat after:content-[''] text-accentRed"
                 : ""
             }`}
             onClick={() => setActive(link.name)}
