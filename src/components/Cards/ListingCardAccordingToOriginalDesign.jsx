@@ -6,18 +6,18 @@ import BathWithPersonIcon from "../../assets/icons/bath-with-person-icon.png";
 
 const ListingCardAccordingToOriginalDesign = ({ property }) => {
   return (
-    <div class="card flex-1">
-      <div class="image-container relative overflow-hidden rounded-[10px] w-full aspect-video">
+    <div class="card flex-1  shadow-md m-2 rounded-xl hover:scale-[1.03] hover:shadow-xl transition-all duration-200">
+      <div class="image-container relative w-full aspect-video">
         <img
           src={property?.images[0]}
           alt=""
-          class="object-cover w-full h-full"
+          class="object-cover w-full h-full  rounded-tr-[10px]  rounded-tl-[10px]"
         />
-        <p class="overlay absolute top-0 left-0 flex items-center rounded-br-[74px] bg-accentRed  pl-4 pr-6 py-1 text-[16px] font-medium text-white md:text-[16px] lg:text-[20px] xl:text-[24px]">
+        <p class="overlay absolute top-0 left-0 flex items-center rounded-br-[74px] bg-accentRed  pl-4 pr-6 py-1 text-[16px] font-medium text-white md:text-[16px] lg:text-[20px] xl:text-[24px]  rounded-tl-[10px]">
           {property.propertyIs}
         </p>
       </div>
-      <div class="details mt-[16px]">
+      <div class="details mt-[16px] p-4">
         <h2 class="mb-[10px] text-[22px] font-medium text-dividerBlack sm:mb-[14px] sm:text-[27px] md:mb-[10px] md:text-[18px] lg:mb-[14px] xl:mb-[10px] xl:text-[22px] 2xl:mb-[14px] line-clamp-1">
           {property?.propertyTitle}
         </h2>
