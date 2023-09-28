@@ -57,7 +57,7 @@ const Hero = () => {
     <>
       <SearchSectionAccordingToOriginalDesign />
       {/* <SearchSection /> */}
-      <Container size={"xl"} mt={"xl"}>
+      <Container size={"1500px"} mt={"xl"}>
         <Box style={{ padding: 20 }}>
           <Text
             weight={600}
