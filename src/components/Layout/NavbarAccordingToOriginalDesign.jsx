@@ -2,9 +2,11 @@ import React, { useMemo, useState } from "react";
 import Logo from "../../assets/images/Logo.png";
 import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
+import useAuth from "../hooks/useAuth";
 
 const NavbarAccordingToOriginalDesign = () => {
   const [active, setActive] = useState("Home");
+  const { auth, setAuth } = useAuth();
 
   const links = useMemo(() => {
     return [
@@ -32,24 +34,33 @@ const NavbarAccordingToOriginalDesign = () => {
   }, []);
 
   const buttons = useMemo(() => {
-    return [
-      {
-        name: "Login",
-        link: "/login",
-        filled: true,
-      },
-      {
-        name: "Sign Up",
-        link: "/register",
-        filled: false,
-      },
-      //   {
-      //     name: "Subscription",
-      //     link: "/subscription",
-      //     filled: false,
-      //   },
-    ];
-  }, []);
+    return auth
+      ? [
+          {
+            name: "Dashboard",
+            link: "/dashboard",
+            filled: true,
+          },
+          {
+            name: "Logout",
+            link: "/login",
+            filled: false,
+            onClick: () => {setAuth(false)},
+          },
+        ]
+      : [
+          {
+            name: "Login",
+            link: "/login",
+            filled: true,
+          },
+          {
+            name: "Sign Up",
+            link: "/register",
+            filled: false,
+          },
+        ];
+  }, [auth]);
 
   return (
     <nav class="shadow-[0px_7px_45px_rgba(0,0,0,0.05)]bg-white sticky top-0 z-50 flex h-[100px] w-full items-center justify-between bg-white px-[10px] shadow-[0px_7px_45px_rgba(0,0,0,0.05)] 2xl:h-[150px] 2xl:px-[42px]">
@@ -57,8 +68,9 @@ const NavbarAccordingToOriginalDesign = () => {
         <img src={Logo} alt="Rayhaesh Logo" class="h-full" />
       </div>
       <div class="links hidden font-normal text-navBlack lg:block">
-        {links.map((link) => (
+        {links.map((link, i) => (
           <Link
+            key={i}
             to={link.link}
             className={`relative mr-[10px] bg-[center_bottom_-10px] bg-no-repeat text-[18px] font-semibold duration-300  hover:text-accentRed xl:mr-[30px] xl:text-[22px] 3xl:mr-[45px] 3xl:text-[26.5px] ${
               active === link.name
@@ -128,7 +140,9 @@ const NavbarAccordingToOriginalDesign = () => {
         {buttons.map((button) => (
           <Link
             to={button.link}
-            onClick={() => setActive(button.name)}
+            onClick={() => {
+              button.onClick ? button.onClick() : setActive(button.name);
+            }}
             className={cn(
               "inline-flex h-[40px] w-[120px] items-center justify-center rounded-[8px] border-2 border-accentRed text-accentRed duration-300 hover:bg-accentRed hover:text-white 2xl:mr-[15px] 2xl:h-[50px] 2xl:w-[154px] 2xl:rounded-[10px] 2xl:text-[22px] 3xl:mr-[23px] 3xl:h-[60px] 3xl:w-[184px] 3xl:text-[26.5px]",
               button.filled
