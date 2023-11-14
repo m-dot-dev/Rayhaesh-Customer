@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from "react";
 import Logo from "../../assets/images/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import useAuth from "../hooks/useAuth";
+import { UnstyledButton } from "@mantine/core";
 
 const NavbarAccordingToOriginalDesign = () => {
   const [active, setActive] = useState("Home");
   const { auth, setAuth } = useAuth();
+  const { navigate } = useNavigate();
 
   const links = useMemo(() => {
     return [
@@ -45,7 +47,9 @@ const NavbarAccordingToOriginalDesign = () => {
             name: "Logout",
             link: "/login",
             filled: false,
-            onClick: () => {setAuth(false)},
+            onClick: () => {
+              setAuth(false);
+            },
           },
         ]
       : [
@@ -65,7 +69,9 @@ const NavbarAccordingToOriginalDesign = () => {
   return (
     <nav class="shadow-[0px_7px_45px_rgba(0,0,0,0.05)]bg-white sticky top-0 z-50 flex h-[100px] w-full items-center justify-between bg-white px-[10px] shadow-[0px_7px_45px_rgba(0,0,0,0.05)] 2xl:h-[150px] 2xl:px-[42px]">
       <div class="!h-3/4">
-        <img src={Logo} alt="Rayhaesh Logo" class="h-full" />
+        <Link to="/">
+          <img src={Logo} alt="Rayhaesh Logo" class="h-full" />
+        </Link>
       </div>
       <div class="links hidden font-normal text-navBlack lg:block">
         {links.map((link, i) => (
