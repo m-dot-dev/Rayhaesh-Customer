@@ -110,7 +110,7 @@ export default function Login() {
             // password,
             accessToken,
           });
-          navigate(prevLocation, { replace: true });
+          navigate("/dashboard", { replace: true });
         } else {
           showNotification({
             title: "Login Failed",
