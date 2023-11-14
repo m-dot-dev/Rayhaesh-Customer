@@ -45,7 +45,7 @@ export default function Dashboard() {
         </Tabs.List>
 
         <Tabs.Panel value="settings" pl="xs">
-          <ProfileSettings />
+          <ProfileSettings setActiveTab={setActiveTab}/>
         </Tabs.Panel>
 
         <Tabs.Panel value="properties" pl="xs">

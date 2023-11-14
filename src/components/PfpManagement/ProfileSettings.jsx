@@ -389,7 +389,7 @@ const ProfileSettings = (props) => {
             <Button
               color="red"
               onClick={() => {
-                navigate(-1);
+                props.setActiveTab("properties");
               }}
               leftIcon={!match310 ? <IconX /> : null}
             >
