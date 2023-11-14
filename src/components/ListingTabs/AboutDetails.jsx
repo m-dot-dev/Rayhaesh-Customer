@@ -58,7 +58,7 @@ const AboutDetails = ({ property }) => {
         <Group noWrap mt={"xs"}>
           <Text className={classes.aboutText}>Property price:</Text>
 
-          <Text>{property?.monthlyRent + "Rs./Month"}</Text>
+          <Text>{`Rs. ${property?.totalPrice} / Month`}</Text>
         </Group>
       )}
       <Group noWrap mt={"xs"}>
@@ -70,7 +70,7 @@ const AboutDetails = ({ property }) => {
         </Group>
       </Group>
       {property?.propertyIs === "For Exchange" && (
-        <Stack spacing={2}>
+        <Stack spacing={2} mt={"xs"}>
           <Group noWrap>
             <Text className={classes.aboutText}>Exchange details: </Text>
             <Text>{property?.exchangeWith}</Text>
@@ -107,7 +107,7 @@ const AboutDetails = ({ property }) => {
         </Stack>
       )}
       {property?.propertyIs === "For Rent" && (
-        <Stack spacing={2}>
+        <Stack spacing={2} mt={"xs"}>
           <Group noWrap pt="xs">
             <Text className={classes.aboutText}>Minimum Contract Period: </Text>
             <Text>{property?.minimumContractPeriod} month(s)</Text>
