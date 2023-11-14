@@ -6,35 +6,22 @@ import {
   Stack,
   Grid,
   Paper,
-  Button,
-  List,
-  Box,
-  Input,
-  Modal,
-  Notification,
-  Dialog,
-  Container,
+  Button, Input,
+  Modal, Container
 } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
-  IconArrowRight,
-  IconCheck,
-  IconFileInfo,
+  IconArrowRight, IconFileInfo,
   IconFiles,
   IconMap2,
   IconPhoto,
-  IconShoppingBag,
-  IconUser,
-  IconVideo,
-  IconX,
+  IconShoppingBag, IconVideo
 } from "@tabler/icons";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import PropertyCarousel from "./PropertyCarousel";
+import { useLocation } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
-import LocationMap from "../Generic/LocationMap";
 import VideosCarousel from "../Carousel/VideosCarousel";
 import ImagesCarousel from "../Carousel/ImagesCarousel";
 import AgencyDetails from "../ListingTabs/AgencyDetails";
