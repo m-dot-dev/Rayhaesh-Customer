@@ -69,75 +69,63 @@ const AboutDetails = ({ property }) => {
           </Text>
         </Group>
       </Group>
-      <Group mt={"xs"}>
-        {property?.propertyIs === "For Exchange" ? (
-          <Stack spacing={2}>
-            <Group noWrap>
-              <Text className={classes.aboutText}>Exchange details: </Text>
-              <Text>{property?.exchangeWith}</Text>
-            </Group>
-            <Group noWrap mt={"xs"}>
-              <Text className={classes.aboutText}>
-                Minimum Exchange Value:{" "}
-              </Text>
-              <Text>{property?.minimumExchangeValue}</Text>
-            </Group>
-            <Group>
-              {property?.inInstallments && (
-                <Stack>
-                  <Text className={classes.aboutText}>In Installments: </Text>
-                  <Group spacing={"xs"}>
-                    <Text>Down Payment:</Text>
-                    <Text>{property?.downPayment}</Text>
-                  </Group>
-                  <Group spacing={"xs"}>
-                    <Text className={classes.aboutText}>
-                      Total Number of Installments:{" "}
-                    </Text>
-                    <Text>{property?.totalNumberOfInstallments}</Text>
-                  </Group>
+      {property?.propertyIs === "For Exchange" && (
+        <Stack spacing={2}>
+          <Group noWrap>
+            <Text className={classes.aboutText}>Exchange details: </Text>
+            <Text>{property?.exchangeWith}</Text>
+          </Group>
+          <Group noWrap mt={"xs"}>
+            <Text className={classes.aboutText}>Minimum Exchange Value: </Text>
+            <Text>{property?.minimumExchangeValue}</Text>
+          </Group>
+          <Group>
+            {property?.inInstallments && (
+              <Stack>
+                <Text className={classes.aboutText}>In Installments: </Text>
+                <Group spacing={"xs"}>
+                  <Text>Down Payment:</Text>
+                  <Text>{property?.downPayment}</Text>
+                </Group>
+                <Group spacing={"xs"}>
                   <Text className={classes.aboutText}>
-                    Installment Duration:{" "}
+                    Total Number of Installments:{" "}
                   </Text>
-                  <Text>{property?.installmentDuration}</Text>
-                  <Text className={classes.aboutText}>
-                    Monthly Installments:{" "}
-                  </Text>
-                  <Text>{property?.monthlyInstallment}</Text>
-                </Stack>
-              )}
-            </Group>
-          </Stack>
-        ) : (
-          <Text></Text>
-        )}
-      </Group>
-      <Group mt={"xs"}>
-        {property?.propertyIs === "For Rent" ? (
-          <Stack spacing={2}>
-            <Group noWrap>
-              <Text className={classes.aboutText}>
-                Minimum Contract Period:{" "}
-              </Text>
-              <Text>{property?.minimumContractPeriod} month(s)</Text>
-            </Group>
-            <Group noWrap mt={"xs"}>
-              <Text className={classes.aboutText}>Monthly Rent: </Text>
-              <Text>Rs. {property?.monthlyRent}</Text>
-            </Group>
-            <Group noWrap mt={"xs"}>
-              <Text className={classes.aboutText}>Security Deposit: </Text>
-              <Text>Rs. {property?.securityDeposit}</Text>
-            </Group>
-            <Group noWrap mt={"xs"}>
-              <Text className={classes.aboutText}>Advance Rent: </Text>
-              <Text>{property?.advanceRent ? "Yes" : "No"}</Text>
-            </Group>
-          </Stack>
-        ) : (
-          <Text></Text>
-        )}
-      </Group>
+                  <Text>{property?.totalNumberOfInstallments}</Text>
+                </Group>
+                <Text className={classes.aboutText}>
+                  Installment Duration:{" "}
+                </Text>
+                <Text>{property?.installmentDuration}</Text>
+                <Text className={classes.aboutText}>
+                  Monthly Installments:{" "}
+                </Text>
+                <Text>{property?.monthlyInstallment}</Text>
+              </Stack>
+            )}
+          </Group>
+        </Stack>
+      )}
+      {property?.propertyIs === "For Rent" && (
+        <Stack spacing={2}>
+          <Group noWrap pt="xs">
+            <Text className={classes.aboutText}>Minimum Contract Period: </Text>
+            <Text>{property?.minimumContractPeriod} month(s)</Text>
+          </Group>
+          <Group noWrap mt={"xs"}>
+            <Text className={classes.aboutText}>Monthly Rent: </Text>
+            <Text>Rs. {property?.monthlyRent}</Text>
+          </Group>
+          <Group noWrap mt={"xs"}>
+            <Text className={classes.aboutText}>Security Deposit: </Text>
+            <Text>Rs. {property?.securityDeposit}</Text>
+          </Group>
+          <Group noWrap mt={"xs"}>
+            <Text className={classes.aboutText}>Advance Rent: </Text>
+            <Text>{property?.advanceRent ? "Yes" : "No"}</Text>
+          </Group>
+        </Stack>
+      )}
     </>
   );
 };
