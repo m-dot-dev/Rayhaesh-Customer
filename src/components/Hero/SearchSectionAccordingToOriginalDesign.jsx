@@ -41,9 +41,9 @@ const SearchSectionAccordingToOriginalDesign = () => {
       <div class="content isolate mt-[40px] w-[90%] max-w-[1430px]">
         <div class="text relative after:absolute after:top-[-10px] after:bottom-[-10px] after:left-[-10px] after:right-[-10px] after:-z-10 after:block after:bg-headingBackground/50 after:bg-bottom after:bg-no-repeat after:blur-[30px] after:content-[''] after:md:hidden">
           <h1 class="relative overflow-visible text-[40px] font-bold     leading-[50px] sm:text-[47px] sm:leading-[60px] md:text-[55px] md:leading-[70px] lg:text-[70px] lg:leading-[80px] xl:text-[90px] xl:leading-[110px] 2xl:text-[135px] 2xl:leading-[130px]">
-            Find your
+            Find Your
             <br />
-            dream home
+            Dream Home
             <span class="absolute top-[-10%] left-[-10%] -z-10 block h-[100%] w-[33%] rounded-[650px_650px_500px_500px] border-2 bg-headingBackground blur-[230px]"></span>
             <span class="absolute top-[-5%] left-[15%] -z-10 h-[100%] w-[33%] rounded-[650px_650px_500px_500px] bg-headingBackground blur-[230px]"></span>
             <span class="absolute top-[-20%] right-0 -z-10 block h-[100%] w-[33%] rounded-[650px_650px_500px_500px] bg-headingBackground blur-[230px] sm:right-[45%]"></span>
