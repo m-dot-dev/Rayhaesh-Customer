@@ -519,6 +519,7 @@ const Booking = () => {
                   backgroundColor: "#D92228",
                   color: "white",
                 }}
+                onClick={() => navigate(-1)}
               >
                 Cancel
               </Button>
